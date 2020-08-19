@@ -1,30 +1,46 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  ChangeDetectionStrategy,
-  EventEmitter
-} from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { Author } from '../../../authors/models/author.model';
 import { Book } from '../../models/book.model';
-import { Genre } from '../../../genres/models/genre.model';
+import { AuthorsService } from '../../../core/services/authors.service';
+
 
 @Component({
   selector: 'book',
   templateUrl: './book.component.html',
   styleUrls: ['./book.component.sass'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BookComponent implements OnInit {
+export class BookComponent implements OnInit, OnDestroy {
 
   @Input('book') public book: Book;
-  @Output('genreFilter') private genreFilter = new EventEmitter<Genre>();
+  public author = new Author();
 
-  public ngOnInit(): void {}
+  private destroy$ = new Subject<void>();
 
-  public filterByGenre(genre: Genre): void {
-    this.genreFilter.emit(genre);
+  constructor(
+  private authorService: AuthorsService,
+  ) { }
+
+  public ngOnInit(): void {
+    console.log(this.book);
+    this.authorService
+      .getAuthorById(this.book.id)
+      .pipe(
+        takeUntil(this.destroy$),
+      )
+      .subscribe(
+        (res) => {
+          this.author._fromJSON(res);
+        },
+      );
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }

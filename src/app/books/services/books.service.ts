@@ -1,27 +1,23 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
-import { Book } from '../models/book.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BooksService {
 
+  protected API_URL: string = environment.hosts.api_host;
+
   constructor(
-    private readonly http: HttpClient
+    private http: HttpClient,
   ) { }
 
-  public getBooks(): Observable<Book[]> {
-    return this.http.get('/books')
-      .pipe(
-        map((res: any) => {
-          return Book.newCollection(Book, res.books);
-        }),
-      );
+  public geBooks(): Observable<any> {
+    return this.http.get(this.API_URL + '/books');
   }
 
 }
