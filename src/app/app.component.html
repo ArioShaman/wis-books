@@ -1,9 +1,11 @@
-<h1>Root</h1>
-<a routerLink="books">Books</a>
-<hr>
-<a routerLink="genres">Genres</a>
-<hr>
-<a routerLink="authors">Authors</a>
+<div class="navbar">
+    <div class="links">
+        <a routerLink="books" routerLinkActive="active">Books</a>
+        <a routerLink="genres" routerLinkActive="active">Genres</a>
+        <a routerLink="authors" routerLinkActive="active">Authors</a>
+    </div>
+</div>
 
-
-<router-outlet></router-outlet>
+<div class="grid">
+    <router-outlet></router-outlet>
+</div>

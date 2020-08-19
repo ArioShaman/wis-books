@@ -1,0 +1,23 @@
+<mat-form-field>
+    <input type="text" 
+        matInput
+        placeholder="Enter search value"
+    >
+</mat-form-field>
+
+<div class="container" *ngIf="books.length > 0; else elseBlock">
+    <book 
+        *ngFor="let book of books"
+        [book]="book"
+    >
+    </book>
+</div>
+<ng-template #elseBlock>
+    <div class="container">
+        <div 
+            class="shadow-book"
+            *ngFor="let book of shadowBooks"
+        >
+        </div>
+    </div>
+</ng-template>

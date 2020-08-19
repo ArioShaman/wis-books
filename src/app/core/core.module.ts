@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from '../app-routing.module';
 
+import { AuthorsService } from './services/authors.service';
+
 @NgModule({
   declarations: [],
   imports: [
@@ -12,6 +14,9 @@ import { AppRoutingModule } from '../app-routing.module';
   exports: [
     AppRoutingModule,
     CommonModule,
+  ],
+  providers: [
+    AuthorsService,
   ],
 })
 export class CoreModule { }
