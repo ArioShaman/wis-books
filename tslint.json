@@ -186,10 +186,6 @@
       "multiline"
     ],
     "encoding": true,
-    "file-name-casing": [
-      true,
-      "kebab-case"
-    ],
     "increment-decrement": [
       true,
       "allow-post"
@@ -320,7 +316,7 @@
     "max-line-length": [
       true,
       {
-        "limit": 100,
+        "limit": 80,
         "ignore-pattern": "^import { \\w+ |^export |\\*|//|loadChildren"
       }
     ],
