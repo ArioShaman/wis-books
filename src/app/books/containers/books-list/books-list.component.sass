@@ -1,125 +1,14 @@
-$base-color: #ddd
-$shine-color: #e8e8e8
-$animation-duration: 1.6s
-$grey: #bdbbbb
-
-book
-  margin-left: 30px
-  &:nth-child(3n+1)
-    margin-left: 0px
-
-mat-paginator
-  width: 100%
-  margin-top: 25px
-
+.mat-form-field::ng-deep
+    width: calc(100% - 30px)
+    margin-left: 30px
 .container
-  width: 100%
-  display: flex
-  flex-wrap: wrap
-  margin-bottom: 50px
-
-@keyframes hiding
-  0%
-    opacity: 1
-  100%
-    opacity: 0
+    width: 100%
+    display: flex
+    flex-wrap: wrap
 
 .shadow-book
-  margin-top: 30px
-  margin-left: 30px
-  position: relative
-  background: #ececec
-  width: 300px
-  height: 375px
-  clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%)
-  opacity: 1
-  animation: hiding 1.5s linear
-
-  .gradient
-    background-image: linear-gradient(90deg, $base-color 0px, $shine-color 40px, $base-color 80px) 
-    height: 130%
-    width: 140%
-    transform: rotate(15deg) translate(-20%, -10%)
-    animation: loading $animation-duration infinite linear
-
-  .pad-cont
-    padding: 15px 15px 0px 15px
-
-  .img
-    height: 170px
-    width: 270px
-    transition: 0.6s
-    box-sizing: border-box
-    margin-bottom: 10px
-    background: $grey
-
-  .title
-    height: 25px
-    width: 100%
-    background: $grey
-
-  .text
-    margin-top: 10px
-    height: 50px
-    width: 100%
-    background: $grey
-
-  .price
-    margin-top: 10px
-    width: 75px
-    height: 25px
-    background: $grey
-    float: right
-
-  .genres
-    width: 100%
-    display: flex
-
-    .genre
-      margin-top: 20px
-      height: 25px
-      width: 110px
-      background: $grey
-      margin-left: 15px
-
-  &:nth-child(3n+1)
-    margin-left: 0px
-
-@keyframes loading
-  0%
-    background-position: 0px
-  100%
-    background-position: 300px
-    
-    
-.not-found
-  margin-top: 40px
-  box-sizing: border-box
-  height: 200px
-  width: 100%
-  background: #ececec
-  display: flex
-  justify-content: center
-  align-items: center
-
-.select 
-  width: 180px
-
-.flex 
-  width: 100%
-  height: 50px
-  display: flex
-  justify-content: space-between
-
-  .inputs-cont
-    display: flex
-    justify-content: space-between
-    width: 800px
-
-.clear
-  width: 100px
-  height: 60px
-  margin-top: 4px
-
-.input
-  width: 420px
+    margin-top: 30px
+    margin-left: 30px
+    background: #ececec
+    width: 300px
+    height: 400px

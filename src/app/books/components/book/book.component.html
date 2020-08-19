@@ -1,36 +1,30 @@
 <mat-card fxLayoutAlign="start stretch">
-  <div class="container">
-    <div class="pad-cont">
-      
-      <div class="img"></div>
-
-      <mat-card-title class="title">
-        {{ book.title }}
-      </mat-card-title>
-      
-      <mat-card-content class="content">
-        {{ book.description }}
-      </mat-card-content>
-      
-      <mat-card-content>
-        <div class="flex-cont">
-          <div class="author">
-            <!-- {{ book.authorId }} -->
-          </div>
-          <div class="price">
-            {{ book.price | currency : 'USD' : 'symbol' : '1.0-0' }}
-          </div>
+    <div class="container">
+        <div class="pad-cont">
+            <div class="img"></div>
+            <mat-card-title>
+                {{ book.title }}
+            </mat-card-title>
+            <mat-card-content class="content">
+                {{ book.description }}
+            </mat-card-content>
+            <mat-card-content>
+                <div class="flex-cont">
+                    <div class="author"*ngIf="author">
+                        {{ author.firstName }} {{ author.lastName }}
+                    </div>
+                    <div class="price">
+                        {{ book.price | currency : 'USD' : 'symbol' : '1.0-0' }}
+                    </div>
+                </div>
+            </mat-card-content>
         </div>
-      </mat-card-content>
+        <div class="genres">
+            <div class="genre" 
+                *ngFor="let genre of book.genres"
+            >
+                {{ genre.name }}
+            </div>
+        </div>
     </div>
-    
-    <div class="genres">
-      <div class="genre" 
-           *ngFor="let genre of book.genres | slice:0:2"
-           (click)="filterByGenre([genre.name])">
-        {{ genre.name }}
-      </div>
-    </div>
-  
-  </div>
 </mat-card>

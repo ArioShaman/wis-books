@@ -1,56 +1,11 @@
-<div class="body">
-  
-  <mat-sidenav-container>
-    
-    <mat-sidenav #sidenav>
-      <div class="side-cont">
-        <mat-list>
-          <a  routerLink="books" 
-              routerLinkActive="active"
-              mat-list-item
-              (click)="sidenav.toggle()"
-              matRipple>
-            Books
-          </a>
-          <a  routerLink="genres"
-              routerLinkActive="active"
-              mat-list-item
-              (click)="sidenav.toggle()"
-              matRipple>
-            Genres
-          </a>
-          <a  routerLink="authors" 
-              routerLinkActive="active"
-              mat-list-item
-              (click)="sidenav.toggle()"
-              matRipple>
-            Authors
-          </a>
-        </mat-list>
-        
-        <mat-form-field class="select" 
-        *ngIf="(appearences$ | async) as resultAppearences">
-          <mat-label>Choose an appearence</mat-label>
-  
-          <mat-select [value]="activeAppearence"
-                      (selectionChange)="setActiveAppearence($event)">
-            <mat-option *ngFor="let appearence of resultAppearences"
-                        [value]="appearence">
-            {{ appearence }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </mat-sidenav>
-  
-    <mat-sidenav-content>
-      <mat-icon aria-hidden="false"
-                (click)="sidenav.toggle()">
-        menu
-      </mat-icon>
-      <div class="grid">
-        <router-outlet></router-outlet>
-      </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+<div class="navbar">
+    <div class="links">
+        <a routerLink="books" routerLinkActive="active">Books</a>
+        <a routerLink="genres" routerLinkActive="active">Genres</a>
+        <a routerLink="authors" routerLinkActive="active">Authors</a>
+    </div>
+</div>
+
+<div class="grid">
+    <router-outlet></router-outlet>
 </div>
