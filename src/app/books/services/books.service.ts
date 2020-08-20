@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
+import { Book } from '../models/book.model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,8 +18,13 @@ export class BooksService {
     private http: HttpClient,
   ) { }
 
-  public geBooks(): Observable<any> {
-    return this.http.get(this.API_URL + '/books');
+  public getBooks(): Observable<any> {
+    return this.http.get(this.API_URL + '/books')
+      .pipe(
+        map((res: any) => {
+          return Book.newCollection(Book, res.books);
+        }),
+      );
   }
 
 }

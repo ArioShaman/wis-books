@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AppRoutingModule } from '../app-routing.module';
 
 import { AuthorsService } from './services/authors.service';
+import { GenresService } from './services/genres.service';
 
 @NgModule({
   declarations: [],
@@ -29,6 +30,7 @@ import { AuthorsService } from './services/authors.service';
   ],
   providers: [
     AuthorsService,
+    GenresService,
   ],
 })
 export class CoreModule { }

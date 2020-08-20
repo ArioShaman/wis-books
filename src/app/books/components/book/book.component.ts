@@ -1,28 +1,33 @@
-import { Component, OnInit, Input } from '@angular/core';
-
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  ChangeDetectionStrategy,
+  EventEmitter,
+} from '@angular/core';
 
 import { Book } from '../../models/book.model';
-import { AuthorsService } from '../../../core/services/authors.service';
-
+import { Genre } from '../../../genres/models/genre.model';
 
 @Component({
   selector: 'book',
   templateUrl: './book.component.html',
   styleUrls: ['./book.component.sass'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookComponent implements OnInit {
 
   @Input('book') public book: Book;
+  @Output('genreFilter') private genreFilter = new EventEmitter<Genre>();
 
-  private destroy$ = new Subject<void>();
-
-  constructor(
-  private authorService: AuthorsService,
-  ) { }
+  constructor() { }
 
   public ngOnInit(): void {}
+
+  public filterByGenre(genre: Genre): void {
+    this.genreFilter.emit(genre);
+  }
 
 }
 
