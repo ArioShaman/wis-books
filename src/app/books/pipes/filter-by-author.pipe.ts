@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
+import { Author } from '../../authors/models/author.model';
 import { Book } from '../models/book.model';
 
 @Pipe({
@@ -12,7 +13,7 @@ export class FilterByAuthorPipe implements PipeTransform {
       return books;
     }
 
-    return books.filter((book) => book.authorId === authorId);
+    return books.filter(book => book.authorId === authorId);
   }
 
 }
