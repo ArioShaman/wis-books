@@ -1,9 +1,8 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { Author } from '../../../authors/models/author.model';
 import { Book } from '../../models/book.model';
 import { AuthorsService } from '../../../core/services/authors.service';
 
@@ -13,10 +12,9 @@ import { AuthorsService } from '../../../core/services/authors.service';
   templateUrl: './book.component.html',
   styleUrls: ['./book.component.sass'],
 })
-export class BookComponent implements OnInit, OnDestroy {
+export class BookComponent implements OnInit {
 
   @Input('book') public book: Book;
-  public author = new Author();
 
   private destroy$ = new Subject<void>();
 
@@ -24,24 +22,7 @@ export class BookComponent implements OnInit, OnDestroy {
   private authorService: AuthorsService,
   ) { }
 
-  public ngOnInit(): void {
-    console.log(this.book);
-    this.authorService
-      .getAuthorById(this.book.id)
-      .pipe(
-        takeUntil(this.destroy$),
-      )
-      .subscribe(
-        (res) => {
-          this.author._fromJSON(res);
-        },
-      );
-  }
-
-  public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
+  public ngOnInit(): void {}
 
 }
 
