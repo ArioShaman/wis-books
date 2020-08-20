@@ -5,13 +5,12 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
-import { Author } from '../../authors/models/author.model';
-
+import { Genre } from '../../genres/models/genre.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthorsService {
+export class GenresService {
 
   protected API_URL: string = environment.hosts.api_host;
 
@@ -19,22 +18,17 @@ export class AuthorsService {
     private http: HttpClient,
   ) { }
 
-  public getAllAuthors(): Observable<Author[]> {
+  public getAllGenres(): Observable<Genre[]> {
     return this.http.get(
-      this.API_URL + '/authors',
+      this.API_URL + '/genres',
       {
-        params: new HttpParams().set('limit', '25'),
+        params: new HttpParams().set('limit', '30'),
       },
     ).pipe(
       map((res: any) => {
-        return Author.newCollection(Author, res.authors);
+        return Genre.newCollection(Genre, res.genres);
       }),
     );
   }
 
-  public getAuthorById(id: number): Observable<any> {
-    return this.http.get(this.API_URL + `/authors/${id}`);
-  }
-
 }
-
