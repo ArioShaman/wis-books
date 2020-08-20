@@ -13,6 +13,7 @@ import { BooksComponent } from './views/books/books.component';
 import { BooksListComponent } from './containers/books-list/books-list.component';
 import { BookComponent } from './components/book/book.component';
 import { FilterByAuthorPipe } from './pipes/filter-by-author.pipe';
+import { FilterByGenrePipe } from './pipes/filter-by-genre.pipe';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { FilterByAuthorPipe } from './pipes/filter-by-author.pipe';
     BooksListComponent,
     BookComponent,
     FilterByAuthorPipe,
+    FilterByGenrePipe,
   ],
   providers: [
     BooksService,
