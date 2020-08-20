@@ -10,8 +10,8 @@
             </mat-card-content>
             <mat-card-content>
                 <div class="flex-cont">
-                    <div class="author"*ngIf="author">
-                        {{ author.firstName }} {{ author.lastName }}
+                    <div class="author">
+                        {{ book.authorId }}
                     </div>
                     <div class="price">
                         {{ book.price | currency : 'USD' : 'symbol' : '1.0-0' }}

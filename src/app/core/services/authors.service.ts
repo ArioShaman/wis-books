@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { Author } from '../../authors/models/author.model';
 import { environment } from '../../../environments/environment';
 
 
@@ -17,6 +16,15 @@ export class AuthorsService {
   constructor(
     private http: HttpClient,
   ) { }
+
+  public getAllAuthors(): Observable<any> {
+    return this.http.get(
+      this.API_URL + '/authors',
+      {
+        params: new HttpParams().set('limit', '25'),
+      },
+    );
+  }
 
   public getAuthorById(id: number): Observable<any> {
     return this.http.get(this.API_URL + `/authors/${id}`);

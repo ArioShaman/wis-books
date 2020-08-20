@@ -1,11 +1,44 @@
-<div class="navbar">
-    <div class="links">
-        <a routerLink="books" routerLinkActive="active">Books</a>
-        <a routerLink="genres" routerLinkActive="active">Genres</a>
-        <a routerLink="authors" routerLinkActive="active">Authors</a>
-    </div>
-</div>
-
-<div class="grid">
-    <router-outlet></router-outlet>
+<div class="body">
+    <mat-sidenav-container>
+        <mat-sidenav #sidenav>
+            <div class="links">
+                <a 
+                    routerLink="books" 
+                    routerLinkActive="active"
+                    mat-flat-button
+                    (click)="sidenav.toggle()"
+                >
+                    Books
+                </a>
+                <a 
+                    routerLink="genres"
+                    routerLinkActive="active"
+                    mat-flat-button
+                    (click)="sidenav.toggle()"
+                >
+                    Genres
+                </a>
+                <a 
+                    routerLink="authors" 
+                    routerLinkActive="active"
+                    mat-flat-button
+                    (click)="sidenav.toggle()"
+                >
+                    Authors
+                </a>
+            </div>
+        </mat-sidenav>
+    
+        <mat-sidenav-content>
+            <mat-icon
+                aria-hidden="false"
+                (click)="sidenav.toggle()"
+            >
+                menu
+            </mat-icon>
+            <div class="grid">
+                <router-outlet></router-outlet>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
 </div>
