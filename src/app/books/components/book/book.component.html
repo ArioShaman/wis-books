@@ -26,8 +26,8 @@
     
     <div class="genres">
       <div class="genre" 
-        *ngFor="let genre of book.genres"
-        (click)="filterByGenre(genre)">
+           *ngFor="let genre of book.genres"
+           (click)="filterByGenre(genre)">
         {{ genre.name }}
       </div>
     </div>

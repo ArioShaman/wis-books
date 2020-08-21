@@ -6,7 +6,9 @@ import { AuthorsComponent } from './views/authors/authors.component';
 
 
 @NgModule({
-  declarations: [AuthorsComponent],
+  declarations: [
+    AuthorsComponent,
+  ],
   imports: [
     CommonModule,
     AuthorsRoutingModule,

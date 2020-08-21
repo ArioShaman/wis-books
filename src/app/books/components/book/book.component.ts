@@ -21,8 +21,6 @@ export class BookComponent implements OnInit {
   @Input('book') public book: Book;
   @Output('genreFilter') private genreFilter = new EventEmitter<Genre>();
 
-  constructor() { }
-
   public ngOnInit(): void {}
 
   public filterByGenre(genre: Genre): void {

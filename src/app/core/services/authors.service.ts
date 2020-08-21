@@ -4,42 +4,37 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { environment } from '../../../environments/environment';
 import { Author } from '../../authors/models/author.model';
 
+interface IResponse {
+  authors: Author[];
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthorsService {
 
-  protected API_URL: string = environment.hosts.api_host;
-
   constructor(
     private http: HttpClient,
   ) { }
 
   public getAllAuthors(): Observable<Author[]> {
-    return this.http.get(
-      this.API_URL + '/authors',
-      {
-        params: new HttpParams().set('limit', '25'),
-      },
-    ).pipe(
-      map((res: any) => {
-        return Author.newCollection(Author, res.authors);
-      }),
-    );
+    const params = {
+      params: new HttpParams().set('limit', '25'),
+    };
+
+    return this.http.get<IResponse>('/authors', params)
+      .pipe(
+        map((res) => Author.newCollection(Author, res.authors)),
+      );
   }
 
   public getAuthorById(id: number): Observable<Author> {
-    return this.http.get(
-      this.API_URL + `/authors/${id}`,
-    ).pipe(
-      map((res: any) => {
-        return Author.new(Author, res);
-      }),
-    );
+    return this.http.get(`/authors/${id}`)
+      .pipe(
+        map(res => Author.new(Author, res)),
+      );
   }
 
 }
