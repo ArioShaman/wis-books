@@ -39,8 +39,9 @@
     </button>
 </div>
 
-<ng-container *ngIf="(books | filterByAuthor:selectedAuthorId | filterByGenre:selectedGenreId ) as resultBooks; else elseBlock">
-  <div class="container">
+<ng-container *ngIf="(books | filterByAuthor:selectedAuthorId | filterByGenre:selectedGenreId ) as resultBooks">
+  <div class="container" 
+    *ngIf="books.length > 0 ; else elseBlock">
     <book [book]="book"
       (genreFilter)="selectGenre($event)"
       *ngFor="let book of resultBooks">
