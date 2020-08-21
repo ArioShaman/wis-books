@@ -17,10 +17,10 @@ export class DomainInterceptor implements HttpInterceptor {
 
   public intercept(
     req: HttpRequest<unknown>,
-    next: HttpHandler
+    next: HttpHandler,
   ): Observable<HttpEvent<unknown>> {
     const apiReq = req.clone({
-      url: `/api${req.url}`
+      url: `${this.API_URL}/api${req.url}`,
     });
 
     return next.handle(apiReq);

@@ -7,11 +7,11 @@ import { AuthorsComponent } from './views/authors/authors.component';
 
 @NgModule({
   declarations: [
-    AuthorsComponent
+    AuthorsComponent,
   ],
   imports: [
     CommonModule,
-    AuthorsRoutingModule
-  ]
+    AuthorsRoutingModule,
+  ],
 })
 export class AuthorsModule { }
