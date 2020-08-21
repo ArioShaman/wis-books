@@ -22,7 +22,7 @@ import { DomainInterceptor } from './interceptors/domain.interceptor';
     MatButtonModule,
     MatIconModule,
 
-    AppRoutingModule,
+    AppRoutingModule
   ],
   exports: [
     HttpClientModule,
@@ -32,7 +32,7 @@ import { DomainInterceptor } from './interceptors/domain.interceptor';
     MatButtonModule,
     MatIconModule,
 
-    AppRoutingModule,
+    AppRoutingModule
   ],
   providers: [
     AuthorsService,
@@ -40,8 +40,9 @@ import { DomainInterceptor } from './interceptors/domain.interceptor';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: DomainInterceptor,
-      multi: true,
-    },
-  ],
+      multi: true
+    }
+  ]
 })
+
 export class CoreModule { }

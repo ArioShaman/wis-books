@@ -4,7 +4,7 @@ import {
   Input,
   Output,
   ChangeDetectionStrategy,
-  EventEmitter,
+  EventEmitter
 } from '@angular/core';
 
 import { Book } from '../../models/book.model';
@@ -14,7 +14,7 @@ import { Genre } from '../../../genres/models/genre.model';
   selector: 'book',
   templateUrl: './book.component.html',
   styleUrls: ['./book.component.sass'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BookComponent implements OnInit {
 
