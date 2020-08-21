@@ -1,13 +1,17 @@
 <mat-card fxLayoutAlign="start stretch">
   <div class="container">
     <div class="pad-cont">
+      
       <div class="img"></div>
+
       <mat-card-title>
         {{ book.title }}
       </mat-card-title>
+      
       <mat-card-content class="content">
         {{ book.description }}
       </mat-card-content>
+      
       <mat-card-content>
         <div class="flex-cont">
           <div class="author">
@@ -19,6 +23,7 @@
         </div>
       </mat-card-content>
     </div>
+    
     <div class="genres">
       <div class="genre" 
         *ngFor="let genre of book.genres"
@@ -26,5 +31,6 @@
         {{ genre.name }}
       </div>
     </div>
+  
   </div>
 </mat-card>
