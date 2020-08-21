@@ -13,7 +13,7 @@ import { Genre } from '../../../genres/models/genre.model';
 @Component({
   selector: 'books-list',
   templateUrl: './books-list.component.html',
-  styleUrls: ['./books-list.component.sass'],
+  styleUrls: ['./books-list.component.sass']
 })
 export class BooksListComponent implements OnInit, OnDestroy {
 
@@ -21,7 +21,7 @@ export class BooksListComponent implements OnInit, OnDestroy {
   public genres$: Observable<Genre[]>;
 
   public books: Book[] = [];
-  public shadowBooks: Object[] = new Array(6);
+  public shadowBooks = new Array(6);
 
   public searchText: string;
 
@@ -33,7 +33,7 @@ export class BooksListComponent implements OnInit, OnDestroy {
   constructor(
     private booksService: BooksService,
     private authorsService: AuthorsService,
-    private genresService: GenresService,
+    private genresService: GenresService
   ) {}
 
   public ngOnInit(): void {
@@ -61,7 +61,7 @@ export class BooksListComponent implements OnInit, OnDestroy {
     this.booksService.getBooks()
       .pipe(
         delay(1000),
-        takeUntil(this.destroy$),
+        takeUntil(this.destroy$)
       )
       .subscribe(
         (res) => {
@@ -84,7 +84,6 @@ export class BooksListComponent implements OnInit, OnDestroy {
   }
 
   public search(searchValue: string): void {
-    console.log(searchValue);
   }
 
 }

@@ -11,22 +11,22 @@ interface IResponse {
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class GenresService {
 
   constructor(
-    private http: HttpClient,
+    private readonly http: HttpClient
   ) { }
 
   public getAllGenres(): Observable<Genre[]> {
     const params = {
-      params: new HttpParams().set('limit', '30'),
+      params: new HttpParams().set('limit', '30')
     };
 
     return this.http.get<IResponse>('/genres', params)
       .pipe(
-        map(res => Genre.newCollection(Genre, res.genres)),
+        map(res => Genre.newCollection(Genre, res.genres))
       );
   }
 

@@ -1,7 +1,6 @@
 import { Alias, Model } from 'tsmodels';
 
 import { Genre } from '../../genres/models/genre.model';
-import { Preview } from '../../../lib/models/preview.model';
 
 export class Book extends Model {
 
@@ -10,7 +9,7 @@ export class Book extends Model {
   @Alias() public title: string;
   @Alias() public price: number;
   @Alias() public genres: Genre[];
-  @Alias() public previews: Preview[];
+  @Alias() public previews: [];
   @Alias() public image: string;
 
   @Alias('author_id') public authorId: number;

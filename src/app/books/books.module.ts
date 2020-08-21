@@ -21,10 +21,10 @@ import { FilterByGenrePipe } from './pipes/filter-by-genre.pipe';
     BooksListComponent,
     BookComponent,
     FilterByAuthorPipe,
-    FilterByGenrePipe,
+    FilterByGenrePipe
   ],
   providers: [
-    BooksService,
+    BooksService
   ],
   imports: [
     CommonModule,
@@ -34,7 +34,7 @@ import { FilterByGenrePipe } from './pipes/filter-by-genre.pipe';
     MatSelectModule,
     MatButtonModule,
 
-    BooksRoutingModule,
-  ],
+    BooksRoutingModule
+  ]
 })
 export class BooksModule { }
