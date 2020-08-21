@@ -339,18 +339,7 @@
       true,
       "always"
     ],
-    "trailing-comma": [
-      true,
-      {
-        "esSpecCompliant": true,
-        "multiline": {
-          "arrays": "always",
-          "functions": "always",
-          "objects": "always",
-          "typeLiterals": "ignore"
-        }
-      }
-    ],
+    "trailing-comma": false,
     "whitespace": [
       true,
       "check-branch",
@@ -363,7 +352,6 @@
       "check-type-operator",
       "check-preblock"
     ],
-    // tslint-microsoft-contrib
     "chai-prefer-contains-to-index-of": true,
     "chai-vague-errors": true,
     "export-name": false,
@@ -417,7 +405,6 @@
     "promise-must-complete": true,
     "use-named-parameter": true,
     "void-zero": true,
-    // tslint-eslint-rules
     "no-constant-condition": true,
     "no-control-regex": true,
     "no-empty-character-class": true,
@@ -556,7 +543,6 @@
     "rxjs-prefer-angular-takeuntil": true,
     "rxjs-prefer-observer": true,
     "rxjs-suffix-subjects": false,
-    // codelizer
     "contextual-decorator": true,
     "contextual-lifecycle": true,
     "no-attribute-decorator": false,

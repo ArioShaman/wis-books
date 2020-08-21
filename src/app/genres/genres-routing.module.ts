@@ -6,16 +6,16 @@ import { GenresComponent } from './views/genres/genres.component';
 const routes: Routes = [
   {
     path: '',
-    component: GenresComponent,
-  },
+    component: GenresComponent
+  }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes),
+    RouterModule.forChild(routes)
   ],
   exports: [
-    RouterModule,
-  ],
+    RouterModule
+  ]
 })
 export class GenresRoutingModule { }

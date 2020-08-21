@@ -6,16 +6,16 @@ import { AuthorsComponent } from './views/authors/authors.component';
 const routes: Routes = [
   {
     path: '',
-    component: AuthorsComponent,
-  },
+    component: AuthorsComponent
+  }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes),
+    RouterModule.forChild(routes)
   ],
   exports: [
-    RouterModule,
-  ],
+    RouterModule
+  ]
 })
 export class AuthorsRoutingModule { }

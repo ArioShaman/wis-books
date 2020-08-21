@@ -7,12 +7,12 @@ import { map } from 'rxjs/operators';
 import { Book } from '../models/book.model';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class BooksService {
 
   constructor(
-    private http: HttpClient,
+    private readonly http: HttpClient
   ) { }
 
   public getBooks(): Observable<Book[]> {

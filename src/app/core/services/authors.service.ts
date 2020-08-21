@@ -11,29 +11,29 @@ interface IResponse {
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthorsService {
 
   constructor(
-    private http: HttpClient,
+    private readonly http: HttpClient
   ) { }
 
   public getAllAuthors(): Observable<Author[]> {
     const params = {
-      params: new HttpParams().set('limit', '25'),
+      params: new HttpParams().set('limit', '25')
     };
 
     return this.http.get<IResponse>('/authors', params)
       .pipe(
-        map((res) => Author.newCollection(Author, res.authors)),
+        map((res) => Author.newCollection(Author, res.authors))
       );
   }
 
   public getAuthorById(id: number): Observable<Author> {
     return this.http.get(`/authors/${id}`)
       .pipe(
-        map(res => Author.new(Author, res)),
+        map(res => Author.new(Author, res))
       );
   }
 
