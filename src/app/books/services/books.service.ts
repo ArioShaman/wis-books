@@ -18,7 +18,7 @@ export class BooksService {
     private http: HttpClient,
   ) { }
 
-  public getBooks(): Observable<any> {
+  public getBooks(): Observable<Book[]> {
     return this.http.get(this.API_URL + '/books')
       .pipe(
         map((res: any) => {

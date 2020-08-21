@@ -32,8 +32,14 @@ export class AuthorsService {
     );
   }
 
-  public getAuthorById(id: number): Observable<any> {
-    return this.http.get(this.API_URL + `/authors/${id}`);
+  public getAuthorById(id: number): Observable<Author> {
+    return this.http.get(
+      this.API_URL + `/authors/${id}`,
+    ).pipe(
+      map((res: any) => {
+        return Author.new(Author, res);
+      }),
+    );
   }
 
 }

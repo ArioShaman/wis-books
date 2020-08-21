@@ -19,10 +19,12 @@ export class BooksListComponent implements OnInit, OnDestroy {
 
   public authors$: Observable<Author[]>;
   public genres$: Observable<Genre[]>;
-  public books: Book[] = [];
 
+  public books: Book[] = [];
   public shadowBooks: Object[] = new Array(6);
+
   public searchText: string;
+
   public selectedAuthorId: number;
   public selectedGenreId: number;
 
