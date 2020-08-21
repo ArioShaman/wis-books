@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Subject, Observable } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, delay } from 'rxjs/operators';
 
 import { BooksService } from '../../services/books.service';
 import { AuthorsService } from '../../../core/services/authors.service';
@@ -58,6 +58,7 @@ export class BooksListComponent implements OnInit, OnDestroy {
   public getBooks(): void {
     this.booksService.getBooks()
       .pipe(
+        delay(1000),
         takeUntil(this.destroy$),
       )
       .subscribe(
