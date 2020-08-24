@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
@@ -47,6 +47,7 @@ import { SearchTextPipe } from './pipes/search-text.pipe';
     MatPaginatorModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    ReactiveFormsModule,
 
     BooksRoutingModule
   ]

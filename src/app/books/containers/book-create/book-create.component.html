@@ -4,80 +4,144 @@
             (click)="close()">
       close
   </mat-icon>
-  <form class="body">
+  <form class="body"
+        [formGroup]="bookForm"
+        (ngSubmit)="onSubmit(bookForm.value)">
     <h1>Create book</h1>
     
+    <!-- Title -->
     <mat-form-field appearance="fill" class="input">
       <mat-label>1. Title</mat-label>
       <input  matInput
-              placeholder="Enter a title">
+              placeholder="Enter a title"
+              formControlName="title"
+              required>
     </mat-form-field>  
     
+    <div *ngIf="bookForm.get('title').hasError('required') && 
+                bookForm.get('title').touched"
+                class="error">
+      Oops, title is required!
+    </div>
+
+    <!-- Description -->
     <mat-form-field appearance="fill">
       <mat-label>2. Description</mat-label>
       <textarea matInput
                 placeholder="Enter a title"
+                formControlName="description"
+                required
       ></textarea>
     </mat-form-field>
+    <div *ngIf="bookForm.get('description').hasError('required')&& 
+                bookForm.get('description').touched"
+                class="error">
+      Oops, Description is required!
+    </div>
 
     <div class="flex-line">
       <div class="half-group">
+        <!-- Author -->
         <mat-form-field class="select" 
         appearance="fill"
         *ngIf="(authors$ | async) as resultAuthors">
           <mat-label>3. Choose an Author</mat-label>
 
-          <mat-select>
-            <mat-option [value]="author.id"
+          <mat-select formControlName="author"
+                      required>
+            <mat-option [value]="author"
                     *ngFor="let author of resultAuthors">
             {{ author.firstName }} {{ author.lastName }}
             </mat-option>
           </mat-select>
 
         </mat-form-field>
+        <div *ngIf="bookForm.get('author').hasError('required')&& 
+                    bookForm.get('author').touched"
+                    class="error">
+          Oops, Author is required!
+        </div>
       </div>
       <div class="half-group">
+        <!-- Genre -->
         <mat-form-field class="select" 
                 appearance="fill"
                 *ngIf="(genres$ | async) as resultGenres">
 
           <mat-label>4. Choose a genres</mat-label>
-          <mat-select multiple>
+          <mat-select multiple formControlName="genres"
+                      required>
             <mat-option *ngFor="let genre of resultGenres"
-                    [value]="genre.id">
+                    [value]="genre">
             {{ genre.name }}
             </mat-option>
           </mat-select>
         </mat-form-field>        
+        <div *ngIf="bookForm.get('genres').hasError('required')&& 
+                    bookForm.get('genres').touched"
+                    class="error">
+          Oops, Genres is required!
+        </div>
       </div>
     </div>
-    
     <div class="flex-line">
       <div class="half-group">
+        <!-- Writing Date -->
         <mat-form-field appearance="fill">
           <mat-label>5. Writing date</mat-label>
-          <input matInput [matDatepicker]="picker" placeholder="Enter a release date">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
+          <input matInput
+                required 
+                [matDatepicker]="writingPicker" 
+                placeholder="Enter a release date"
+                formControlName="writingDate">
+          <mat-datepicker-toggle matSuffix [for]="writingPicker"></mat-datepicker-toggle>
+          <mat-datepicker #writingPicker></mat-datepicker>
         </mat-form-field>
+        <div *ngIf="bookForm.get('writingDate').hasError('required')&& 
+                    bookForm.get('writingDate').touched"
+                    class="error">
+          Oops, Writing date is required!
+        </div>
+        <div *ngIf="bookForm.get('writingDate').hasError('pattern')&& 
+                    bookForm.get('writingDate').touched"
+                    class="error">
+          Oops, Writing date is not valid
+        </div>
       </div>
       <div class="half-group">
+        <!-- Release date -->
         <mat-form-field appearance="fill">
           <mat-label>6. Release date</mat-label>
-          <input matInput [matDatepicker]="picker" placeholder="Enter a release date">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
+          <input matInput 
+                required
+                [matDatepicker]="releasePicker" 
+                placeholder="Enter a release date"
+                formControlName="releaseDate">
+          <mat-datepicker-toggle matSuffix [for]="releasePicker"></mat-datepicker-toggle>
+          <mat-datepicker #releasePicker></mat-datepicker>
         </mat-form-field>
+        <div *ngIf="bookForm.get('releaseDate').hasError('required')&& 
+                    bookForm.get('releaseDate').touched"
+                    class="error">
+          Oops, Release date is required!
+        </div>
       </div>
     </div>
     <div class="flex-line">
       <div class="half-group">
+        <!-- Price -->
         <mat-form-field appearance="fill">
           <mat-label>7. Price</mat-label>
           <input matInput
-                    placeholder="Enter a price"
-          >
+                 required
+                 placeholder="Enter a price"
+                 formControlName="price">
         </mat-form-field>
+        <div *ngIf="bookForm.get('price').hasError('required')&& 
+                    bookForm.get('price').touched"
+                    class="error">
+          Oops, Price  is required!
+        </div>
       </div>
       <div class="half-group">
 
@@ -86,7 +150,8 @@
 
     <button type="submit"
             mat-flat-button
-            color="primary">
+            color="primary"
+            [disabled]="bookForm.invalid">
       Submit data
     </button>
   </form>
