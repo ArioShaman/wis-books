@@ -9,6 +9,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { BooksRoutingModule } from './books-routing.module';
 import { BooksService } from './services/books.service';
@@ -43,6 +45,8 @@ import { SearchTextPipe } from './pipes/search-text.pipe';
     MatButtonModule,
     MatIconModule,
     MatPaginatorModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
 
     BooksRoutingModule
   ]

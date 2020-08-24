@@ -1,8 +1,93 @@
 <div class="container">
-    <mat-icon aria-hidden="false"
-              class="close"
-              (click)="close()">
-        close
-    </mat-icon>
-    <p>book-create works!</p>
+  <mat-icon aria-hidden="false"
+            class="close"
+            (click)="close()">
+      close
+  </mat-icon>
+  <form class="body">
+    <h1>Create book</h1>
+    
+    <mat-form-field appearance="fill" class="input">
+      <mat-label>1. Title</mat-label>
+      <input  matInput
+              placeholder="Enter a title">
+    </mat-form-field>  
+    
+    <mat-form-field appearance="fill">
+      <mat-label>2. Description</mat-label>
+      <textarea matInput
+                placeholder="Enter a title"
+      ></textarea>
+    </mat-form-field>
+
+    <div class="flex-line">
+      <div class="half-group">
+        <mat-form-field class="select" 
+        appearance="fill"
+        *ngIf="(authors$ | async) as resultAuthors">
+          <mat-label>3. Choose an Author</mat-label>
+
+          <mat-select>
+            <mat-option [value]="author.id"
+                    *ngFor="let author of resultAuthors">
+            {{ author.firstName }} {{ author.lastName }}
+            </mat-option>
+          </mat-select>
+
+        </mat-form-field>
+      </div>
+      <div class="half-group">
+        <mat-form-field class="select" 
+                appearance="fill"
+                *ngIf="(genres$ | async) as resultGenres">
+
+          <mat-label>4. Choose a genres</mat-label>
+          <mat-select multiple>
+            <mat-option *ngFor="let genre of resultGenres"
+                    [value]="genre.id">
+            {{ genre.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>        
+      </div>
+    </div>
+    
+    <div class="flex-line">
+      <div class="half-group">
+        <mat-form-field appearance="fill">
+          <mat-label>5. Writing date</mat-label>
+          <input matInput [matDatepicker]="picker" placeholder="Enter a release date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="half-group">
+        <mat-form-field appearance="fill">
+          <mat-label>6. Release date</mat-label>
+          <input matInput [matDatepicker]="picker" placeholder="Enter a release date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="flex-line">
+      <div class="half-group">
+        <mat-form-field appearance="fill">
+          <mat-label>7. Price</mat-label>
+          <input matInput
+                    placeholder="Enter a price"
+          >
+        </mat-form-field>
+      </div>
+      <div class="half-group">
+
+      </div>
+    </div>
+
+    <button type="submit"
+            mat-flat-button
+            color="primary">
+      Submit data
+    </button>
+  </form>
 </div>

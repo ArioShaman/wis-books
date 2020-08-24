@@ -1,46 +1,47 @@
 <div class="flex">
-  <mat-form-field class="input">
+  <mat-form-field appearance="fill" class="input">
+    <mat-label>Enter Search value</mat-label>
     <input type="text" 
            matInput
            placeholder="Enter search value"
            [(ngModel)]="searchText">
-    </mat-form-field>
+  </mat-form-field>
 
-    <mat-form-field class="select" 
-                    appearance="fill"
-                    *ngIf="(authors$ | async) as resultAuthors">
-      <mat-label>Choose an Author</mat-label>
+  <mat-form-field class="select" 
+                  appearance="fill"
+                  *ngIf="(authors$ | async) as resultAuthors">
+    <mat-label>Choose an Author</mat-label>
 
-      <mat-select [ngModel]="selectedAuthorId"
-                  (ngModelChange)="selectAuthor($event)">
-        <mat-option [value]="author.id"
-                    *ngFor="let author of resultAuthors">
-          {{ author.firstName }} {{ author.lastName }}
-        </mat-option>
-      </mat-select>
-      
-    </mat-form-field>
+    <mat-select [ngModel]="selectedAuthorId"
+                (ngModelChange)="selectAuthor($event)">
+      <mat-option [value]="author.id"
+                  *ngFor="let author of resultAuthors">
+        {{ author.firstName }} {{ author.lastName }}
+      </mat-option>
+    </mat-select>
+    
+  </mat-form-field>
 
-    <mat-form-field class="select" 
-                    appearance="fill"
-                    *ngIf="(genres$ | async) as resultGenres">
-      
-      <mat-label>Choose a genre</mat-label>
-      <mat-select [ngModel]="selectedGenreId"
-                  (ngModelChange)="selectGenre($event)">
-        <mat-option *ngFor="let genre of resultGenres"
-                    [value]="genre.id">
-          {{ genre.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+  <mat-form-field class="select" 
+                  appearance="fill"
+                  *ngIf="(genres$ | async) as resultGenres">
+    
+    <mat-label>Choose a genre</mat-label>
+    <mat-select [ngModel]="selectedGenreId"
+                (ngModelChange)="selectGenre($event)">
+      <mat-option *ngFor="let genre of resultGenres"
+                  [value]="genre.id">
+        {{ genre.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
-    <button class="clear" 
-            mat-raised-button
-            *ngIf="selectedAuthorId !== undefined || selectedGenreId !== undefined"
-            (click)="clearFilter()">
-      Clear
-    </button>
+  <button class="clear" 
+          mat-raised-button
+          *ngIf="selectedAuthorId !== undefined || selectedGenreId !== undefined"
+          (click)="clearFilter()">
+    Clear
+  </button>
 </div>
 
 <ng-container *ngIf="(books | filterByAuthor:selectedAuthorId | filterByGenre:selectedGenreId | searchText:searchText ) as resultBooks">
