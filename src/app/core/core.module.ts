@@ -18,21 +18,21 @@ import { DomainInterceptor } from './interceptors/domain.interceptor';
     CommonModule,
     HttpClientModule,
 
+    AppRoutingModule,
+
     MatSidenavModule,
     MatButtonModule,
-    MatIconModule,
-
-    AppRoutingModule
+    MatIconModule
   ],
   exports: [
     HttpClientModule,
     CommonModule,
 
+    AppRoutingModule,
+
     MatSidenavModule,
     MatButtonModule,
-    MatIconModule,
-
-    AppRoutingModule
+    MatIconModule
   ],
   providers: [
     AuthorsService,
