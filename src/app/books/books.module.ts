@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { BooksRoutingModule } from './books-routing.module';
 import { BooksService } from './services/books.service';
@@ -39,6 +40,7 @@ import { BookCreateComponent } from './containers/book-create/book-create.compon
     MatSelectModule,
     MatButtonModule,
     MatIconModule,
+    MatPaginatorModule,
 
     BooksRoutingModule
   ]
