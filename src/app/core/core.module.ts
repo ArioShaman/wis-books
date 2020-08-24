@@ -17,7 +17,6 @@ import { DomainInterceptor } from './interceptors/domain.interceptor';
   imports: [
     CommonModule,
     HttpClientModule,
-
     AppRoutingModule,
 
     MatSidenavModule,
@@ -27,7 +26,6 @@ import { DomainInterceptor } from './interceptors/domain.interceptor';
   exports: [
     HttpClientModule,
     CommonModule,
-
     AppRoutingModule,
 
     MatSidenavModule,
