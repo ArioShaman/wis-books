@@ -47,10 +47,15 @@
 <ng-container *ngIf="(books | filterByAuthor:selectedAuthorId | filterByGenre:selectedGenreId ) as resultBooks">
   <div class="container" 
        *ngIf="books.length > 0 ; else elseBlock">
-    <book *ngFor="let book of resultBooks"
+    <book *ngFor="let book of resultBooks | slice:pageIndex*pageSize:(pageIndex+1)*pageSize"
           [book]="book"
           (genreFilter)="selectGenre($event.id)">
     </book>
+    <mat-paginator [length]="isLoaded ? resultBooks.length : countRecords"
+                   [pageSize]="pageSize"
+                   (page)="pageEvent($event)">
+    </mat-paginator>
+
     <div class="not-found" 
          *ngIf="resultBooks.length === 0">
       Not found
