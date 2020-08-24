@@ -21,7 +21,7 @@ export class BooksComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    // this.openCreateModal();
+    this.openCreateModal();
   }
 
   public ngOnDestroy(): void {
@@ -40,7 +40,7 @@ export class BooksComponent implements OnInit, OnDestroy {
       .subscribe(
         (res) => {
           // call reload books
-          console.log('reload');
+          // console.log('reload');
         }
       );
   }
