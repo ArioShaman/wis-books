@@ -120,9 +120,6 @@ export class BooksListComponent implements OnInit, OnDestroy {
     this.selectedGenreId = genreId;
   }
 
-  public search(searchValue: string): void {
-  }
-
   public pageEvent(event: IPageEvent): void {
     this.pageIndex = event.pageIndex;
   }
