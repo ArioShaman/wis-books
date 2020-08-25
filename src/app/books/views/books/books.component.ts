@@ -21,7 +21,7 @@ export class BooksComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.openCreateModal();
+    // this.openCreateModal();
   }
 
   public ngOnDestroy(): void {

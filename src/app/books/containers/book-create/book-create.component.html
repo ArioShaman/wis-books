@@ -10,7 +10,7 @@
     <h1>Create book</h1>
     
     <!-- Title -->
-    <mat-form-field appearance="fill" class="input">
+    <mat-form-field class="input">
       <mat-label>1. Title</mat-label>
       <input  matInput
               placeholder="Enter a title"
@@ -25,7 +25,7 @@
     
 
     <!-- Description -->
-    <mat-form-field appearance="fill">
+    <mat-form-field>
       <mat-label>2. Description</mat-label>
       <textarea matInput
                 placeholder="Enter a title"
@@ -44,7 +44,6 @@
       <div class="half-group">
         <!-- Author -->
         <mat-form-field class="select" 
-        appearance="fill"
         *ngIf="(authors$ | async) as resultAuthors">
           <mat-label>3. Choose an Author</mat-label>
 
@@ -64,7 +63,7 @@
         </mat-form-field>
 
         <!-- Writing Date -->
-        <mat-form-field appearance="fill">
+        <mat-form-field>
           <mat-label>5. Writing date</mat-label>
           <input matInput
                 required 
@@ -81,7 +80,7 @@
           </mat-error>
         </mat-form-field>
         <!-- Price -->
-        <mat-form-field appearance="fill">
+        <mat-form-field>
           <mat-label>7. Price</mat-label>
           <input matInput
                  required
@@ -97,7 +96,7 @@
       <div class="half-group">
         <!-- Genre -->
         <mat-form-field class="select" 
-                appearance="fill"
+                
                 *ngIf="(genres$ | async) as resultGenres">
 
           <mat-label>4. Choose a genres</mat-label>
@@ -115,7 +114,7 @@
           </mat-error>
         </mat-form-field>        
         <!-- Release date -->
-        <mat-form-field appearance="fill">
+        <mat-form-field>
           <mat-label>6. Release date</mat-label>
           <input matInput 
                 required

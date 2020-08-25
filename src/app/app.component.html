@@ -1,25 +1,41 @@
 <div class="body">
   <mat-sidenav-container>
     <mat-sidenav #sidenav>
-      <div class="links">
-        <a routerLink="books" 
-           routerLinkActive="active"
-           mat-flat-button
-           (click)="sidenav.toggle()">
-          Books
-        </a>
-        <a routerLink="genres"
-           routerLinkActive="active"
-           mat-flat-button
-           (click)="sidenav.toggle()">
-          Genres
-        </a>
-        <a routerLink="authors" 
-           routerLinkActive="active"
-           mat-flat-button
-           (click)="sidenav.toggle()">
-          Authors
-        </a>
+      <div class="side-cont">
+        <div class="links">
+          <a routerLink="books" 
+             routerLinkActive="active"
+             mat-flat-button
+             (click)="sidenav.toggle()">
+            Books
+          </a>
+          <a routerLink="genres"
+             routerLinkActive="active"
+             mat-flat-button
+             (click)="sidenav.toggle()">
+            Genres
+          </a>
+          <a routerLink="authors" 
+             routerLinkActive="active"
+             mat-flat-button
+             (click)="sidenav.toggle()">
+            Authors
+          </a>
+        </div>
+  
+        
+        <mat-form-field class="select" 
+        *ngIf="(appearences$ | async) as resultAppearences">
+          <mat-label>Choose an appearence</mat-label>
+  
+          <mat-select [value]="activeAppearence"
+                      (selectionChange)="setActiveAppearence($event)">
+            <mat-option *ngFor="let appearence of resultAppearences"
+                        [value]="appearence">
+            {{ appearence }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
     </mat-sidenav>
   
