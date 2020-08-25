@@ -15,14 +15,14 @@
       <input  matInput
               placeholder="Enter a title"
               formControlName="title"
-              required>
+              required
+              [errorStateMatcher]="matcher">
+      <mat-error *ngIf="bookForm.get('title').hasError('required') && submited"
+                  class="error">
+        Oops, title is required!
+      </mat-error>
     </mat-form-field>  
     
-    <div *ngIf="bookForm.get('title').hasError('required') && 
-                bookForm.get('title').touched"
-                class="error">
-      Oops, title is required!
-    </div>
 
     <!-- Description -->
     <mat-form-field appearance="fill">
@@ -31,13 +31,14 @@
                 placeholder="Enter a title"
                 formControlName="description"
                 required
+                rows="3"
+                [errorStateMatcher]="matcher"
       ></textarea>
+      <mat-error *ngIf="bookForm.get('description').hasError('required') && submited"
+                  class="error">
+        Oops, Description is required!
+      </mat-error>
     </mat-form-field>
-    <div *ngIf="bookForm.get('description').hasError('required')&& 
-                bookForm.get('description').touched"
-                class="error">
-      Oops, Description is required!
-    </div>
 
     <div class="flex-line">
       <div class="half-group">
@@ -48,19 +49,50 @@
           <mat-label>3. Choose an Author</mat-label>
 
           <mat-select formControlName="author"
-                      required>
+                      required
+                      [errorStateMatcher]="matcher">
             <mat-option [value]="author"
                     *ngFor="let author of resultAuthors">
             {{ author.firstName }} {{ author.lastName }}
             </mat-option>
           </mat-select>
-
+          
+          <mat-error *ngIf="bookForm.get('author').hasError('required') && submited"
+                      class="error">
+            Oops, Author is required!
+          </mat-error>
         </mat-form-field>
-        <div *ngIf="bookForm.get('author').hasError('required')&& 
-                    bookForm.get('author').touched"
-                    class="error">
-          Oops, Author is required!
-        </div>
+
+        <!-- Writing Date -->
+        <mat-form-field appearance="fill">
+          <mat-label>5. Writing date</mat-label>
+          <input matInput
+                required 
+                [matDatepicker]="writingPicker" 
+                placeholder="Enter a release date"
+                formControlName="writingDate"
+                [errorStateMatcher]="matcher">
+          <mat-datepicker-toggle matSuffix [for]="writingPicker"></mat-datepicker-toggle>
+          <mat-datepicker #writingPicker></mat-datepicker>
+          
+          <mat-error *ngIf="bookForm.get('writingDate').hasError('required') && submited"
+                      class="error">
+            Oops, Writing date is required!
+          </mat-error>
+        </mat-form-field>
+        <!-- Price -->
+        <mat-form-field appearance="fill">
+          <mat-label>7. Price</mat-label>
+          <input matInput
+                 required
+                 placeholder="Enter a price"
+                 formControlName="price"
+                 [errorStateMatcher]="matcher">
+          <mat-error *ngIf="bookForm.get('price').hasError('required') && submited"
+                      class="error">
+            Oops, Price  is required!
+          </mat-error>             
+        </mat-form-field>
       </div>
       <div class="half-group">
         <!-- Genre -->
@@ -70,45 +102,18 @@
 
           <mat-label>4. Choose a genres</mat-label>
           <mat-select multiple formControlName="genres"
-                      required>
+                      [errorStateMatcher]="matcher">
             <mat-option *ngFor="let genre of resultGenres"
                     [value]="genre">
             {{ genre.name }}
             </mat-option>
           </mat-select>
+          
+          <mat-error *ngIf="bookForm.get('genres').hasError('required') && submited"
+                      class="error">
+            Oops, Genres is required!
+          </mat-error>
         </mat-form-field>        
-        <div *ngIf="bookForm.get('genres').hasError('required')&& 
-                    bookForm.get('genres').touched"
-                    class="error">
-          Oops, Genres is required!
-        </div>
-      </div>
-    </div>
-    <div class="flex-line">
-      <div class="half-group">
-        <!-- Writing Date -->
-        <mat-form-field appearance="fill">
-          <mat-label>5. Writing date</mat-label>
-          <input matInput
-                required 
-                [matDatepicker]="writingPicker" 
-                placeholder="Enter a release date"
-                formControlName="writingDate">
-          <mat-datepicker-toggle matSuffix [for]="writingPicker"></mat-datepicker-toggle>
-          <mat-datepicker #writingPicker></mat-datepicker>
-        </mat-form-field>
-        <div *ngIf="bookForm.get('writingDate').hasError('required')&& 
-                    bookForm.get('writingDate').touched"
-                    class="error">
-          Oops, Writing date is required!
-        </div>
-        <div *ngIf="bookForm.get('writingDate').hasError('pattern')&& 
-                    bookForm.get('writingDate').touched"
-                    class="error">
-          Oops, Writing date is not valid
-        </div>
-      </div>
-      <div class="half-group">
         <!-- Release date -->
         <mat-form-field appearance="fill">
           <mat-label>6. Release date</mat-label>
@@ -116,42 +121,22 @@
                 required
                 [matDatepicker]="releasePicker" 
                 placeholder="Enter a release date"
-                formControlName="releaseDate">
+                formControlName="releaseDate"
+                [errorStateMatcher]="matcher">
           <mat-datepicker-toggle matSuffix [for]="releasePicker"></mat-datepicker-toggle>
           <mat-datepicker #releasePicker></mat-datepicker>
+          
+          <mat-error *ngIf="bookForm.get('releaseDate').hasError('required') && submited"
+                      class="error">
+            Oops, Release date is required!
+          </mat-error>
         </mat-form-field>
-        <div *ngIf="bookForm.get('releaseDate').hasError('required')&& 
-                    bookForm.get('releaseDate').touched"
-                    class="error">
-          Oops, Release date is required!
-        </div>
-      </div>
-    </div>
-    <div class="flex-line">
-      <div class="half-group">
-        <!-- Price -->
-        <mat-form-field appearance="fill">
-          <mat-label>7. Price</mat-label>
-          <input matInput
-                 required
-                 placeholder="Enter a price"
-                 formControlName="price">
-        </mat-form-field>
-        <div *ngIf="bookForm.get('price').hasError('required')&& 
-                    bookForm.get('price').touched"
-                    class="error">
-          Oops, Price  is required!
-        </div>
-      </div>
-      <div class="half-group">
-
       </div>
     </div>
 
     <button type="submit"
             mat-flat-button
-            color="primary"
-            [disabled]="bookForm.invalid">
+            color="primary">
       Submit data
     </button>
   </form>

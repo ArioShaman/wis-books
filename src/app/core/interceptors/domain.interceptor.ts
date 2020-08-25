@@ -20,7 +20,7 @@ export class DomainInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     const apiReq = req.clone({
-      url: `${this.API_URL}/api${req.url}`
+      url: `/api${req.url}`
     });
 
     return next.handle(apiReq);

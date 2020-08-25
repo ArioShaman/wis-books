@@ -18,28 +18,24 @@ export class BooksService {
   ) { }
 
   public createBook(formData: BookRequest): Observable<Book> {
-
     const body = {
-      body: {
-        title: formData.title,
-        description: formData.description,
-        genres: formData.genres,
-        writing_date: formData.writingDate,
-        release_date: formData.releaseDate,
-        price: formData.price
-      }
+      title: formData.title,
+      description: formData.description,
+      // genres: formData.genres,
+      writing_date: formData.writingDate,
+      release_date: formData.releaseDate,
+      price: formData.price
     };
-    console.log(body);
 
     return this.http.post(
       `/authors/${formData.author.id}/books`,
       body
     ).pipe(
-      map((res: any) => Book.new(Book, res))
+      map((res) => Book.new(Book, res))
     );
   }
 
-  public getBooks(page: number = 1): Observable<BooksResponse> {
+  public getBooks(page: number): Observable<BooksResponse> {
     const params = {
       params: new HttpParams()
       .set('limit', '9')

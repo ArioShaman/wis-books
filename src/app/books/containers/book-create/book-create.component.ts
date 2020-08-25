@@ -1,7 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormGroupDirective,
+  FormControl,
+  NgForm
+} from '@angular/forms';
 
 import { MatDialogRef } from '@angular/material/dialog';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -23,6 +31,16 @@ interface IForm {
   releaseDate: Date;
   price: number;
 }
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+
+  public isErrorState(control: FormControl | null,
+                      form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+
+    return !!(control && control.invalid && (isSubmitted));
+  }
+
+}
 
 @Component({
   selector: 'app-book-create',
@@ -32,6 +50,9 @@ interface IForm {
 export class BookCreateComponent implements OnInit, OnDestroy {
 
   public bookForm: FormGroup;
+  public matcher = new MyErrorStateMatcher();
+
+  public submited: boolean = false;
 
   public authors$: Observable<Author[]>;
   public genres$: Observable<Genre[]>;
@@ -53,7 +74,7 @@ export class BookCreateComponent implements OnInit, OnDestroy {
       title: ['', Validators.required],
       description: ['', Validators.required],
       author: [null, Validators.required],
-      genres: [[], Validators.required],
+      genres: [[]],
       writingDate: [null, Validators.required],
       releaseDate: [null, Validators.required],
       price: ['', Validators.required]
@@ -80,17 +101,19 @@ export class BookCreateComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(cf: IForm): void {
-    console.log(cf);
+    this.submited = true;
 
-    const bookRequest = BookRequest.new(BookRequest, cf);
-    this.booksService.createBook(bookRequest)
-      .pipe(
-        takeUntil(this.destroy$)
-      ).subscribe(
-        (res) => {
-          console.log(res);
-        }
-      );
+    if (!this.bookForm.invalid) {
+      const bookRequest = BookRequest.new(BookRequest, cf);
+      this.booksService.createBook(bookRequest)
+        .pipe(
+          takeUntil(this.destroy$)
+        ).subscribe(
+          (res) => {
+            this.close();
+          }
+        );
+    }
   }
 
 }
