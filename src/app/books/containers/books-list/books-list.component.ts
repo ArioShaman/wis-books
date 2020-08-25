@@ -37,9 +37,7 @@ export class BooksListComponent implements OnInit, OnDestroy {
   public pageSize = 9;
   public pageIndex = 0;
   public countPages = 1;
-  public loadedPages = 0;
   public countRecords = 0;
-  public isLoaded = false;
 
   private destroy$ = new Subject<void>();
 
@@ -70,41 +68,19 @@ export class BooksListComponent implements OnInit, OnDestroy {
       .getAllAuthors();
   }
 
-  public getBooks(): void {
-    this.booksService.getBooks()
+  public getBooks(page: number = 1): void {
+    this.booksService.getBooks(page)
       .pipe(
         delay(1000),
         takeUntil(this.destroy$)
       )
       .subscribe(
         (res) => {
-          this. books = res.books;
+          this.books = res.books;
           this.countRecords = res.meta.records;
           this.countPages = res.meta.pages;
-          this.loadedPages = 1;
-
-          this.backgroundLoadData();
         },
       );
-  }
-
-  public backgroundLoadData(): void {
-    if (this.loadedPages < this.countPages) {
-      this.loadedPages += 1;
-      this.booksService
-        .getBooks(this.loadedPages)
-        .pipe(
-          takeUntil(this.destroy$)
-        )
-        .subscribe(
-          (res) => {
-            this.books = this.books.concat(res.books);
-            this.backgroundLoadData();
-          }
-        );
-    } else {
-      this.isLoaded = true;
-    }
   }
 
   public clearFilter(): void {
@@ -122,6 +98,8 @@ export class BooksListComponent implements OnInit, OnDestroy {
 
   public pageEvent(event: IPageEvent): void {
     this.pageIndex = event.pageIndex;
+    this.books = [];
+    this.getBooks(this.pageIndex + 1);
   }
 
 }
