@@ -2,25 +2,22 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
-  Validators,
-  FormGroupDirective,
-  FormControl,
-  NgForm
+  Validators
 } from '@angular/forms';
 
-import { MatDialogRef } from '@angular/material/dialog';
-import { ErrorStateMatcher } from '@angular/material/core';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-
+import { BookErrorStateMatcher } from '../../../core/matchers/error-state.matcher';
 import { BooksService } from '../../services/books.service';
 import { AuthorsService } from '../../../core/services/authors.service';
 import { GenresService } from '../../../core/services/genres.service';
 import { Author } from '../../../authors/models/author.model';
 import { Genre } from '../../../genres/models/genre.model';
 import { BookRequest } from '../../models/book-request.model';
+import { BookConfirmComponent } from '../../components/book-confirm/book-confirm.component';
 
 interface IForm {
   title: string;
@@ -31,16 +28,7 @@ interface IForm {
   releaseDate: Date;
   price: number;
 }
-export class MyErrorStateMatcher implements ErrorStateMatcher {
 
-  public isErrorState(control: FormControl | null,
-                      form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-
-    return !!(control && control.invalid && (isSubmitted));
-  }
-
-}
 
 @Component({
   selector: 'app-book-create',
@@ -50,7 +38,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class BookCreateComponent implements OnInit, OnDestroy {
 
   public bookForm: FormGroup;
-  public matcher = new MyErrorStateMatcher();
+  public matcher = new BookErrorStateMatcher();
 
   public submited: boolean = false;
 
@@ -60,6 +48,7 @@ export class BookCreateComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   constructor(
+    private dialog: MatDialog,
     private dialogRef: MatDialogRef<BookCreateComponent>,
     private booksService: BooksService,
     private genresService: GenresService,
@@ -68,6 +57,17 @@ export class BookCreateComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
+    this.dialogRef.disableClose = true;
+    this.dialogRef.backdropClick()
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        (res) => {
+          this.close();
+        }
+      );
+
     this.getAuthors();
     this.getGenres();
     this.bookForm = this.fb.group({
@@ -87,7 +87,18 @@ export class BookCreateComponent implements OnInit, OnDestroy {
   }
 
   public close(): void {
-    this.dialogRef.close();
+    const dialogRef = this.dialog.open(BookConfirmComponent);
+
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(this.destroy$)
+      ).subscribe(
+        (res) => {
+          if (res) {
+            this.dialogRef.close();
+          }
+        }
+      );
   }
 
   public getGenres(): void {

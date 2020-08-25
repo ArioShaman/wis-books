@@ -1,6 +1,6 @@
 <div class="flex">
   <div class="inputs-cont">
-    <mat-form-field appearance="fill" class="input">
+    <mat-form-field class="input">
       <mat-label>Enter Search value</mat-label>
       <input type="text" 
              matInput
@@ -8,8 +8,7 @@
              [(ngModel)]="searchText">
     </mat-form-field>
   
-    <mat-form-field class="select" 
-                    appearance="fill"
+    <mat-form-field class="select"
                     *ngIf="(authors$ | async) as resultAuthors">
       <mat-label>Choose an Author</mat-label>
   
@@ -23,8 +22,7 @@
       
     </mat-form-field>
   
-    <mat-form-field class="select" 
-                    appearance="fill"
+    <mat-form-field class="select"
                     *ngIf="(genres$ | async) as resultGenres">
       
       <mat-label>Choose a genre</mat-label>
