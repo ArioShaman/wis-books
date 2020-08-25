@@ -11,7 +11,7 @@
     
     <!-- Title -->
     <mat-form-field class="input">
-      <mat-label>1. Title</mat-label>
+      <mat-label>Title</mat-label>
       <input  matInput
               placeholder="Enter a title"
               formControlName="title"
@@ -26,7 +26,7 @@
 
     <!-- Description -->
     <mat-form-field>
-      <mat-label>2. Description</mat-label>
+      <mat-label>Description</mat-label>
       <textarea matInput
                 placeholder="Enter a title"
                 formControlName="description"
@@ -45,7 +45,7 @@
         <!-- Author -->
         <mat-form-field class="select" 
         *ngIf="(authors$ | async) as resultAuthors">
-          <mat-label>3. Choose an Author</mat-label>
+          <mat-label>Choose an Author</mat-label>
 
           <mat-select formControlName="author"
                       required
@@ -64,7 +64,7 @@
 
         <!-- Writing Date -->
         <mat-form-field>
-          <mat-label>5. Writing date</mat-label>
+          <mat-label>Writing date</mat-label>
           <input matInput
                 required 
                 [matDatepicker]="writingPicker" 
@@ -81,7 +81,7 @@
         </mat-form-field>
         <!-- Price -->
         <mat-form-field>
-          <mat-label>7. Price</mat-label>
+          <mat-label>Price</mat-label>
           <input matInput
                  required
                  placeholder="Enter a price"
@@ -99,7 +99,7 @@
                 
                 *ngIf="(genres$ | async) as resultGenres">
 
-          <mat-label>4. Choose a genres</mat-label>
+          <mat-label>Choose a genres</mat-label>
           <mat-select multiple formControlName="genres"
                       [errorStateMatcher]="matcher">
             <mat-option *ngFor="let genre of resultGenres"
@@ -115,7 +115,7 @@
         </mat-form-field>        
         <!-- Release date -->
         <mat-form-field>
-          <mat-label>6. Release date</mat-label>
+          <mat-label>Release date</mat-label>
           <input matInput 
                 required
                 [matDatepicker]="releasePicker" 
@@ -136,7 +136,7 @@
     <button type="submit"
             mat-flat-button
             color="primary">
-      Submit data
+      Create
     </button>
   </form>
 </div>

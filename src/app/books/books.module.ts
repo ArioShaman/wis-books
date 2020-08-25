@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { BooksRoutingModule } from './books-routing.module';
 import { BooksService } from './services/books.service';
@@ -49,6 +50,8 @@ import { BookConfirmComponent } from './components/book-confirm/book-confirm.com
     MatPaginatorModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    MatSnackBarModule,
+
     ReactiveFormsModule,
 
     BooksRoutingModule

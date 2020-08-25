@@ -6,6 +6,7 @@ import {
 } from '@angular/forms';
 
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -41,6 +42,7 @@ export class BookCreateComponent implements OnInit, OnDestroy {
   public matcher = new BookErrorStateMatcher();
 
   public submited: boolean = false;
+  public created: boolean = false;
 
   public authors$: Observable<Author[]>;
   public genres$: Observable<Genre[]>;
@@ -48,6 +50,7 @@ export class BookCreateComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   constructor(
+    private snack: MatSnackBar,
     private dialog: MatDialog,
     private dialogRef: MatDialogRef<BookCreateComponent>,
     private booksService: BooksService,
@@ -87,18 +90,22 @@ export class BookCreateComponent implements OnInit, OnDestroy {
   }
 
   public close(): void {
-    const dialogRef = this.dialog.open(BookConfirmComponent);
+    if (!this.created) {
+      const dialogRef = this.dialog.open(BookConfirmComponent);
 
-    dialogRef.afterClosed()
-      .pipe(
-        takeUntil(this.destroy$)
-      ).subscribe(
-        (res) => {
-          if (res) {
-            this.dialogRef.close();
+      dialogRef.afterClosed()
+        .pipe(
+          takeUntil(this.destroy$)
+        ).subscribe(
+          (res) => {
+            if (res) {
+              this.dialogRef.close();
+            }
           }
-        }
-      );
+        );
+    } else {
+      this.dialogRef.close();
+    }
   }
 
   public getGenres(): void {
@@ -121,6 +128,12 @@ export class BookCreateComponent implements OnInit, OnDestroy {
           takeUntil(this.destroy$)
         ).subscribe(
           (res) => {
+            this.created = true;
+            this.snack.open('Book created', 'Ok', {
+              duration: 3000,
+              horizontalPosition: 'end',
+              verticalPosition: 'top'
+            });
             this.close();
           }
         );
