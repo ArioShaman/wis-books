@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
-  Validators
+  Validators,
+  ValidatorFn
 } from '@angular/forms';
 
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
@@ -29,7 +30,6 @@ interface IForm {
   releaseDate: Date;
   price: number;
 }
-
 
 @Component({
   selector: 'app-book-create',
@@ -79,14 +79,26 @@ export class BookCreateComponent implements OnInit, OnDestroy {
       author: [null, Validators.required],
       genres: [[]],
       writingDate: [null, Validators.required],
-      releaseDate: [null, Validators.required],
+      releaseDate: [ null, Validators.required],
       price: ['', Validators.required]
+    }, {
+      validators: this.checkDatevalidation
     });
   }
 
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+  public checkDatevalidation: ValidatorFn =
+  (control: FormGroup): null => {
+    const wDate = control.get('writingDate');
+    const rDate = control.get('releaseDate');
+    if (rDate.value < wDate.value) {
+      rDate.setErrors({ invalidDate: true });
+    }
+
+    return null;
   }
 
   public close(): void {
@@ -120,7 +132,7 @@ export class BookCreateComponent implements OnInit, OnDestroy {
 
   public onSubmit(cf: IForm): void {
     this.submited = true;
-
+    console.log(this.bookForm);
     if (!this.bookForm.invalid) {
       const bookRequest = BookRequest.new(BookRequest, cf);
       this.booksService.createBook(bookRequest)

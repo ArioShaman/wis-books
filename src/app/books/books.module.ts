@@ -9,7 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
@@ -36,7 +36,11 @@ import { BookConfirmComponent } from './components/book-confirm/book-confirm.com
     BookConfirmComponent
   ],
   providers: [
-    BooksService
+    BooksService,
+    {
+      provide: MAT_DATE_LOCALE,
+      useValue: 'ru-RU'
+    }
   ],
   imports: [
     CommonModule,

@@ -40,7 +40,6 @@ export class BooksComponent implements OnInit, OnDestroy {
       .subscribe(
         (res) => {
           // call reload books
-          // console.log('reload');
         }
       );
   }
