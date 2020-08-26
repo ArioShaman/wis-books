@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { Book } from '../models/book.model';
 import { BooksResponse } from '../models/books-response.model';
 import { BookRequest } from '../models/book-request.model';
+import { RanSackParams } from '../models/ran-sack-params.model';
 
 @Injectable({
   providedIn: 'root'
@@ -35,11 +36,12 @@ export class BooksService {
     );
   }
 
-  public getBooks(page: number): Observable<BooksResponse> {
+  public getBooks(
+    page: number,
+    ranSackParams: RanSackParams
+  ): Observable<BooksResponse> {
     const params = {
-      params: new HttpParams()
-      .set('limit', '9')
-      .set('page', String(page))
+      params: this.setParams(page, ranSackParams)
     };
 
     return this.http.get('/books', params)
@@ -54,6 +56,42 @@ export class BooksService {
           );
         }),
       );
+  }
+
+  private setParams(page: number, ranSackParams: RanSackParams): HttpParams {
+    let httpParams = new HttpParams()
+      .set('limit', '9')
+      .set('page', String(page));
+
+    Object.keys(ranSackParams).forEach(
+      (key) => {
+        const param = ranSackParams[key];
+
+        switch (key) {
+          case 'authorIds':
+            param.map((id) => {
+              httpParams = httpParams.append('q[author_id_in][]', id);
+            });
+
+            break;
+          case 'genreNames':
+            param.map((name) => {
+              httpParams = httpParams.append('q[genres_name_in][]', name);
+            });
+            break;
+          case 'searchText':
+            if (param) {
+              httpParams = httpParams.append(
+                'q[title_or_description_cont]', param
+              );
+            }
+
+            break;
+        }
+      }
+    );
+
+    return httpParams;
   }
 
 }

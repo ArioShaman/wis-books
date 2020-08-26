@@ -7,6 +7,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { MatListModule } from '@angular/material/list';
 
 import { AppRoutingModule } from '../app-routing.module';
 
@@ -33,7 +34,8 @@ const appearenceFactory = () => {
     MatSelectModule,
     MatSidenavModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatListModule
   ],
   exports: [
     HttpClientModule,
@@ -43,7 +45,8 @@ const appearenceFactory = () => {
     MatSelectModule,
     MatSidenavModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatListModule
   ],
   providers: [
     AuthorsService,

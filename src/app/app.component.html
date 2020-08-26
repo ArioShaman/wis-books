@@ -2,27 +2,26 @@
   <mat-sidenav-container>
     <mat-sidenav #sidenav>
       <div class="side-cont">
-        <div class="links">
+        <mat-list>
           <a routerLink="books" 
-             routerLinkActive="active"
-             mat-flat-button
-             (click)="sidenav.toggle()">
+            routerLinkActive="active"
+            mat-list-item
+            (click)="sidenav.toggle()">
             Books
           </a>
           <a routerLink="genres"
-             routerLinkActive="active"
-             mat-flat-button
-             (click)="sidenav.toggle()">
+            routerLinkActive="active"
+            mat-list-item
+            (click)="sidenav.toggle()">
             Genres
           </a>
           <a routerLink="authors" 
-             routerLinkActive="active"
-             mat-flat-button
-             (click)="sidenav.toggle()">
+              routerLinkActive="active"
+              mat-list-item
+              (click)="sidenav.toggle()">
             Authors
-          </a>
-        </div>
-  
+          </a> 
+        </mat-list>
         
         <mat-form-field class="select" 
         *ngIf="(appearences$ | async) as resultAppearences">
