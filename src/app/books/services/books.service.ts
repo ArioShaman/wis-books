@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { Observable, from, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of, timer } from 'rxjs';
+import { map, debounce } from 'rxjs/operators';
 
 import { Book } from '../models/book.model';
 import { BooksResponse } from '../models/books-response.model';
@@ -46,6 +46,7 @@ export class BooksService {
 
     return this.http.get('/books', params)
       .pipe(
+        debounce(() => timer(1000)),
         map((res: any) => {
           return BooksResponse.new(
             BooksResponse,

@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
+import { MatRippleModule } from '@angular/material/core';
 
 import { AppRoutingModule } from '../app-routing.module';
 
@@ -35,7 +36,8 @@ const appearenceFactory = () => {
     MatSidenavModule,
     MatButtonModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatRippleModule
   ],
   exports: [
     HttpClientModule,
@@ -46,7 +48,8 @@ const appearenceFactory = () => {
     MatSidenavModule,
     MatButtonModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatRippleModule
   ],
   providers: [
     AuthorsService,

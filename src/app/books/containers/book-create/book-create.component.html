@@ -16,6 +16,7 @@
               placeholder="Enter a title"
               formControlName="title"
               required
+              autocomplete="off"
               [errorStateMatcher]="matcher">
       <mat-error *ngIf="bookForm.get('title').hasError('required') && submited"
                   class="error">
@@ -63,14 +64,14 @@
         </mat-form-field>
 
         <!-- Writing Date -->
-        <mat-form-field>
+        <mat-form-field (click)="writingPicker.open()">
           <mat-label>Writing date</mat-label>
-          <input matInput
-                required 
-                disabled
-                [matDatepicker]="writingPicker" 
-                placeholder="Enter a release date"
-                formControlName="writingDate"
+          <input  matInput
+                  autocomplete="off"
+                  required 
+                  [matDatepicker]="writingPicker" 
+                  placeholder="Enter a release date"
+                  formControlName="writingDate"
                 [errorStateMatcher]="matcher">
           <mat-datepicker-toggle matSuffix [for]="writingPicker"></mat-datepicker-toggle>
           <mat-datepicker disabled="false" #writingPicker></mat-datepicker>
@@ -85,6 +86,7 @@
           <mat-label>Price</mat-label>
           <input matInput
                  required
+                 autocomplete="off"
                  type="number"
                  placeholder="Enter a price"
                  formControlName="price"
@@ -115,11 +117,12 @@
           </mat-error>
         </mat-form-field>        
         <!-- Release date -->
-        <mat-form-field>
+        <mat-form-field (click)="releasePicker.open()">
           <mat-label>Release date</mat-label>
-          <input matInput 
+          <input class="unfocus"
+                autocomplete="off" 
+                matInput
                 required
-                disabled
                 [matDatepicker]="releasePicker" 
                 placeholder="Enter a release date"
                 formControlName="releaseDate"
