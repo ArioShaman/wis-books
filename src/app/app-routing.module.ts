@@ -6,26 +6,28 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'books',
+    redirectTo: 'books'
   },
   {
     path: 'books',
-    loadChildren: () => import('./books/books.module').then((m) => m.BooksModule),
+    loadChildren: () => import('./books/books.module').then((m) => m.BooksModule)
   },
   {
     path: 'genres',
-    loadChildren: () => import('./genres/genres.module').then((m) => m.GenresModule),
+    loadChildren: () => import('./genres/genres.module').then((m) => m.GenresModule)
   },
   {
     path: 'authors',
-    loadChildren: () => import('./authors/authors.module').then((m) => m.AuthorsModule),
-  },
+    loadChildren: () => import('./authors/authors.module').then((m) => m.AuthorsModule)
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [
-    RouterModule,
+  imports: [
+    RouterModule.forRoot(routes)
   ],
+  exports: [
+    RouterModule
+  ]
 })
 export class AppRoutingModule { }

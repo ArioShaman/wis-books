@@ -6,10 +6,12 @@ import { GenresComponent } from './views/genres/genres.component';
 
 
 @NgModule({
-  declarations: [GenresComponent],
+  declarations: [
+    GenresComponent
+  ],
   imports: [
     CommonModule,
-    GenresRoutingModule,
-  ],
+    GenresRoutingModule
+  ]
 })
 export class GenresModule { }

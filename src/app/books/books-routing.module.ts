@@ -6,16 +6,16 @@ import { BooksComponent } from './views/books/books.component';
 const routes: Routes = [
   {
     path: '',
-    component: BooksComponent,
-  },
+    component: BooksComponent
+  }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes),
+    RouterModule.forChild(routes)
   ],
   exports: [
-    RouterModule,
-  ],
+    RouterModule
+  ]
 })
 export class BooksRoutingModule { }
