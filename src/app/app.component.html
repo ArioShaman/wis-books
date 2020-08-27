@@ -1,23 +1,25 @@
 <div class="body">
+  
   <mat-sidenav-container>
+    
     <mat-sidenav #sidenav>
       <div class="side-cont">
         <mat-list>
-          <a routerLink="books" 
-            routerLinkActive="active"
-            mat-list-item
-            (click)="sidenav.toggle()"
-            matRipple>
+          <a  routerLink="books" 
+              routerLinkActive="active"
+              mat-list-item
+              (click)="sidenav.toggle()"
+              matRipple>
             Books
           </a>
-          <a routerLink="genres"
-            routerLinkActive="active"
-            mat-list-item
-            (click)="sidenav.toggle()"
-            matRipple>
+          <a  routerLink="genres"
+              routerLinkActive="active"
+              mat-list-item
+              (click)="sidenav.toggle()"
+              matRipple>
             Genres
           </a>
-          <a routerLink="authors" 
+          <a  routerLink="authors" 
               routerLinkActive="active"
               mat-list-item
               (click)="sidenav.toggle()"

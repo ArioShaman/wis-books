@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-
 import { Observable, of } from 'rxjs';
 
 const appearences = [
@@ -36,7 +35,6 @@ export class MatAppearenceService {
       appearance: this.activeAppearence
     };
   }
-
 
   public getActiveAppearance(): string {
     return this.activeAppearence;

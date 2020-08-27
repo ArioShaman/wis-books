@@ -45,6 +45,8 @@ import { BookConfirmComponent } from './components/book-confirm/book-confirm.com
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
+
     MatDialogModule,
     MatCardModule,
     MatInputModule,
@@ -55,8 +57,6 @@ import { BookConfirmComponent } from './components/book-confirm/book-confirm.com
     MatNativeDateModule,
     MatDatepickerModule,
     MatSnackBarModule,
-
-    ReactiveFormsModule,
 
     BooksRoutingModule
   ]

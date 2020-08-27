@@ -2,7 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { MatFormFieldDefaultOptions, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import {
+  MatFormFieldDefaultOptions,
+  MAT_FORM_FIELD_DEFAULT_OPTIONS
+} from '@angular/material/form-field';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,9 +24,7 @@ const appearance: MatFormFieldDefaultOptions = {
   appearance: 'standard'
 };
 
-const appearenceFactory = () => {
-  return new MatAppearenceService();
-};
+const appearenceFactory = () => new MatAppearenceService();
 
 @NgModule({
   declarations: [],
@@ -62,9 +63,10 @@ const appearenceFactory = () => {
     },
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useFactory: (appearanceService: MatAppearenceService) => {
-        return appearanceService.systemAppearence();
-      },
+      useFactory:
+        (
+          appearanceService: MatAppearenceService
+        ) => appearanceService.systemAppearence(),
       deps: [ MatAppearenceService ]
     }
   ]

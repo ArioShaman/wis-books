@@ -4,16 +4,22 @@ mat-card::ng-deep
   opacity: 1px
   animation: showing 1.5s linear
 
+
 @keyframes showing
   0%
     opacity: 0
   100%
     opacity: 1
 
+.title
+  height: 28px
+  overflow: hidden
+
 .container
   width: 300px
   height: 375px
   cursor: pointer
+
   &:hover
     .img
       background: #4982b8
@@ -23,7 +29,9 @@ mat-card::ng-deep
 
   .content
     height: 50px
+    overflow: hidden
     margin-bottom: 6px
+  
   .img
     height: 170px
     width: 270px
@@ -50,6 +58,7 @@ mat-card::ng-deep
   .genres
     display: flex
     flex-wrap: wrap
+
     .genre
       box-sizing: border-box
       padding: 5px
@@ -59,6 +68,7 @@ mat-card::ng-deep
       user-select: none
       margin-left: 12px
       margin-top: 12px
+
       &:hover
         background: #4982b8
         color: white

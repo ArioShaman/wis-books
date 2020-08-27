@@ -18,7 +18,7 @@
               required
               autocomplete="off"
               [errorStateMatcher]="matcher">
-      <mat-error *ngIf="bookForm.get('title').hasError('required') && submited"
+      <mat-error  *ngIf="bookForm.get('title').hasError('required') && submited"
                   class="error">
         Oops, title is required!
       </mat-error>
@@ -35,7 +35,7 @@
                 rows="3"
                 [errorStateMatcher]="matcher"
       ></textarea>
-      <mat-error *ngIf="bookForm.get('description').hasError('required') && submited"
+      <mat-error  *ngIf="bookForm.get('description').hasError('required') && submited"
                   class="error">
         Oops, Description is required!
       </mat-error>
@@ -52,12 +52,12 @@
                       required
                       [errorStateMatcher]="matcher">
             <mat-option [value]="author"
-                    *ngFor="let author of resultAuthors">
+                        *ngFor="let author of resultAuthors">
             {{ author.firstName }} {{ author.lastName }}
             </mat-option>
           </mat-select>
           
-          <mat-error *ngIf="bookForm.get('author').hasError('required') && submited"
+          <mat-error  *ngIf="bookForm.get('author').hasError('required') && submited"
                       class="error">
             Oops, Author is required!
           </mat-error>
@@ -72,11 +72,11 @@
                   [matDatepicker]="writingPicker" 
                   placeholder="Enter a release date"
                   formControlName="writingDate"
-                [errorStateMatcher]="matcher">
+                  [errorStateMatcher]="matcher">
           <mat-datepicker-toggle matSuffix [for]="writingPicker"></mat-datepicker-toggle>
           <mat-datepicker disabled="false" #writingPicker></mat-datepicker>
           
-          <mat-error *ngIf="bookForm.get('writingDate').hasError('required') && submited"
+          <mat-error  *ngIf="bookForm.get('writingDate').hasError('required') && submited"
                       class="error">
             Oops, Writing date is required!
           </mat-error>
@@ -91,7 +91,7 @@
                  placeholder="Enter a price"
                  formControlName="price"
                  [errorStateMatcher]="matcher">
-          <mat-error *ngIf="bookForm.get('price').hasError('required') && submited"
+          <mat-error  *ngIf="bookForm.get('price').hasError('required') && submited"
                       class="error">
             Oops, Price  is required!
           </mat-error>             
@@ -100,18 +100,18 @@
       <div class="half-group">
         <!-- Genre -->
         <mat-form-field class="select" 
-                *ngIf="(genres$ | async) as resultGenres">
+                        *ngIf="(genres$ | async) as resultGenres">
 
           <mat-label>Choose a genres</mat-label>
           <mat-select multiple formControlName="genres"
                       [errorStateMatcher]="matcher">
             <mat-option *ngFor="let genre of resultGenres"
-                    [value]="genre">
+                        [value]="genre">
             {{ genre.name }}
             </mat-option>
           </mat-select>
           
-          <mat-error *ngIf="bookForm.get('genres').hasError('required') && submited"
+          <mat-error  *ngIf="bookForm.get('genres').hasError('required') && submited"
                       class="error">
             Oops, Genres is required!
           </mat-error>
@@ -119,23 +119,23 @@
         <!-- Release date -->
         <mat-form-field (click)="releasePicker.open()">
           <mat-label>Release date</mat-label>
-          <input class="unfocus"
-                autocomplete="off" 
-                matInput
-                required
-                [matDatepicker]="releasePicker" 
-                placeholder="Enter a release date"
-                formControlName="releaseDate"
-                [errorStateMatcher]="matcher">
+          <input  class="unfocus"
+                  autocomplete="off" 
+                  matInput
+                  required
+                  [matDatepicker]="releasePicker" 
+                  placeholder="Enter a release date"
+                  formControlName="releaseDate"
+                  [errorStateMatcher]="matcher">
           <mat-datepicker-toggle matSuffix [for]="releasePicker"></mat-datepicker-toggle>
           <mat-datepicker disabled="false" #releasePicker></mat-datepicker>
           
-          <mat-error *ngIf="bookForm.get('releaseDate').hasError('required') && submited"
-                     class="error">
+          <mat-error  *ngIf="bookForm.get('releaseDate').hasError('required') && submited"
+                      class="error">
             Oops, Release date is required!
           </mat-error>
-          <mat-error *ngIf="bookForm.get('releaseDate').hasError('invalidDate') && submited"
-                     class="error">
+          <mat-error  *ngIf="bookForm.get('releaseDate').hasError('invalidDate') && submited"
+                      class="error">
             Release date should be later than Writing date
           </mat-error>
         </mat-form-field>

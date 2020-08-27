@@ -28,12 +28,12 @@ export class BooksService {
       price: formData.price
     };
 
-    return this.http.post(
-      `/authors/${formData.author.id}/books`,
-      body
-    ).pipe(
-      map((res) => Book.new(Book, res))
-    );
+    const uri = `/authors/${formData.author.id}/books`;
+
+    return this.http.post(uri, body)
+      .pipe(
+        map((res) => Book.new(Book, res))
+      );
   }
 
   public getBooks(
