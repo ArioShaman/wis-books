@@ -44,7 +44,7 @@ export class BooksListComponent implements OnInit, OnDestroy {
   public selectedGenres: string[];
 
   public pageSize = 9;
-  public pageIndex = 0;
+  public pageIndex = 17;
   public countPages = 1;
   public countRecords = 0;
   public loaded: boolean = false;
@@ -131,7 +131,7 @@ export class BooksListComponent implements OnInit, OnDestroy {
       .getAllAuthors();
   }
 
-  public getBooks(page: number = 1): void {
+  public getBooks(page: number = this.pageIndex + 1): void {
     this.loaded = false;
     this.booksService.getBooks(page, this.ranSackParams)
       .pipe(

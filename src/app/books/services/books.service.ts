@@ -18,19 +18,18 @@ export class BooksService {
     private readonly http: HttpClient
   ) { }
 
-  public createBook(formData: BookRequest): Observable<Book> {
-    const body = {
-      title: formData.title,
-      description: formData.description,
-      // genres: formData.genres,
-      writing_date: formData.writingDate,
-      release_date: formData.releaseDate,
-      price: formData.price
-    };
+  public createBook(data: BookRequest): Observable<Book> {
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('description', data.description);
+    formData.append('writing_date', String(data.writingDate));
+    formData.append('release_date', String(data.releaseDate));
+    formData.append('price', String(data.price));
+    formData.append('image', data.image);
 
-    const uri = `/authors/${formData.author.id}/books`;
+    const uri = `/authors/${data.author.id}/books`;
 
-    return this.http.post(uri, body)
+    return this.http.post(uri, formData)
       .pipe(
         map((res) => Book.new(Book, res))
       );

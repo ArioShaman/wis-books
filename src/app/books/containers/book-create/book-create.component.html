@@ -13,6 +13,7 @@
     <mat-form-field class="input">
       <mat-label>Title</mat-label>
       <input  matInput
+              #title
               placeholder="Enter a title"
               formControlName="title"
               required
@@ -70,7 +71,7 @@
                   autocomplete="off"
                   required 
                   [matDatepicker]="writingPicker" 
-                  placeholder="Enter a release date"
+                  placeholder="Enter a writing date"
                   formControlName="writingDate"
                   [errorStateMatcher]="matcher">
           <mat-datepicker-toggle matSuffix [for]="writingPicker"></mat-datepicker-toggle>
@@ -139,6 +140,21 @@
             Release date should be later than Writing date
           </mat-error>
         </mat-form-field>
+
+        
+        <div class="file" matRipple>
+          <input  type="file"
+                  (change)="upload($event.target.files)"
+                  name="file"
+                  accept="image/png, image/jpeg, image/jpg">
+          <div  class="placeholder"
+                [ngClass]="uploaded ? 'uploaded' : ''">
+            {{ uploaded ? 'Uploaded': 'Choose a cover *' }}
+          </div>
+        </div>
+        <div class="error pad-error" *ngIf="!uploaded && submited">
+          Upload cover
+        </div>
       </div>
     </div>
 

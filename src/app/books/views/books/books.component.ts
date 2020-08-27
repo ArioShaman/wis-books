@@ -22,7 +22,9 @@ export class BooksComponent implements OnInit, OnDestroy {
     private dialog: MatDialog
   ) { }
 
-  public ngOnInit(): void { }
+  public ngOnInit(): void {
+    // this.openCreateModal();
+  }
 
   public ngOnDestroy(): void {
     this.destroy$.next();

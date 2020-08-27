@@ -21,8 +21,8 @@ mat-card::ng-deep
   cursor: pointer
 
   &:hover
-    .img
-      background: #4982b8
+    .hover-cover
+      background-color: rgba(0,0,0,0.5)
 
   .pad-cont
     padding: 15px 15px 0px 15px
@@ -32,13 +32,21 @@ mat-card::ng-deep
     overflow: hidden
     margin-bottom: 6px
   
+  .hover-cover
+    height: 100%
+    width: 100%
+    transition: 0.4s
+
   .img
+    position: relative
     height: 170px
     width: 270px
     transition: 0.6s
     box-sizing: border-box
     margin-bottom: 10px
-    background: #9ccfff
+    background-color: #9ccfff
+    background-size: cover
+    background-position: center
 
   .flex-cont
     display: flex
