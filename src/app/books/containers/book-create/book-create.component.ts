@@ -12,14 +12,18 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { BookErrorStateMatcher } from '../../../core/matchers/error-state.matcher';
+import {
+  BookErrorStateMatcher
+} from '../../../core/matchers/error-state.matcher';
 import { BooksService } from '../../services/books.service';
 import { AuthorsService } from '../../../core/services/authors.service';
 import { GenresService } from '../../../core/services/genres.service';
 import { Author } from '../../../authors/models/author.model';
 import { Genre } from '../../../genres/models/genre.model';
 import { BookRequest } from '../../models/book-request.model';
-import { BookConfirmComponent } from '../../components/book-confirm/book-confirm.component';
+import {
+  BookConfirmComponent
+ } from '../../components/book-confirm/book-confirm.component';
 
 interface IForm {
   title: string;
@@ -62,28 +66,27 @@ export class BookCreateComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.dialogRef.disableClose = true;
     this.dialogRef.backdropClick()
-      .pipe(
-        takeUntil(this.destroy$)
-      )
+      .pipe(takeUntil(this.destroy$))
       .subscribe(
-        (res) => {
-          this.close();
-        }
+        res => this.close()
       );
 
     this.getAuthors();
     this.getGenres();
-    this.bookForm = this.fb.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required],
-      author: [null, Validators.required],
-      genres: [[]],
-      writingDate: [null, Validators.required],
-      releaseDate: [ null, Validators.required],
-      price: ['', Validators.required]
-    }, {
-      validators: this.checkDatevalidation
-    });
+    this.bookForm = this.fb.group(
+      {
+        title: ['', Validators.required],
+        description: ['', Validators.required],
+        author: [null, Validators.required],
+        genres: [[]],
+        writingDate: [null, Validators.required],
+        releaseDate: [ null, Validators.required],
+        price: ['', Validators.required]
+      },
+      {
+        validators: this.checkDatevalidation
+      }
+    );
   }
 
   public ngOnDestroy(): void {
@@ -106,14 +109,9 @@ export class BookCreateComponent implements OnInit, OnDestroy {
       const dialogRef = this.dialog.open(BookConfirmComponent);
 
       dialogRef.afterClosed()
-        .pipe(
-          takeUntil(this.destroy$)
-        ).subscribe(
-          (res) => {
-            if (res) {
-              this.dialogRef.close();
-            }
-          }
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
+          (res) => res ? this.dialogRef.close() : null
         );
     } else {
       this.dialogRef.close();
@@ -132,13 +130,12 @@ export class BookCreateComponent implements OnInit, OnDestroy {
 
   public onSubmit(cf: IForm): void {
     this.submited = true;
-    console.log(this.bookForm);
+
     if (!this.bookForm.invalid) {
       const bookRequest = BookRequest.new(BookRequest, cf);
       this.booksService.createBook(bookRequest)
-        .pipe(
-          takeUntil(this.destroy$)
-        ).subscribe(
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
           (res) => {
             this.created = true;
             this.snack.open('Book created', 'Ok', {

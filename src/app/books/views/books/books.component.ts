@@ -5,7 +5,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
-import { BookCreateComponent } from '../../containers/book-create/book-create.component';
+import {
+  BookCreateComponent
+} from '../../containers/book-create/book-create.component';
 
 @Component({
   selector: 'app-books',
@@ -20,9 +22,7 @@ export class BooksComponent implements OnInit, OnDestroy {
     private dialog: MatDialog
   ) { }
 
-  public ngOnInit(): void {
-    // this.openCreateModal();
-  }
+  public ngOnInit(): void { }
 
   public ngOnDestroy(): void {
     this.destroy$.next();
@@ -31,17 +31,6 @@ export class BooksComponent implements OnInit, OnDestroy {
 
   public openCreateModal(): void {
     const dialogRef = this.dialog.open(BookCreateComponent);
-
-    dialogRef.afterClosed()
-      .pipe(
-        take(1),
-        takeUntil(this.destroy$)
-      )
-      .subscribe(
-        (res) => {
-          // call reload books
-        }
-      );
   }
 
 }

@@ -4,12 +4,12 @@
       
       <div class="img"></div>
 
-      <mat-card-title>
-        {{ (book.title.length > 20)? (book.title | slice:0:20)+'..':(book.title) }}
+      <mat-card-title class="title">
+        {{ book.title }}
       </mat-card-title>
       
       <mat-card-content class="content">
-        {{ (book.description.length > 120)? (book.description | slice:0:120)+'..':(book.description) }}
+        {{ book.description }}
       </mat-card-content>
       
       <mat-card-content>
