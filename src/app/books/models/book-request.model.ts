@@ -13,5 +13,7 @@ export class BookRequest extends Model {
   @Alias() public releaseDate: Date;
   @Alias() public price: number;
   @Alias() public image: File;
+  @Alias() public previews: FileList;
+
 
 }

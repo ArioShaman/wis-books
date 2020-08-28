@@ -47,12 +47,14 @@ export class BookCreateComponent implements OnInit, OnDestroy {
 
   public submited: boolean = false;
   public created: boolean = false;
-  public uploaded: boolean = false;
+  public uploadedImage: boolean = false;
+  public uploadedPreviews: boolean = false;
 
   public authors$: Observable<Author[]>;
   public genres$: Observable<Genre[]>;
 
   public file: File;
+  public previews: FileList;
 
   private destroy$ = new Subject<void>();
 
@@ -86,7 +88,8 @@ export class BookCreateComponent implements OnInit, OnDestroy {
         writingDate: [null, Validators.required],
         releaseDate: [ null, Validators.required],
         price: ['', Validators.required],
-        image: ['', Validators.required]
+        image: [null, Validators.required],
+        previews: [null]
       },
       {
         validators: this.checkDatevalidation
@@ -138,7 +141,15 @@ export class BookCreateComponent implements OnInit, OnDestroy {
     this.bookForm.patchValue({
       image: this.file
     });
-    this.uploaded = true;
+    this.uploadedImage = true;
+  }
+
+  public uploadPreviews(fileList: FileList): void {
+    this.previews = fileList;
+    this.bookForm.patchValue({
+      previews: this.previews
+    });
+    this.uploadedPreviews = true;
   }
 
   public onSubmit(cf: IForm): void {

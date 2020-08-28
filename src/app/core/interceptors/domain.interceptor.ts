@@ -13,8 +13,6 @@ import { environment } from '../../../environments/environment';
 @Injectable()
 export class DomainInterceptor implements HttpInterceptor {
 
-  protected API_URL: string = environment.hosts.api_host;
-
   public intercept(
     req: HttpRequest<unknown>,
     next: HttpHandler

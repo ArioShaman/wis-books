@@ -44,7 +44,7 @@ export class BooksListComponent implements OnInit, OnDestroy {
   public selectedGenres: string[];
 
   public pageSize = 9;
-  public pageIndex = 17;
+  public pageIndex = 0;
   public countPages = 1;
   public countRecords = 0;
   public loaded: boolean = false;

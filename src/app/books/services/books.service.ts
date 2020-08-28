@@ -19,13 +19,7 @@ export class BooksService {
   ) { }
 
   public createBook(data: BookRequest): Observable<Book> {
-    const formData = new FormData();
-    formData.append('title', data.title);
-    formData.append('description', data.description);
-    formData.append('writing_date', String(data.writingDate));
-    formData.append('release_date', String(data.releaseDate));
-    formData.append('price', String(data.price));
-    formData.append('image', data.image);
+    const formData = this._setFormData(data);
 
     const uri = `/authors/${data.author.id}/books`;
 
@@ -40,7 +34,7 @@ export class BooksService {
     ranSackParams: RanSackParams
   ): Observable<BooksResponse> {
     const params = {
-      params: this.setParams(page, ranSackParams)
+      params: this._setParams(page, ranSackParams)
     };
 
     return this.http.get('/books', params)
@@ -58,7 +52,25 @@ export class BooksService {
       );
   }
 
-  private setParams(page: number, ranSackParams: RanSackParams): HttpParams {
+  private _setFormData(data: BookRequest): FormData {
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('description', data.description);
+    formData.append('writing_date', String(data.writingDate));
+    formData.append('release_date', String(data.releaseDate));
+    formData.append('price', String(data.price));
+    formData.append('image', data.image);
+
+    Array.prototype
+      .forEach
+      .call(data.previews, (file) => {
+        formData.append('previews_attributes[][file]', file);
+      });
+
+    return formData;
+  }
+
+  private _setParams(page: number, ranSackParams: RanSackParams): HttpParams {
     let httpParams = new HttpParams()
       .set('limit', '9')
       .set('page', String(page));
