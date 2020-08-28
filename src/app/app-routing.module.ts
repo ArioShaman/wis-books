@@ -13,6 +13,10 @@ const routes: Routes = [
     loadChildren: () => import('./books/books.module').then((m) => m.BooksModule)
   },
   {
+    path: 'books/:id',
+    loadChildren: () => import('./book/book.module').then((m) => m.BookModule)
+  },
+  {
     path: 'genres',
     loadChildren: () => import('./genres/genres.module').then((m) => m.GenresModule)
   },

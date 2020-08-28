@@ -1,0 +1,33 @@
+<div class="header">
+  <div  class="img"
+        [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}">
+  </div>
+  <div class="info">
+    <h1>{{book.title}}</h1>
+    <p class="info-block">
+      <span>Author: </span> {{ book.authorId }}
+    </p>
+    <p class="info-block">
+      <span>Writing date: </span> {{ book.writingDate | localizedDate }}
+    </p>
+    <p class="info-block">
+      <span>Release date: </span> {{ book.releaseDate | localizedDate }}
+    </p>
+  </div>
+</div>
+
+<p>
+  <mat-chip-list aria-label="Fish selection">
+    <mat-chip color="primary" 
+              selected
+              *ngFor="let genre of book.genres"
+              (click)="showGenreBook([genre.name])">
+      {{ genre.name }}
+    </mat-chip>
+  </mat-chip-list>
+</p>
+
+<p>
+  {{ book.description }}
+</p>
+

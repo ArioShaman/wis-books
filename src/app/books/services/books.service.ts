@@ -39,7 +39,7 @@ export class BooksService {
 
     return this.http.get('/books', params)
       .pipe(
-        debounce(() => timer(1000)),
+        debounce(() => timer(1500)),
         map((res: any) => {
           return BooksResponse.new(
             BooksResponse,
@@ -49,6 +49,24 @@ export class BooksService {
             }
           );
         }),
+      );
+  }
+
+  public getBook(id: number): Observable<Book> {
+    const uri = `/books/${id}`;
+
+    return this.http.get(uri)
+      .pipe(
+        map((res: any) => Book.new(Book, res))
+      );
+  }
+
+  public deleteBook(id: number): Observable<Book> {
+    const uri = `/books/${id}`;
+
+    return this.http.delete(uri)
+      .pipe(
+        map((res: any) => Book.new(Book, res))
       );
   }
 
