@@ -9,9 +9,10 @@ import {
 } from '@angular/forms';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable, Subject, of } from 'rxjs';
+import { takeUntil, take } from 'rxjs/operators';
 
 import { BooksService } from '../../../books/services/books.service';
 import { AuthorsService } from '../../../core/services/authors.service';
@@ -24,6 +25,9 @@ import {
 } from '../../../core/matchers/error-state.matcher';
 import { Book } from '../../../books/models/book.model';
 import { IForm } from '../../../../lib/models/form.interface';
+import {
+  BookConfirmComponent
+ } from '../../../books/components/book-confirm/book-confirm.component';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -54,7 +58,8 @@ export class BookEditContainer implements OnInit, OnDestroy {
     private booksService: BooksService,
     private genresService: GenresService,
     private authorsService: AuthorsService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private dialog: MatDialog
   ) { }
 
   public ngOnInit(): void {
@@ -89,6 +94,26 @@ export class BookEditContainer implements OnInit, OnDestroy {
           }
         );
     }
+  }
+
+  public canDeactivate(): boolean | Observable<boolean> | Promise<boolean> {
+    if (this.edited) {
+      const dialogRef = this.dialog.open(BookConfirmComponent);
+
+      return new Promise((resolve) => {
+        const close = dialogRef.afterClosed()
+          .pipe(
+            take(1),
+            takeUntil(this.destroy$)
+          ).subscribe(
+            (res: boolean) => {
+              resolve(res);
+            }
+          );
+      });
+    }
+
+    return true;
   }
 
   public loadForm(): void {

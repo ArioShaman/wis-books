@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { CanDeactivateGuard } from '../core/guards/exit.guard';
+
 import { BookResolve } from './resolvers/book.resolver';
 import { BookView } from './views/book/book.view';
 import { BookShowComponent } from './components/book-show/book-show.component';
@@ -17,15 +19,16 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'details',
+        redirectTo: 'details'
       },
       {
         path: 'details',
-        component: BookShowComponent,
+        component: BookShowComponent
       },
       {
         path: 'edit',
-        component: BookEditContainer
+        component: BookEditContainer,
+        canDeactivate: [CanDeactivateGuard]
       }
     ]
   }

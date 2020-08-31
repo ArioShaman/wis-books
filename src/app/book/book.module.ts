@@ -13,6 +13,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { TranslateModule } from '@ngx-translate/core';
 
+import { CanDeactivateGuard } from '../core/guards/exit.guard';
+
 import { BookRoutingModule } from './book-routing.module';
 import { BookResolve } from './resolvers/book.resolver';
 import { BookView } from './views/book/book.view';
@@ -54,6 +56,7 @@ import { LocalizedDatePipe } from './pipes/localized-date.pipe';
   ],
   providers: [
     BookResolve,
+    CanDeactivateGuard,
     {
       provide: MAT_DATE_LOCALE,
       useValue: 'ru-RU'
