@@ -20,7 +20,7 @@
 
       <!-- last name -->
       <mat-form-field class="input">
-        <mat-label>Login</mat-label>
+        <mat-label>Last name</mat-label>
         <input  matInput
                 placeholder="Enter a last name"
                 formControlName="lastName"
@@ -75,6 +75,10 @@
         <mat-error  *ngIf="signUpForm.get('passwordConfirmation').hasError('required') && submited"
                     class="error">
           Oops, password is required!
+        </mat-error>
+        <mat-error  *ngIf="signUpForm.get('passwordConfirmation').hasError('confirmationInvalid') && submited"
+                    class="error">
+          Oops, this field shold be the same value like 'Password' field!
         </mat-error>
       </mat-form-field>  
       <button type="submit"

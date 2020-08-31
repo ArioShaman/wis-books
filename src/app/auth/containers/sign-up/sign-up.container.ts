@@ -3,7 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {
   FormGroup,
   FormBuilder,
-  Validators
+  Validators,
+  ValidatorFn
 } from '@angular/forms';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -42,11 +43,13 @@ export class SignUpContainer implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.signUpForm = this.fb.group({
-      firstName: ['test', Validators.required],
-      lastName: ['test', Validators.required],
-      email: ['test@mail.ru', Validators.required],
-      password: ['test', Validators.required],
-      passwordConfirmation: ['test', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      passwordConfirmation: ['', Validators.required],
+    }, {
+      validators: [this.checkPasswordValidation]
     });
   }
 
@@ -57,20 +60,33 @@ export class SignUpContainer implements OnInit, OnDestroy {
 
   public onSubmit(cf: ISignUpForm): void {
     this.submited = true;
-    this.auth.signUp(cf)
-      .pipe(
-        takeUntil(this.destroy$)
-      ).subscribe(
-        (res) => {
-          const dialogRef = this.dialog.open(RegisterOkayComponent);
-          dialogRef.afterClosed()
-            .pipe(
-              takeUntil(this.destroy$)
-            ).subscribe(
-              res => this.router.navigate(['/auth/signIn'])
-            );
-        },
-      );
+    if (this.signUpForm.valid) {
+      this.auth.signUp(cf)
+        .pipe(
+          takeUntil(this.destroy$)
+        ).subscribe(
+          (res) => {
+            const dialogRef = this.dialog.open(RegisterOkayComponent);
+            dialogRef.afterClosed()
+              .pipe(
+                takeUntil(this.destroy$)
+              ).subscribe(
+                res => this.router.navigate(['/auth/signIn'])
+              );
+          },
+        );
+    }
+  }
+
+  public checkPasswordValidation: ValidatorFn =
+  (control: FormGroup): null => {
+    const password = control.get('password');
+    const passwordConfirmation = control.get('passwordConfirmation');
+    if (password.value !== passwordConfirmation.value) {
+      passwordConfirmation.setErrors({ confirmationInvalid: true });
+    }
+
+    return null;
   }
 
 }

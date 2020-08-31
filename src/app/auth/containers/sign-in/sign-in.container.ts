@@ -43,14 +43,14 @@ export class SignInContainer implements OnInit {
 
   public onSubmit(cf: ISignInForm): void {
     this.submited = true;
-    console.log(cf);
-    this.auth.signIn(cf)
-      .pipe(
-        takeUntil(this.destroy$)
-      ).subscribe(
-        res => console.log(res)
-      );
-
+    if (this.signInForm.valid) {
+      this.auth.signIn(cf)
+        .pipe(
+          takeUntil(this.destroy$)
+        ).subscribe(
+          res => console.log(res)
+        );
+    }
   }
 
 }
