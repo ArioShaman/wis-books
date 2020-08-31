@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
 import { MatRippleModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from '../app-routing.module';
 
@@ -19,6 +20,8 @@ import { AuthorsService } from './services/authors.service';
 import { GenresService } from './services/genres.service';
 import { MatAppearenceService } from './services/mat-appearence.service';
 import { DomainInterceptor } from './interceptors/domain.interceptor';
+import { HttpConfigInterceptor } from './interceptors/httpconfig.interceptor';
+import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'standard'
@@ -27,7 +30,7 @@ const appearance: MatFormFieldDefaultOptions = {
 const appearenceFactory = () => new MatAppearenceService();
 
 @NgModule({
-  declarations: [],
+  declarations: [ErrorDialogComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -38,7 +41,8 @@ const appearenceFactory = () => new MatAppearenceService();
     MatButtonModule,
     MatIconModule,
     MatListModule,
-    MatRippleModule
+    MatRippleModule,
+    MatDialogModule
   ],
   exports: [
     HttpClientModule,
@@ -59,6 +63,11 @@ const appearenceFactory = () => new MatAppearenceService();
     {
       provide: HTTP_INTERCEPTORS,
       useClass: DomainInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpConfigInterceptor,
       multi: true
     },
     {
