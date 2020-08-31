@@ -4,8 +4,7 @@ import {
   FormGroup,
   FormBuilder,
   Validators,
-  ValidatorFn,
-  Validator
+  ValidatorFn
 } from '@angular/forms';
 
 import { MatSnackBar } from '@angular/material/snack-bar';

@@ -23,6 +23,10 @@ const routes: Routes = [
   {
     path: 'authors',
     loadChildren: () => import('./authors/authors.module').then((m) => m.AuthorsModule)
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule)
   }
 ];
 

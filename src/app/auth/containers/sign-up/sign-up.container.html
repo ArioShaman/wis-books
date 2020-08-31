@@ -1,0 +1,89 @@
+<div class="container">
+    <form class="body"
+          [formGroup]="signUpForm"
+          (ngSubmit)="onSubmit(signUpForm.value)">
+      <h1>Sign Up</h1>
+
+      <!-- first name -->
+      <mat-form-field class="input">
+        <mat-label>First name</mat-label>
+        <input  matInput
+                placeholder="Enter a first name"
+                formControlName="firstName"
+                required
+                [errorStateMatcher]="matcher">
+        <mat-error  *ngIf="signUpForm.get('firstName').hasError('required') && submited"
+                    class="error">
+          Oops, first name is required!
+        </mat-error>
+      </mat-form-field>  
+
+      <!-- last name -->
+      <mat-form-field class="input">
+        <mat-label>Login</mat-label>
+        <input  matInput
+                placeholder="Enter a last name"
+                formControlName="lastName"
+                required
+                [errorStateMatcher]="matcher">
+        <mat-error  *ngIf="signUpForm.get('lastName').hasError('required') && submited"
+                    class="error">
+          Oops, login is required!
+        </mat-error>
+      </mat-form-field>  
+
+      <!-- login -->
+      <mat-form-field class="input">
+        <mat-label>Login</mat-label>
+        <input  matInput
+                placeholder="Enter a login"
+                formControlName="email"
+                required
+                [errorStateMatcher]="matcher">
+        <mat-error  *ngIf="signUpForm.get('email').hasError('required') && submited"
+                    class="error">
+          Oops, login is required!
+        </mat-error>
+      </mat-form-field>  
+
+      <!-- password -->
+      <mat-form-field class="input">
+        <mat-label>Password</mat-label>
+        <input  matInput
+                placeholder="Enter a password"
+                formControlName="password"
+                required
+                type="password"
+                [errorStateMatcher]="matcher">
+        <mat-error  *ngIf="signUpForm.get('password').hasError('required') && submited"
+                    class="error">
+          Oops, password is required!
+        </mat-error>
+      </mat-form-field>
+
+      <!-- password confirmation -->
+      <mat-form-field class="input">
+        <mat-label>Repeat Password</mat-label>
+        <input  matInput
+                placeholder="Repeat a password"
+                formControlName="passwordConfirmation"
+                required
+                name="passwordConfirmation"
+                autocomplete="false"
+                type="password"
+                [errorStateMatcher]="matcher">
+        <mat-error  *ngIf="signUpForm.get('passwordConfirmation').hasError('required') && submited"
+                    class="error">
+          Oops, password is required!
+        </mat-error>
+      </mat-form-field>  
+      <button type="submit"
+              mat-flat-button
+              color="primary">
+        SignUp
+      </button>
+      <a class="link" routerLink="/auth/signIn">
+        SignIn
+      </a>
+    </form>
+  </div>

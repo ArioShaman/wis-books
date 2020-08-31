@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { Observable, of, timer } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import { map, debounce } from 'rxjs/operators';
 
 import { Book } from '../models/book.model';
