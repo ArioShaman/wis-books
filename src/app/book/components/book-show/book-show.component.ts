@@ -23,7 +23,9 @@ export class BookShowComponent implements OnInit {
 
   public ngOnInit(): void {
     this.book = this.route.snapshot.parent.data.book;
-    this.imageSrc = environment.hosts.imgHost + this.book.image;
+    if (this.book.image) {
+      this.imageSrc = environment.hosts.imgHost + this.book.image;
+    }
   }
 
   public showGenreBook(genre: string[]): void {

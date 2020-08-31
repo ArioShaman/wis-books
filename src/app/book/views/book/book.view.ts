@@ -54,7 +54,6 @@ export class BookView implements OnInit, OnDestroy {
   }
 
   private _delete(): void {
-    console.log('delete');
     this.bookService
       .deleteBook(this.book.id)
       .pipe(takeUntil(this.destroy$))

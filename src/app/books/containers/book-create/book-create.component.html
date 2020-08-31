@@ -100,6 +100,8 @@
                 Oops, Price  is required!
               </mat-error>             
             </mat-form-field>
+            
+            <!-- file -->
             <div class="file" matRipple>
               <input  type="file"
                       (change)="upload($event.target.files)"
@@ -172,7 +174,7 @@
               </div>
             </div>
             <div class="error pad-error" *ngIf="!uploadedPreviews && submited">
-              Upload cover
+              Upload previews
             </div>
           </div>
         </div>

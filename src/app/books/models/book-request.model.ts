@@ -5,6 +5,7 @@ import { Genre } from '../../genres/models/genre.model';
 
 export class BookRequest extends Model {
 
+  @Alias() public id: number;
   @Alias() public title: string;
   @Alias() public description: string;
   @Alias() public author: Author;

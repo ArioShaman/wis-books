@@ -26,7 +26,9 @@ export class BookComponent implements OnInit {
   private genreFilter = new EventEmitter<string[]>();
 
   public ngOnInit(): void {
-    this.imageSrc = environment.hosts.imgHost + this.book.image;
+    if (this.book.image) {
+      this.imageSrc = environment.hosts.imgHost + this.book.image;
+    }
   }
 
   public filterByGenre(genre: string[]): void {

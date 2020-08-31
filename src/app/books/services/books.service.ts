@@ -18,17 +18,6 @@ export class BooksService {
     private readonly http: HttpClient
   ) { }
 
-  public createBook(data: BookRequest): Observable<Book> {
-    const formData = this._setFormData(data);
-
-    const uri = `/authors/${data.author.id}/books`;
-
-    return this.http.post(uri, formData)
-      .pipe(
-        map((res) => Book.new(Book, res))
-      );
-  }
-
   public getBooks(
     page: number,
     ranSackParams: RanSackParams
@@ -61,6 +50,28 @@ export class BooksService {
       );
   }
 
+  public createBook(data: BookRequest): Observable<Book> {
+    const formData = this._setFormData(data);
+
+    const uri = `/authors/${data.author.id}/books`;
+
+    return this.http.post(uri, formData)
+      .pipe(
+        map((res) => Book.new(Book, res))
+      );
+  }
+
+  public updateBook(data: BookRequest): Observable<Book> {
+    const formData = this._setFormData(data);
+
+    const uri = `/books/${data.id}`;
+
+    return this.http.put(uri, formData)
+      .pipe(
+        map((res) => Book.new(Book, res))
+      );
+  }
+
   public deleteBook(id: number): Observable<Book> {
     const uri = `/books/${id}`;
 
@@ -77,13 +88,18 @@ export class BooksService {
     formData.append('writing_date', String(data.writingDate));
     formData.append('release_date', String(data.releaseDate));
     formData.append('price', String(data.price));
-    formData.append('image', data.image);
+    if (data.image) {
+      formData.append('image', data.image);
+    }
 
-    Array.prototype
-      .forEach
-      .call(data.previews, (file) => {
-        formData.append('previews_attributes[][file]', file);
-      });
+    // ### FIX ###
+    // Uncomment when backend changes
+    // will be loaded to server
+    // Array.prototype
+    //   .forEach
+    //   .call(data.previews, (file) => {
+    //     formData.append('previews_attributes[][file]', file);
+    //   });
 
     return formData;
   }

@@ -24,16 +24,8 @@ import { BookRequest } from '../../models/book-request.model';
 import {
   BookConfirmComponent
  } from '../../components/book-confirm/book-confirm.component';
+import { IForm } from '../../../../lib/models/form.interface';
 
-interface IForm {
-  title: string;
-  description: string;
-  author: Author;
-  genres: [];
-  writingDate: Date;
-  releaseDate: Date;
-  price: number;
-}
 
 @Component({
   selector: 'app-book-create',
