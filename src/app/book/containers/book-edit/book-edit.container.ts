@@ -85,7 +85,7 @@ export class BookEditContainer implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe(
           (res) => {
-            this.snack.open('Book created', 'Ok', {
+            this.snack.open('Book edited', 'Ok', {
               duration: 3000,
               horizontalPosition: 'end',
               verticalPosition: 'top'
@@ -97,7 +97,7 @@ export class BookEditContainer implements OnInit, OnDestroy {
   }
 
   public canDeactivate(): boolean | Observable<boolean> | Promise<boolean> {
-    if (this.edited) {
+    if (this.edited && !this.submited) {
       const dialogRef = this.dialog.open(BookConfirmComponent);
 
       return new Promise((resolve) => {
