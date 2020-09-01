@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -20,7 +19,7 @@ import {
   templateUrl: './sign-in.container.html',
   styleUrls: ['./sign-in.container.sass']
 })
-export class SignInContainer implements OnInit {
+export class SignInContainer implements OnInit, OnDestroy {
 
   public signInForm: FormGroup;
   public matcher = new BookErrorStateMatcher();
@@ -41,15 +40,18 @@ export class SignInContainer implements OnInit {
     });
   }
 
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   public onSubmit(cf: ISignInForm): void {
     this.submited = true;
     if (this.signInForm.valid) {
       this.auth.signIn(cf)
         .pipe(
           takeUntil(this.destroy$)
-        ).subscribe(
-          res => console.log(res)
-        );
+        ).subscribe();
     }
   }
 

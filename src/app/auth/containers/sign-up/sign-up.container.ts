@@ -11,7 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, map } from 'rxjs/operators';
 
 import { AuthService } from '../../services/auth.service';
 import { ISignUpForm } from '../../models/sign-up-form.interface';
@@ -63,18 +63,17 @@ export class SignUpContainer implements OnInit, OnDestroy {
     if (this.signUpForm.valid) {
       this.auth.signUp(cf)
         .pipe(
-          takeUntil(this.destroy$)
-        ).subscribe(
-          (res) => {
+          map((res) => {
             const dialogRef = this.dialog.open(RegisterOkayComponent);
             dialogRef.afterClosed()
               .pipe(
                 takeUntil(this.destroy$)
               ).subscribe(
-                res => this.router.navigate(['/auth/signIn'])
+                () => this.router.navigate(['/auth/signIn'])
               );
-          },
-        );
+          }),
+          takeUntil(this.destroy$)
+        ).subscribe();
     }
   }
 

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
 
+import { IError } from '../models/error.interface';
 import { ErrorDialogComponent } from '../components/error-dialog/error-dialog.component';
 
 @Injectable({
@@ -15,11 +16,12 @@ export class DialogService {
     private router: Router
   ) { }
 
-  public openDialog(data: any): void {
+  public openDialog(data: IError): void {
     const dialogRef = this.dialog.open(ErrorDialogComponent, {
       width: '300px',
       data
     });
+
     dialogRef.afterClosed()
       .subscribe(
         (res) => {
