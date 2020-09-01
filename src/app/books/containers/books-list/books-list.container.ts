@@ -23,10 +23,10 @@ interface IPageEvent {
 
 @Component({
   selector: 'books-list',
-  templateUrl: './books-list.component.html',
-  styleUrls: ['./books-list.component.sass']
+  templateUrl: './books-list.container.html',
+  styleUrls: ['./books-list.container.sass']
 })
-export class BooksListComponent implements OnInit, OnDestroy {
+export class BooksListContainer implements OnInit, OnDestroy {
 
   public authors$: Observable<Author[]>;
   public genres$: Observable<Genre[]>;

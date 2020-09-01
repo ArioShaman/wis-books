@@ -15,23 +15,23 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { BooksRoutingModule } from './books-routing.module';
 import { BooksService } from './services/books.service';
-import { BooksComponent } from './views/books/books.component';
-import { BooksListComponent } from './containers/books-list/books-list.component';
+import { BooksView } from './views/books/books.view';
+import { BooksListContainer } from './containers/books-list/books-list.container';
 import { BookComponent } from './components/book/book.component';
 import { FilterByAuthorPipe } from './pipes/filter-by-author.pipe';
 import { FilterByGenrePipe } from './pipes/filter-by-genre.pipe';
-import { BookCreateComponent } from './containers/book-create/book-create.component';
+import { BookCreateContainer } from './containers/book-create/book-create.container';
 import { SearchTextPipe } from './pipes/search-text.pipe';
 import { BookConfirmComponent } from './components/book-confirm/book-confirm.component';
 
 @NgModule({
   declarations: [
-    BooksComponent,
-    BooksListComponent,
+    BooksView,
+    BooksListContainer,
     BookComponent,
     FilterByAuthorPipe,
     FilterByGenrePipe,
-    BookCreateComponent,
+    BookCreateContainer,
     SearchTextPipe,
     BookConfirmComponent
   ],

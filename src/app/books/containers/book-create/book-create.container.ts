@@ -29,10 +29,10 @@ import { IForm } from '../../../../lib/models/form.interface';
 
 @Component({
   selector: 'app-book-create',
-  templateUrl: './book-create.component.html',
-  styleUrls: ['./book-create.component.sass']
+  templateUrl: './book-create.container.html',
+  styleUrls: ['./book-create.container.sass']
 })
-export class BookCreateComponent implements OnInit, OnDestroy {
+export class BookCreateContainer implements OnInit, OnDestroy {
 
   public bookForm: FormGroup;
   public matcher = new BookErrorStateMatcher();
@@ -54,7 +54,7 @@ export class BookCreateComponent implements OnInit, OnDestroy {
   constructor(
     private snack: MatSnackBar,
     private dialog: MatDialog,
-    private dialogRef: MatDialogRef<BookCreateComponent>,
+    private dialogRef: MatDialogRef<BookCreateContainer>,
     private booksService: BooksService,
     private genresService: GenresService,
     private authorsService: AuthorsService,

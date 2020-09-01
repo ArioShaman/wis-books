@@ -3,15 +3,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import {
-  BookCreateComponent
-} from '../../containers/book-create/book-create.component';
+  BookCreateContainer
+} from '../../containers/book-create/book-create.container';
 
 @Component({
   selector: 'app-books',
-  templateUrl: './books.component.html',
-  styleUrls: ['./books.component.sass']
+  templateUrl: './books.view.html',
+  styleUrls: ['./books.view.sass']
 })
-export class BooksComponent implements OnInit, OnDestroy {
+export class BooksView implements OnInit, OnDestroy {
 
 
   constructor(
@@ -25,7 +25,7 @@ export class BooksComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void { }
 
   public openCreateModal(): void {
-    const dialogRef = this.dialog.open(BookCreateComponent);
+    const dialogRef = this.dialog.open(BookCreateContainer);
   }
 
 }
