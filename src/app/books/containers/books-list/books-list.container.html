@@ -1,4 +1,7 @@
-<div class="flex">
+
+
+<div class="flex"
+  [ngClass]="[openedFilters ? 'opened':'']">
   <div class="inputs-cont">
     <mat-form-field class="input">
       <mat-label>Enter Search value</mat-label>
@@ -44,6 +47,13 @@
           Clear
   </button>
 </div>
+
+<button class="filter"
+        mat-flat-button
+        (click)="toggleFilters()"
+        color="primary">
+  Filter
+</button>
 
 <div class="not-found" 
       *ngIf="countRecords === 0 && loaded">

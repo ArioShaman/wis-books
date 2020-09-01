@@ -106,7 +106,7 @@ export class BooksService {
 
   private _setParams(page: number, ranSackParams: RanSackParams): HttpParams {
     let httpParams = new HttpParams()
-      .set('limit', '9')
+      .set('limit', '12')
       .set('page', String(page));
 
     Object.keys(ranSackParams).forEach(

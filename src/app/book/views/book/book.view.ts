@@ -13,7 +13,7 @@ import { BookDeleteComponent } from '../../components/book-delete/book-delete.co
 import { Book } from '../../../books/models/book.model';
 
 @Component({
-  selector: 'app-book',
+  selector: 'book-view',
   templateUrl: './book.view.html',
   styleUrls: ['./book.view.sass']
 })

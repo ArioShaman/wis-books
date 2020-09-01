@@ -1,3 +1,5 @@
+@import "./../../../../mixins.sass"
+
 $base-color: #ddd
 $shine-color: #e8e8e8
 $animation-duration: 1.6s
@@ -5,8 +7,26 @@ $grey: #bdbbbb
 
 book
   margin-left: 30px
+
+  @include mobile
+    margin-left: 0px
+
   &:nth-child(3n+1)
     margin-left: 0px
+    
+    @include tablet
+      margin-left: 30px
+    
+    @include mobile
+      margin-left: 0px
+
+  &:nth-child(2n+1)
+
+    @include tablet
+      margin-left: 0px
+    
+    @include mobile
+      margin-left: 0px
 
 mat-paginator
   width: 100%
@@ -34,6 +54,13 @@ mat-paginator
   clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%)
   opacity: 1
   animation: hiding 1.5s linear
+  
+  @include tablet
+    width: 275px
+
+  @include mobile
+    width: 275px
+    margin-left: 0px
 
   .gradient
     background-image: linear-gradient(90deg, $base-color 0px, $shine-color 40px, $base-color 80px) 
@@ -52,6 +79,12 @@ mat-paginator
     box-sizing: border-box
     margin-bottom: 10px
     background: $grey
+
+    @include tablet
+      width: 245px
+
+    @include mobile
+      width: 245px
 
   .title
     height: 25px
@@ -85,6 +118,20 @@ mat-paginator
   &:nth-child(3n+1)
     margin-left: 0px
 
+    @include tablet
+      margin-left: 30px
+
+    @include mobile
+      margin-left: 0px
+
+  &:nth-child(2n+1)
+
+    @include tablet
+      margin-left: 0px
+
+    @include mobile
+      margin-left: 0px
+
 @keyframes loading
   0%
     background-position: 0px
@@ -105,21 +152,81 @@ mat-paginator
 .select 
   width: 180px
 
+  @include tablet
+    width: 100%
+
+  @include mobile
+    width: 100%
+
 .flex 
   width: 100%
   height: 50px
   display: flex
   justify-content: space-between
 
+  @include tablet
+    height: auto
+    flex-direction: column
+    display: none
+
+  @include mobile
+    height: auto
+    flex-direction: column
+    display: none
+
+  &.opened
+
+    @include tablet
+      display: flex 
+    
+    @include mobile
+      display: flex 
+
   .inputs-cont
     display: flex
     justify-content: space-between
     width: 800px
+
+    @include tablet
+      height: 300px
+      flex-direction: column
+      width: 100%
+    
+    @include mobile
+      height: 300px
+      flex-direction: column
+      width: 100%
+
+.filter
+  width: 100%
+  height: 50px
+  display: none
+  margin-top: 25px
+  
+  @include tablet
+    display: block
+
+  @include mobile
+    display: block
 
 .clear
   width: 100px
   height: 60px
   margin-top: 4px
 
+  @include tablet
+    width: 100%
+    height: 50px
+  
+  @include mobile
+    width: 100%
+    height: 50px
+
 .input
   width: 420px
+
+  @include tablet
+    width: 100%
+
+  @include mobile
+    width: 100%

@@ -1,7 +1,15 @@
+@import "./../../../../mixins.sass"
+
 .header
   width: 100%
   position: relative
   display: flex
+
+  @include tablet
+    flex-direction: column
+
+  @include mobile
+    flex-direction: column
 
   .img
     height: 200px
@@ -11,6 +19,14 @@
     background-size: cover
     background-position: center
     margin-top: 22px
+
+    @include tablet
+      width: 100%
+      height: 300px
+
+    @include mobile
+      width: 100%
+      height: 200px
 
     .error
       z-index: 200
@@ -23,6 +39,16 @@
     width: calc(100% - 250px)
     height: 200px
     margin-left: 50px
+
+    @include tablet
+      width: 100%
+      margin-left: 0px
+      height: auto
+    
+    @include mobile
+      width: 100%
+      margin-left: 0px
+      height: auto
 
     span
       font-weight: 500
@@ -41,6 +67,9 @@ mat-form-field
 .price
   width: 200px
 
+  @include mobile
+    width: 150px
+
 .description
   margin-top: 50px
 
@@ -49,6 +78,9 @@ button[type="submit"]
   height: 40px
   margin-top: 22px
 
+
+  @include mobile
+    width: 100px
 
 .file
   width: 100%

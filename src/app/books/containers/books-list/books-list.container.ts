@@ -44,12 +44,13 @@ export class BooksListContainer implements OnInit, OnDestroy {
   public selectedAuthors: number[];
   public selectedGenres: string[];
 
-  public pageSize = 9;
+  public pageSize = 12;
   public pageIndex = 0;
   public countPages = 1;
   public countRecords = 0;
   public loaded: boolean = false;
   public disabled: boolean = true;
+  public openedFilters: boolean = false;
 
   public ranSackParams = new RanSackParams();
 
@@ -133,11 +134,17 @@ export class BooksListContainer implements OnInit, OnDestroy {
   public selectGenre(genreNames: string[]): void {
     this.genresControl.patchValue(genreNames);
   }
+
   public pageEvent(event: IPageEvent): void {
     this.pageIndex = event.pageIndex;
     this.books = [];
     this.getBooks(this.pageIndex + 1);
   }
+
+  public toggleFilters(): void {
+    this.openedFilters = !this.openedFilters;
+  }
+
   private _setValueChanges(): void {
     this.searchControl.valueChanges
       .pipe(

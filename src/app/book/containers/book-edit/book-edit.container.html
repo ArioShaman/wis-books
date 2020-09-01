@@ -133,7 +133,7 @@
                 placeholder="Enter a title"
                 formControlName="description"
                 required
-                rows="23"
+                rows="8"
                 [errorStateMatcher]="matcher"
       ></textarea>
       <mat-error  *ngIf="bookForm.get('description').hasError('required') && submited"
