@@ -26,7 +26,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
       .pipe(
         catchError((error) => {
           const data = {
-            error: error.error.errors ? error.error.errors : error.error,
+            error: error.error.message ? error.error.message : error.error,
             status: error.status
           };
           this.dialogService.openDialog(data);
