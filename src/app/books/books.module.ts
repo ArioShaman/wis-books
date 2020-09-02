@@ -13,6 +13,8 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
+import { ImageCropperModule } from 'ngx-image-cropper';
+
 import { BooksRoutingModule } from './books-routing.module';
 import { BooksService } from './services/books.service';
 import { BooksView } from './views/books/books.view';
@@ -55,6 +57,8 @@ import { SearchTextPipe } from './pipes/search-text.pipe';
     MatNativeDateModule,
     MatDatepickerModule,
     MatSnackBarModule,
+
+    ImageCropperModule,
 
     BooksRoutingModule
   ]

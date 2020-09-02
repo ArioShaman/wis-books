@@ -10,7 +10,8 @@
     <h1>Create book</h1>
     
     <div class="flex">
-      <div class="md md-2">
+      <div  class="md md-2"
+            [ngClass]="uploadedImage ? 'short' : ''">
         <!-- Title -->
         <mat-form-field class="input">
           <mat-label>Title</mat-label>
@@ -104,7 +105,7 @@
             <!-- file -->
             <div class="file" matRipple>
               <input  type="file"
-                      (change)="upload($event.target.files)"
+                      (change)="upload($event.target.files, $event)"
                       name="file"
                       accept="image/png, image/jpeg">
               <div  class="placeholder"
@@ -185,9 +186,17 @@
           Create
         </button>
       </div>
-      <div class="md md-1">
+      <div  class="md md-1"
+            [ngClass]="uploadedImage ? 'wide' : ''">
         <div class="croper">
-          Croper container
+          <image-cropper
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="16 / 9"
+            [resizeToWidth]="300"
+            format="png"
+            (imageCropped)="imageCropped($event)">
+          </image-cropper>
         </div>
       </div>
     </div>

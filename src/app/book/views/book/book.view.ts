@@ -27,7 +27,7 @@ export class BookView implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
-    translate: TranslateService,
+    translate: TranslateService
   ) {
     translate.setDefaultLang('en');
     translate.use('en');

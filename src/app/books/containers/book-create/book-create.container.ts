@@ -12,6 +12,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
 
+import { ImageCroppedEvent } from 'ngx-image-cropper';
+
 import {
   BookErrorStateMatcher
 } from '../../../core/matchers/error-state.matcher';
@@ -41,6 +43,9 @@ export class BookCreateContainer implements OnInit, OnDestroy {
   public uploadedImage: boolean = false;
   public uploadedPreviews: boolean = false;
 
+  public imageChangedEvent: Event;
+  public croppedImage: any;
+
   public authors$: Observable<Author[]>;
   public genres$: Observable<Genre[]>;
 
@@ -52,7 +57,6 @@ export class BookCreateContainer implements OnInit, OnDestroy {
 
   constructor(
     private snack: MatSnackBar,
-    private dialog: MatDialog,
     private dialogRef: MatDialogRef<BookCreateContainer>,
     private booksService: BooksService,
     private genresService: GenresService,
@@ -66,7 +70,7 @@ export class BookCreateContainer implements OnInit, OnDestroy {
     this.dialogRef.backdropClick()
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        res => this.close()
+        (res) => this.close()
       );
 
     this.getAuthors();
@@ -132,12 +136,23 @@ export class BookCreateContainer implements OnInit, OnDestroy {
       .getAllAuthors();
   }
 
-  public upload(fileList: FileList): void {
+  public imageCropped(event: ImageCroppedEvent): void {
+    this.croppedImage = event.base64;
+    fetch(this.croppedImage)
+      .then((res) => res.blob())
+      .then((blob) => {
+        const filename = Math.random().toString(36).substring(7);
+        const file = new File([blob], filename, { type: 'image/png' });
+        this.bookForm.patchValue({
+          image: file
+        });
+      });
+  }
+
+  public upload(fileList: FileList, event: Event): void {
     this.file = fileList[0];
-    this.bookForm.patchValue({
-      image: this.file
-    });
     this.uploadedImage = true;
+    setTimeout(() => this.imageChangedEvent = event, 401);
   }
 
   public uploadPreviews(fileList: FileList): void {
@@ -150,7 +165,6 @@ export class BookCreateContainer implements OnInit, OnDestroy {
 
   public onSubmit(cf: IForm): void {
     this.submited = true;
-
     if (!this.bookForm.invalid) {
       const bookRequest = BookRequest.new(BookRequest, cf);
       this.booksService.createBook(bookRequest)
