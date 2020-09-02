@@ -1,0 +1,65 @@
+@import "./../../../../mixins.sass"
+
+.flex 
+  width: 100%
+  height: 50px
+  display: flex
+  justify-content: space-between
+
+  @include tablet
+    height: auto
+    flex-direction: column
+    display: none
+
+  @include mobile
+    height: auto
+    flex-direction: column
+    display: none
+
+  &.opened
+
+    @include tablet
+      display: flex 
+    
+    @include mobile
+      display: flex 
+
+  .inputs-cont
+    display: flex
+    justify-content: space-between
+    width: 800px
+
+    @include tablet
+      height: 300px
+      flex-direction: column
+      width: 100%
+    
+    @include mobile
+      height: 300px
+      flex-direction: column
+      width: 100%
+
+.filter
+  width: 100%
+  height: 50px
+  display: none
+  margin-top: 25px
+  
+  @include tablet
+    display: block
+
+  @include mobile
+    display: block
+
+.clear
+  width: 100px
+  height: 60px
+  margin-top: 4px
+
+  @include tablet
+    width: 100%
+    height: 50px
+  
+  @include mobile
+    width: 100%
+    height: 50px

@@ -1,0 +1,54 @@
+<div class="flex"
+  [ngClass]="[openedFilters ? 'opened':'']">
+  <form class="inputs-cont" [formGroup]="filterForm">
+    <mat-form-field class="input">
+      <mat-label>Enter Search value</mat-label>
+      <input type="text" 
+             matInput
+             placeholder="Enter search value"
+             formControlName="searchControl">
+    </mat-form-field>
+  
+    <mat-form-field class="select"
+                    *ngIf="(authors$ | async) as resultAuthors">
+      <mat-label>Choose an Author</mat-label>
+  
+      <mat-select formControlName="authorsControl"
+                  multiple>
+        <mat-option [value]="author.id"
+                    *ngFor="let author of resultAuthors">
+          {{ author.firstName }} {{ author.lastName }}
+        </mat-option>
+      </mat-select>
+      
+    </mat-form-field>
+  
+    <mat-form-field class="select"
+                    *ngIf="(genres$ | async) as resultGenres">
+      
+      <mat-label>Choose a genre</mat-label>
+      <mat-select formControlName="genresControl"
+                  multiple>
+        <mat-option *ngFor="let genre of resultGenres"
+                    [value]="genre.name">
+          {{ genre.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </form>
+
+  <button class="clear" 
+          mat-flat-button
+          (click)="clearFilter()"
+          [disabled]="disabled">
+          Clear
+  </button>
+</div>
+
+<button class="filter"
+        mat-flat-button
+        (click)="toggleFilters()"
+        color="primary">
+  Filter
+</button>

@@ -24,6 +24,7 @@ import { FilterByAuthorPipe } from './pipes/filter-by-author.pipe';
 import { FilterByGenrePipe } from './pipes/filter-by-genre.pipe';
 import { BookCreateContainer } from './containers/book-create/book-create.container';
 import { SearchTextPipe } from './pipes/search-text.pipe';
+import { BookFilterContainer } from './containers/book-filter/book-filter.container';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { SearchTextPipe } from './pipes/search-text.pipe';
     FilterByAuthorPipe,
     FilterByGenrePipe,
     BookCreateContainer,
-    SearchTextPipe
+    SearchTextPipe,
+    BookFilterContainer
   ],
   providers: [
     BooksService,
