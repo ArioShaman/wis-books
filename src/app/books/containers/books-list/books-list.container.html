@@ -2,20 +2,20 @@
 
 <div class="flex"
   [ngClass]="[openedFilters ? 'opened':'']">
-  <div class="inputs-cont">
+  <form class="inputs-cont" [formGroup]="filterForm">
     <mat-form-field class="input">
       <mat-label>Enter Search value</mat-label>
       <input type="text" 
              matInput
              placeholder="Enter search value"
-             [formControl]="searchControl">
+             formControlName="searchControl">
     </mat-form-field>
   
     <mat-form-field class="select"
                     *ngIf="(authors$ | async) as resultAuthors">
       <mat-label>Choose an Author</mat-label>
   
-      <mat-select [formControl]="authorsControl"
+      <mat-select formControlName="authorsControl"
                   multiple>
         <mat-option [value]="author.id"
                     *ngFor="let author of resultAuthors">
@@ -29,7 +29,7 @@
                     *ngIf="(genres$ | async) as resultGenres">
       
       <mat-label>Choose a genre</mat-label>
-      <mat-select [formControl]="genresControl"
+      <mat-select formControlName="genresControl"
                   multiple>
         <mat-option *ngFor="let genre of resultGenres"
                     [value]="genre.name">
@@ -38,7 +38,7 @@
       </mat-select>
     </mat-form-field>
 
-  </div>
+  </form>
 
   <button class="clear" 
           mat-flat-button

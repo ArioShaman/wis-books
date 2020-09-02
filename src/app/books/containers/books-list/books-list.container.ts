@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subject, Observable } from 'rxjs';
@@ -36,10 +36,11 @@ export class BooksListContainer implements OnInit, OnDestroy {
 
   public searchText: string;
 
-  public searchControl = new FormControl();
-  public authorsControl = new FormControl();
-  public genresControl = new FormControl();
-
+  public filterForm: FormGroup = new FormGroup({
+    searchControl: new FormControl(),
+    authorsControl: new FormControl(),
+    genresControl: new FormControl()
+  });
 
   public selectedAuthors: number[];
   public selectedGenres: string[];
@@ -77,9 +78,13 @@ export class BooksListContainer implements OnInit, OnDestroy {
           const genre = param['genre'];
           if (genre) {
             if (Array.isArray(genre)) {
-              this.genresControl.patchValue(genre);
+              this.filterForm.patchValue({
+                genresControl: genre
+              });
             } else {
-              this.genresControl.patchValue([genre]);
+              this.filterForm.patchValue({
+                genresControl: [genre]
+              });
             }
           } else {
             this.getBooks();
@@ -124,14 +129,14 @@ export class BooksListContainer implements OnInit, OnDestroy {
     this.disabled = true;
 
     this.ranSackParams.clear();
-
-    this.authorsControl.patchValue([]);
-    this.genresControl.patchValue([]);
-    this.searchControl.patchValue('');
+    this.disabled = true;
+    this.filterForm.reset();
   }
 
   public selectGenre(genreNames: string[]): void {
-    this.genresControl.patchValue(genreNames);
+    this.filterForm.patchValue({
+      genresControl: genreNames
+    });
   }
 
   public pageEvent(event: IPageEvent): void {
@@ -145,52 +150,24 @@ export class BooksListContainer implements OnInit, OnDestroy {
   }
 
   private _setValueChanges(): void {
-    this.searchControl.valueChanges
+    this.filterForm.valueChanges
       .pipe(
         debounceTime(1000),
         takeUntil(this.destroy$)
-      ).subscribe(
-        (value: string) => {
-          this.disabled = false;
-          if (value.length === 0) {
-            this.disabled = true;
-          }
-
-          this.ranSackParams.searchText = value;
-          this.getBooks();
+      ).subscribe((res) => {
+        this.disabled = false;
+        if (res.searchControl) {
+          this.ranSackParams.searchText = res.searchControl;
         }
-      );
-
-    this.authorsControl.valueChanges
-      .pipe(
-        debounceTime(600),
-        takeUntil(this.destroy$)
-      ).subscribe(
-        (authorIds: number[]) => {
-          this.disabled = false;
-          if (authorIds.length === 0) {
-            this.disabled = true;
-          }
-
-          this.ranSackParams.authorIds = authorIds;
-          this.getBooks();
+        if (res.genresControl) {
+          this.ranSackParams.genreNames = res.genresControl;
         }
-      );
-    this.genresControl.valueChanges
-      .pipe(
-        debounceTime(600),
-        takeUntil(this.destroy$)
-      ).subscribe(
-        (genreNames: string[]) => {
-          this.disabled = false;
-          if (genreNames.length === 0) {
-            this.disabled = true;
-          }
 
-          this.ranSackParams.genreNames = genreNames;
-          this.getBooks();
+        if (res.authorsControl) {
+          this.ranSackParams.authorIds = res.authorsControl;
         }
-      );
+        this.getBooks();
+      });
   }
 
 }
