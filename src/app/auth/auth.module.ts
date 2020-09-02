@@ -15,15 +15,13 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { AuthView } from './views/auth/auth.view';
 import { SignInContainer } from './containers/sign-in/sign-in.container';
 import { SignUpContainer } from './containers/sign-up/sign-up.container';
-import { RegisterOkayComponent } from './components/register-okay/register-okay.component';
 
 
 @NgModule({
   declarations: [
     AuthView,
     SignInContainer,
-    SignUpContainer,
-    RegisterOkayComponent
+    SignUpContainer
   ],
   imports: [
     CommonModule,

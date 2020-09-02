@@ -1,0 +1,24 @@
+<h2 mat-dialog-title
+     *ngIf="data.type !== 'error-array'; else elseBlock">
+  {{ data.message }}
+</h2>
+<ng-template #elseBlock>
+  <span>Errors:</span>
+    <div *ngFor="let key of Object.keys(data.payload.errors)"> 
+      {{ key }} {{  data.payload.errors[key] }} 
+    </div>
+</ng-template>
+
+<mat-dialog-actions align="end">
+  <button mat-button 
+          [mat-dialog-close]="true" 
+          cdkFocusInitial>
+    {{ data.type === 'multiple' ? 'Yes' : 'Ok' }}
+  </button>
+
+  <button mat-button 
+          [mat-dialog-close]="false"
+          *ngIf="data.type === 'multiple'">
+    No
+  </button>
+</mat-dialog-actions>

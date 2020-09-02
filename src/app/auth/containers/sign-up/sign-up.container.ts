@@ -14,8 +14,9 @@ import { Subject } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
 
 import { AuthService } from '../../services/auth.service';
+import { DialogService } from '../../../core/services/dialog.service';
+import { IDialogBody } from '../../../core/models/dialog-body.interface';
 import { ISignUpForm } from '../../models/sign-up-form.interface';
-import { RegisterOkayComponent } from '../../components/register-okay/register-okay.component';
 import {
   BookErrorStateMatcher
 } from '../../../core/matchers/error-state.matcher';
@@ -38,7 +39,8 @@ export class SignUpContainer implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private auth: AuthService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private dialogService: DialogService
   ) { }
 
   public ngOnInit(): void {
@@ -64,8 +66,11 @@ export class SignUpContainer implements OnInit, OnDestroy {
       this.auth.signUp(cf)
         .pipe(
           map((res) => {
-            const dialogRef = this.dialog.open(RegisterOkayComponent);
-            dialogRef.afterClosed()
+            const data: IDialogBody = {
+              message: 'Confirmation email was sended to you!',
+              type: 'single'
+            };
+            this.dialogService.openDialog(data)
               .pipe(
                 takeUntil(this.destroy$)
               ).subscribe(

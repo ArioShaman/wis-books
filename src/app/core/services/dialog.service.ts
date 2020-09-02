@@ -3,8 +3,15 @@ import { Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
 
-import { IError } from '../models/error.interface';
-import { ErrorDialogComponent } from '../components/error-dialog/error-dialog.component';
+import { Observable } from 'rxjs';
+
+import { IDialogBody, ISize } from '../models/dialog-body.interface';
+import { DialogComponent } from '../components/dialog/dialog.component';
+
+const DEFAULT_SIZE: ISize = {
+  width: '400px',
+  height: 'auto'
+};
 
 @Injectable({
   providedIn: 'root'
@@ -12,24 +19,20 @@ import { ErrorDialogComponent } from '../components/error-dialog/error-dialog.co
 export class DialogService {
 
   constructor(
-    public dialog: MatDialog,
-    private router: Router
+    public dialog: MatDialog
   ) { }
 
-  public openDialog(data: IError): void {
-    const dialogRef = this.dialog.open(ErrorDialogComponent, {
-      width: '300px',
+  public openDialog(
+    data: IDialogBody,
+    size: ISize = DEFAULT_SIZE
+  ): Observable<any> {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: size.width,
+      height: size.height,
       data
     });
 
-    dialogRef.afterClosed()
-      .subscribe(
-        (res) => {
-          if (data.status === 404) {
-            this.router.navigate(['/books']);
-          }
-        }
-      );
+    return dialogRef.afterClosed();
   }
 
 }

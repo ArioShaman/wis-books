@@ -128,7 +128,6 @@ export class BooksListContainer implements OnInit, OnDestroy {
     this.authorsControl.patchValue([]);
     this.genresControl.patchValue([]);
     this.searchControl.patchValue('');
-    this.getBooks();
   }
 
   public selectGenre(genreNames: string[]): void {

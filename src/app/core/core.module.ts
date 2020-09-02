@@ -21,7 +21,7 @@ import { GenresService } from './services/genres.service';
 import { MatAppearenceService } from './services/mat-appearence.service';
 import { DomainInterceptor } from './interceptors/domain.interceptor';
 import { HttpConfigInterceptor } from './interceptors/httpconfig.interceptor';
-import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
+import { DialogComponent } from './components/dialog/dialog.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'standard'
@@ -30,7 +30,9 @@ const appearance: MatFormFieldDefaultOptions = {
 const appearenceFactory = () => new MatAppearenceService();
 
 @NgModule({
-  declarations: [ErrorDialogComponent],
+  declarations: [
+    DialogComponent
+  ],
   imports: [
     CommonModule,
     HttpClientModule,

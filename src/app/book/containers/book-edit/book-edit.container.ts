@@ -16,6 +16,8 @@ import { takeUntil, take } from 'rxjs/operators';
 import { BooksService } from '../../../books/services/books.service';
 import { AuthorsService } from '../../../core/services/authors.service';
 import { GenresService } from '../../../core/services/genres.service';
+import { DialogService } from '../../../core/services/dialog.service';
+import { IDialogBody } from '../../../core/models/dialog-body.interface';
 import { Author } from '../../../authors/models/author.model';
 import { Genre } from '../../../genres/models/genre.model';
 import { BookRequest } from '../../../books/models/book-request.model';
@@ -24,9 +26,6 @@ import {
 } from '../../../core/matchers/error-state.matcher';
 import { Book } from '../../../books/models/book.model';
 import { IForm } from '../../../../lib/models/form.interface';
-import {
-  BookConfirmComponent
- } from '../../../books/components/book-confirm/book-confirm.component';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -58,7 +57,8 @@ export class BookEditContainer implements OnInit, OnDestroy {
     private genresService: GenresService,
     private authorsService: AuthorsService,
     private fb: FormBuilder,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private dialogService: DialogService
   ) { }
 
   public ngOnInit(): void {
@@ -97,10 +97,13 @@ export class BookEditContainer implements OnInit, OnDestroy {
 
   public canDeactivate(): boolean | Observable<boolean> | Promise<boolean> {
     if (this.edited && !this.submited) {
-      const dialogRef = this.dialog.open(BookConfirmComponent);
+      const data: IDialogBody = {
+        message: 'Are you sure you want to leave form?',
+        type: 'multiple'
+      };
 
       return new Promise((resolve) => {
-        const close = dialogRef.afterClosed()
+        const close = this.dialogService.openDialog(data)
           .pipe(
             take(1),
             takeUntil(this.destroy$)
