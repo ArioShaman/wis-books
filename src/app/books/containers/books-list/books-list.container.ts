@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute, ParamsAsMap } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { takeUntil, delay } from 'rxjs/operators';
@@ -7,6 +7,7 @@ import { takeUntil, delay } from 'rxjs/operators';
 import { BooksService } from '../../services/books.service';
 import { Book } from '../../models/book.model';
 import { RanSackParams } from '../../models/ran-sack-params.model';
+import { IFilterParam } from '../../models/filter-param.interface';
 
 interface IPageEvent {
   length: number;
@@ -43,11 +44,12 @@ export class BooksListContainer implements OnInit, OnDestroy {
 
   constructor(
     private booksService: BooksService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   public ngOnInit(): void {
-
+    this._listenQueryPrams();
   }
 
   public ngOnDestroy(): void {
@@ -96,6 +98,29 @@ export class BooksListContainer implements OnInit, OnDestroy {
   public setRanSack(ranSackParams: RanSackParams): void {
     this.curRanSackParams = ranSackParams;
     this.getBooks();
+  }
+
+  private _listenQueryPrams(): void {
+    this.route.queryParamMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res: ParamsAsMap) => {
+        if (res.has('searchText')) {
+          this.curRanSackParams.searchText = res.get('searchText');
+        }
+        if (res.has('genreNames')) {
+          this.curRanSackParams.genreNames = res.getAll('genreNames');
+        }
+        if (res.has('authorIds')) {
+          let authorIds = res.getAll('authorIds');
+          authorIds = authorIds.map((strId: string) => parseInt(strId, 2));
+          this.curRanSackParams.authorIds = authorIds;
+        }
+
+        if (Object.keys(res).length === 0) {
+          this.curRanSackParams.clear();
+        }
+        this.getBooks();
+      });
   }
 
 

@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router, ParamsAsMap } from '@angular/router';
-import { Location } from '@angular/common';
 
 import { Subject, Observable } from 'rxjs';
 import { takeUntil, debounceTime, take } from 'rxjs/operators';
@@ -11,13 +10,7 @@ import { GenresService } from '../../../core/services/genres.service';
 import { RanSackParams } from '../../models/ran-sack-params.model';
 import { Author } from '../../../authors/models/author.model';
 import { Genre } from '../../../genres/models/genre.model';
-
-interface IFilterParam {
-  searchText?: string;
-  genreNames?: string[];
-  authorIds?: number[];
-
-}
+import { IFilterParam } from '../../models/filter-param.interface';
 
 @Component({
   selector: 'app-book-filter',
@@ -45,24 +38,16 @@ export class BookFilterContainer implements OnInit, OnDestroy {
     private router: Router,
     private authorsService: AuthorsService,
     private genresService: GenresService,
-    private location: Location
   ) {
     this._initForm();
+    this._setValueChanges();
   }
 
   public ngOnInit(): void {
     this.getGenres();
     this.getAuthors();
 
-    this.route.queryParamMap
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (params) => {
-          this._setParams(params, 'paramMap');
-        }
-      );
-    this._setValueChanges();
-    this._patchForm();
+    this._listenQueryParams();
   }
 
   public ngOnDestroy(): void {
@@ -81,13 +66,24 @@ export class BookFilterContainer implements OnInit, OnDestroy {
   }
 
   public clearFilter(): void {
-    this.ranSackParams.clear();
     this.disabled = true;
     this.filterForm.reset();
   }
 
 
-  private _setTree(queryParams: Object): void {
+  private _listenQueryParams(): void {
+    this.route.queryParamMap
+      .pipe(
+        take(1),
+        takeUntil(this.destroy$)
+      ).subscribe(
+        (params) => {
+          this._setParams(params);
+        }
+      );
+  }
+
+  private _setTree(queryParams: ParamsAsMap): void {
     this.router.navigate(
       [], {
         relativeTo: this.route,
@@ -103,7 +99,7 @@ export class BookFilterContainer implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       ).subscribe((res) => {
         this.disabled = false;
-        this._setParams(res, 'ransack');
+        this._setTree(res);
       });
   }
 
@@ -115,69 +111,22 @@ export class BookFilterContainer implements OnInit, OnDestroy {
     });
   }
 
-  private _setParams(params: ParamsAsMap | IFilterParam, action: string = 'default'): void {
-    const queryParams: Object = {};
+  private _setParams(params: ParamsAsMap): void {
+    const queryParams: IFilterParam = {};
 
-    switch (action) {
-      case 'paramMap':
-        if (params.has('searchText')) {
-          const paramSearchText = params.get('searchText');
-          this._setParam('searchText', paramSearchText, queryParams);
-        }
-
-        if (params.has('genreNames')) {
-          const paramGenreNames = params.getAll('genreNames');
-          this._setParam('genreNames', paramGenreNames, queryParams);
-        }
-
-        if (params.has('authorIds')) {
-          let paramAuthorIds = params.getAll('authorIds');
-          paramAuthorIds = paramAuthorIds.map(
-            (strId: string) => parseInt(strId)
-          );
-          this._setParam('authorIds', paramAuthorIds, queryParams);
-        }
-
-        if (params && params.keys.length > 0) {
-          this.disabled = false;
-        }
-        break;
-
-      case 'ransack':
-        const paramSearchText = params.searchText;
-        this._setParam('searchText', paramSearchText, queryParams);
-
-        if (params.genreNames) {
-          const paramGenreNames = params.genreNames;
-          this._setParam('genreNames', paramGenreNames, queryParams);
-        }
-
-        if (params.authorIds) {
-          const paramAuthorIds = params.authorIds;
-          this._setParam('authorIds', paramAuthorIds, queryParams);
-        }
-        break;
+    if (params.has('searchText')) {
+      queryParams['searchText'] = params.get('searchText');
     }
-
+    if (params.has('genreNames')) {
+      queryParams['genreNames'] = params.getAll('genreNames');
+    }
+    if (params.has('authorIds')) {
+      let authorIds = params.getAll('authorIds');
+      authorIds = authorIds.map((strId: string) => parseInt(strId, 2));
+      queryParams['authorIds'] = authorIds;
+    }
+    this.filterForm.patchValue(queryParams);
     this._setTree(queryParams);
-    this.setRanSack.emit(this.ranSackParams);
-  }
-
-  private _setParam(
-    key: string,
-    value: string | string[] | number[],
-    queryParams: IFilterParam
-  ): void {
-    this.ranSackParams[key] = value;
-    queryParams[key] = value;
-  }
-
-  private _patchForm(): void {
-    this.filterForm.patchValue({
-      searchText: this.ranSackParams.searchText,
-      genreNames: this.ranSackParams.genreNames,
-      authorIds: this.ranSackParams.authorIds
-    });
   }
 
 }
