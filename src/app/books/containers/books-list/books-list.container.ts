@@ -104,16 +104,24 @@ export class BooksListContainer implements OnInit, OnDestroy {
     this.route.queryParamMap
       .pipe(takeUntil(this.destroy$))
       .subscribe((res: ParamsAsMap) => {
-        if (res.has('searchText')) {
+        if (res.has('searchText') && res.get('searchText')?.length > 0) {
           this.curRanSackParams.searchText = res.get('searchText');
+        } else {
+          this.curRanSackParams.searchText = null;
         }
-        if (res.has('genreNames')) {
+
+        if (res.has('genreNames') && res.getAll('genreNames')?.length > 0) {
           this.curRanSackParams.genreNames = res.getAll('genreNames');
+        } else {
+          this.curRanSackParams.genreNames = null;
         }
-        if (res.has('authorIds')) {
+
+        if (res.has('authorIds') && res.getAll('authorIds')?.length > 0) {
           let authorIds = res.getAll('authorIds');
           authorIds = authorIds.map((strId: string) => parseInt(strId, 2));
           this.curRanSackParams.authorIds = authorIds;
+        } else {
+          this.curRanSackParams.authorIds = null;
         }
 
         if (Object.keys(res).length === 0) {

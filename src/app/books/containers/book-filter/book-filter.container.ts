@@ -68,6 +68,7 @@ export class BookFilterContainer implements OnInit, OnDestroy {
   public clearFilter(): void {
     this.disabled = true;
     this.filterForm.reset();
+    this._setTree({});
   }
 
 
@@ -84,6 +85,16 @@ export class BookFilterContainer implements OnInit, OnDestroy {
   }
 
   private _setTree(queryParams: ParamsAsMap): void {
+    if (queryParams['searchText']?.length === 0) {
+      delete queryParams.searchText;
+    }
+    if (queryParams['genreNames']?.length === 0) {
+      delete queryParams.genreNames;
+    }
+    if (queryParams['authorIds']?.length === 0) {
+      delete queryParams.authorIds;
+    }
+    console.log(queryParams);
     this.router.navigate(
       [], {
         relativeTo: this.route,
@@ -117,14 +128,17 @@ export class BookFilterContainer implements OnInit, OnDestroy {
     if (params.has('searchText')) {
       queryParams['searchText'] = params.get('searchText');
     }
+
     if (params.has('genreNames')) {
       queryParams['genreNames'] = params.getAll('genreNames');
     }
+
     if (params.has('authorIds')) {
       let authorIds = params.getAll('authorIds');
       authorIds = authorIds.map((strId: string) => parseInt(strId, 2));
       queryParams['authorIds'] = authorIds;
     }
+
     this.filterForm.patchValue(queryParams);
     this._setTree(queryParams);
   }

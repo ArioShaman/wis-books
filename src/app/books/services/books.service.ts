@@ -112,26 +112,28 @@ export class BooksService {
     Object.keys(ranSackParams).forEach(
       (key) => {
         const param = ranSackParams[key];
-        switch (key) {
-          case 'authorIds':
-            param.map((id) => {
-              httpParams = httpParams.append('q[author_id_in][]', id);
-            });
+        if (param) {
+          switch (key) {
+            case 'authorIds':
+              param.map((id) => {
+                httpParams = httpParams.append('q[author_id_in][]', id);
+              });
 
-            break;
-          case 'genreNames':
-            param.map((name) => {
-              httpParams = httpParams.append('q[genres_name_in][]', name);
-            });
-            break;
-          case 'searchText':
-            if (param) {
-              httpParams = httpParams.append(
-                'q[title_or_description_cont]', param
-              );
-            }
+              break;
+            case 'genreNames':
+              param.map((name) => {
+                httpParams = httpParams.append('q[genres_name_in][]', name);
+              });
+              break;
+            case 'searchText':
+              if (param) {
+                httpParams = httpParams.append(
+                  'q[title_or_description_cont]', param
+                );
+              }
 
-            break;
+              break;
+          }
         }
       }
     );
