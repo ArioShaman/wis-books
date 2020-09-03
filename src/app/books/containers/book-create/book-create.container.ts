@@ -6,7 +6,7 @@ import {
   ValidatorFn
 } from '@angular/forms';
 
-import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Observable, Subject } from 'rxjs';
@@ -38,13 +38,13 @@ export class BookCreateContainer implements OnInit, OnDestroy {
   public bookForm: FormGroup;
   public matcher = new BookErrorStateMatcher();
 
-  public submited: boolean = false;
-  public created: boolean = false;
-  public uploadedImage: boolean = false;
-  public uploadedPreviews: boolean = false;
+  public submited = false;
+  public created = false;
+  public uploadedImage = false;
+  public uploadedPreviews = false;
 
   public imageChangedEvent: Event;
-  public croppedImage: any;
+  public croppedImage: string;
 
   public authors$: Observable<Author[]>;
   public genres$: Observable<Genre[]>;

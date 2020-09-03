@@ -94,12 +94,12 @@ export class BookFilterContainer implements OnInit, OnDestroy {
     if (queryParams['authorIds']?.length === 0) {
       delete queryParams.authorIds;
     }
-    console.log(queryParams);
     this.router.navigate(
       [], {
         relativeTo: this.route,
         replaceUrl: true,
         queryParams,
+        queryParamsHandling: 'merge'
       });
   }
 

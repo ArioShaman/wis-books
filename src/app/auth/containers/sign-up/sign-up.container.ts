@@ -31,7 +31,7 @@ export class SignUpContainer implements OnInit, OnDestroy {
   public signUpForm: FormGroup;
   public matcher = new BookErrorStateMatcher();
 
-  public submited: boolean = false;
+  public submited = false;
 
   private destroy$ = new Subject<void>();
 

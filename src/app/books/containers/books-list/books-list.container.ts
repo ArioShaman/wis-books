@@ -37,8 +37,8 @@ export class BooksListContainer implements OnInit, OnDestroy {
   public pageIndex = 0;
   public countPages = 1;
   public countRecords = 0;
-  public loaded: boolean = false;
-  public openedFilters: boolean = false;
+  public loaded = false;
+  public openedFilters = false;
 
   private destroy$ = new Subject<void>();
 
@@ -72,6 +72,9 @@ export class BooksListContainer implements OnInit, OnDestroy {
           this.books = res.books;
           this.countRecords = res.meta.records;
           this.countPages = res.meta.pages;
+          if (this.pageIndex >= this.countPages) {
+            this._navigate(this.countPages);
+          }
         },
       );
   }
@@ -81,14 +84,15 @@ export class BooksListContainer implements OnInit, OnDestroy {
       .navigate(['/books'], {
         queryParams: {
           genreNames
-        }
+        },
+        queryParamsHandling: 'merge'
       }
     );
   }
   public pageEvent(event: IPageEvent): void {
     this.pageIndex = event.pageIndex;
     this.books = [];
-    this.getBooks(this.pageIndex + 1);
+    this._navigate(this.pageIndex + 1);
   }
 
   public toggleFilters(): void {
@@ -100,10 +104,24 @@ export class BooksListContainer implements OnInit, OnDestroy {
     this.getBooks();
   }
 
+  private _navigate(page: number): void {
+    this.router.navigate(
+      [], {
+        relativeTo: this.route,
+        replaceUrl: true,
+        queryParams: { page },
+        queryParamsHandling: 'merge'
+      });
+  }
+
   private _listenQueryPrams(): void {
     this.route.queryParamMap
       .pipe(takeUntil(this.destroy$))
       .subscribe((res: ParamsAsMap) => {
+        if (res.has('page')) {
+          this.pageIndex = res.get('page') - 1;
+        }
+
         if (res.has('searchText') && res.get('searchText')?.length > 0) {
           this.curRanSackParams.searchText = res.get('searchText');
         } else {

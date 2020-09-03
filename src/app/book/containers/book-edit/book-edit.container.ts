@@ -40,8 +40,8 @@ export class BookEditContainer implements OnInit, OnDestroy {
   public matcher = new BookErrorStateMatcher();
 
   public imageSrc: string;
-  public submited: boolean = false;
-  public edited: boolean = false;
+  public submited = false;
+  public edited = false;
   public fileUrl: string | ArrayBuffer;
 
   public authors$: Observable<Author[]>;
