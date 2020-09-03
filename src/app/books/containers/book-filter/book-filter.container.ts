@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, ParamsAsMap } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { Subject, Observable } from 'rxjs';
-import { takeUntil, debounceTime } from 'rxjs/operators';
+import { takeUntil, debounceTime, take } from 'rxjs/operators';
 
 import { AuthorsService } from '../../../core/services/authors.service';
 import { GenresService } from '../../../core/services/genres.service';
@@ -11,8 +12,15 @@ import { RanSackParams } from '../../models/ran-sack-params.model';
 import { Author } from '../../../authors/models/author.model';
 import { Genre } from '../../../genres/models/genre.model';
 
+interface IFilterParam {
+  searchText?: string;
+  genreNames?: string[];
+  authorIds?: number[];
+
+}
+
 @Component({
-  selector: 'book-filter',
+  selector: 'app-book-filter',
   templateUrl: './book-filter.container.html',
   styleUrls: ['./book-filter.container.sass']
 })
@@ -21,7 +29,7 @@ export class BookFilterContainer implements OnInit, OnDestroy {
   @Output('setRanSack')
   public setRanSack = new EventEmitter<RanSackParams>();
 
-  public disabled: boolean = true;
+  public disabled = true;
 
   public filterForm: FormGroup;
   public ranSackParams = new RanSackParams();
@@ -34,42 +42,27 @@ export class BookFilterContainer implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     private authorsService: AuthorsService,
     private genresService: GenresService,
+    private location: Location
   ) {
-    this.filterForm = this.fb.group({
-      searchControl: null,
-      authorsControl: null,
-      genresControl: null
-    });
+    this._initForm();
   }
 
   public ngOnInit(): void {
     this.getGenres();
     this.getAuthors();
 
+    this.route.queryParamMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (params) => {
+          this._setParams(params, 'paramMap');
+        }
+      );
     this._setValueChanges();
-
-    this.route.queryParams
-      .pipe(
-        takeUntil(this.destroy$)
-      ).subscribe(
-        (param) => {
-          const genre = param['genre'];
-          if (genre) {
-            if (Array.isArray(genre)) {
-              this.filterForm.patchValue({
-                genresControl: genre
-              });
-            } else {
-              this.filterForm.patchValue({
-                genresControl: [genre]
-              });
-            }
-          } else {
-            this.setRanSack.emit(this.ranSackParams);
-          }
-        });
+    this._patchForm();
   }
 
   public ngOnDestroy(): void {
@@ -79,7 +72,7 @@ export class BookFilterContainer implements OnInit, OnDestroy {
 
   public getGenres(): void {
     this.genres$ = this.genresService
-      .getAllGenres();
+    .getAllGenres();
   }
 
   public getAuthors(): void {
@@ -88,17 +81,19 @@ export class BookFilterContainer implements OnInit, OnDestroy {
   }
 
   public clearFilter(): void {
-    this.disabled = true;
-
     this.ranSackParams.clear();
     this.disabled = true;
     this.filterForm.reset();
   }
 
-  public selectGenre(genreNames: string[]): void {
-    this.filterForm.patchValue({
-      genresControl: genreNames
-    });
+
+  private _setTree(queryParams: Object): void {
+    this.router.navigate(
+      [], {
+        relativeTo: this.route,
+        replaceUrl: true,
+        queryParams,
+      });
   }
 
   private _setValueChanges(): void {
@@ -108,18 +103,81 @@ export class BookFilterContainer implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       ).subscribe((res) => {
         this.disabled = false;
-        if (res.searchControl) {
-          this.ranSackParams.searchText = res.searchControl;
-        }
-        if (res.genresControl) {
-          this.ranSackParams.genreNames = res.genresControl;
+        this._setParams(res, 'ransack');
+      });
+  }
+
+  private _initForm(): void {
+    this.filterForm = this.fb.group({
+      searchText: null,
+      authorIds: null,
+      genreNames: null
+    });
+  }
+
+  private _setParams(params: ParamsAsMap | IFilterParam, action: string = 'default'): void {
+    const queryParams: Object = {};
+
+    switch (action) {
+      case 'paramMap':
+        if (params.has('searchText')) {
+          const paramSearchText = params.get('searchText');
+          this._setParam('searchText', paramSearchText, queryParams);
         }
 
-        if (res.authorsControl) {
-          this.ranSackParams.authorIds = res.authorsControl;
+        if (params.has('genreNames')) {
+          const paramGenreNames = params.getAll('genreNames');
+          this._setParam('genreNames', paramGenreNames, queryParams);
         }
-        this.setRanSack.emit(this.ranSackParams);
-      });
+
+        if (params.has('authorIds')) {
+          let paramAuthorIds = params.getAll('authorIds');
+          paramAuthorIds = paramAuthorIds.map(
+            (strId: string) => parseInt(strId)
+          );
+          this._setParam('authorIds', paramAuthorIds, queryParams);
+        }
+
+        if (params && params.keys.length > 0) {
+          this.disabled = false;
+        }
+        break;
+
+      case 'ransack':
+        const paramSearchText = params.searchText;
+        this._setParam('searchText', paramSearchText, queryParams);
+
+        if (params.genreNames) {
+          const paramGenreNames = params.genreNames;
+          this._setParam('genreNames', paramGenreNames, queryParams);
+        }
+
+        if (params.authorIds) {
+          const paramAuthorIds = params.authorIds;
+          this._setParam('authorIds', paramAuthorIds, queryParams);
+        }
+        break;
+    }
+
+    this._setTree(queryParams);
+    this.setRanSack.emit(this.ranSackParams);
+  }
+
+  private _setParam(
+    key: string,
+    value: string | string[] | number[],
+    queryParams: IFilterParam
+  ): void {
+    this.ranSackParams[key] = value;
+    queryParams[key] = value;
+  }
+
+  private _patchForm(): void {
+    this.filterForm.patchValue({
+      searchText: this.ranSackParams.searchText,
+      genreNames: this.ranSackParams.genreNames,
+      authorIds: this.ranSackParams.authorIds
+    });
   }
 
 }

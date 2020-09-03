@@ -32,7 +32,7 @@ export class BookShowComponent implements OnInit {
     this.router
       .navigate(['/books'], {
         queryParams: {
-          genre: genre
+          genreNames: genre
         }
       }
     );

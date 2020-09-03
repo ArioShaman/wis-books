@@ -112,7 +112,6 @@ export class BooksService {
     Object.keys(ranSackParams).forEach(
       (key) => {
         const param = ranSackParams[key];
-
         switch (key) {
           case 'authorIds':
             param.map((id) => {

@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router'
 
-import { Subject, Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil, delay } from 'rxjs/operators';
 
 import { BooksService } from '../../services/books.service';
@@ -41,7 +42,8 @@ export class BooksListContainer implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   constructor(
-    private booksService: BooksService
+    private booksService: BooksService,
+    private router: Router
   ) {}
 
   public ngOnInit(): void {
@@ -72,7 +74,15 @@ export class BooksListContainer implements OnInit, OnDestroy {
       );
   }
 
-
+  public selectGenre(genreNames: string[]): void {
+    this.router
+      .navigate(['/books'], {
+        queryParams: {
+          genreNames
+        }
+      }
+    );
+  }
   public pageEvent(event: IPageEvent): void {
     this.pageIndex = event.pageIndex;
     this.books = [];
