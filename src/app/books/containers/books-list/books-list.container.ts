@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute, ParamsAsMap } from '@angular/router';
+// import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subject } from 'rxjs';
-import { takeUntil, delay } from 'rxjs/operators';
+import { takeUntil, delay, debounceTime, skip } from 'rxjs/operators';
 
 import { BooksService } from '../../services/books.service';
 import { Book } from '../../models/book.model';
 import { ParamsService } from '../../services/params.service';
+import { IFilterParam } from '../../models/filter-param.interface';
 
 interface IPageEvent {
   length: number;
@@ -41,13 +42,11 @@ export class BooksListContainer implements OnInit, OnDestroy {
 
   constructor(
     private booksService: BooksService,
-    private router: Router,
-    private route: ActivatedRoute,
     private qParams: ParamsService
   ) {}
 
   public ngOnInit(): void {
-    this._listenQueryPrams();
+    this._listenParams();
   }
 
   public ngOnDestroy(): void {
@@ -56,11 +55,10 @@ export class BooksListContainer implements OnInit, OnDestroy {
   }
 
   public getBooks(
-    page: number = this.pageIndex + 1
+    params: IFilterParam
   ): void {
     this.loaded = false;
-    console.log(this.qParams.getParams());
-    this.booksService.getBooks(page, this.qParams.getParams())
+    this.booksService.getBooks(params)
       .pipe(
         delay(700),
         takeUntil(this.destroy$)
@@ -71,56 +69,34 @@ export class BooksListContainer implements OnInit, OnDestroy {
           this.books = res.books;
           this.countRecords = res.meta.records;
           this.countPages = res.meta.pages;
-          if (this.pageIndex >= this.countPages) {
-            this._navigate(this.countPages);
-          }
         },
       );
   }
 
   public selectGenre(genreNames: string[]): void {
-    this.router
-      .navigate(['/books'], {
-        queryParams: {
-          genreNames
-        },
-        queryParamsHandling: 'merge'
-      }
-    );
+    this.qParams.setNewParams({ genreNames }); // ### FIX 
   }
+
   public pageEvent(event: IPageEvent): void {
     this.pageIndex = event.pageIndex;
     this.books = [];
-    this._navigate(this.pageIndex + 1);
+    this.qParams.setNewParams({
+      page: this.pageIndex + 1
+    });
   }
 
   public toggleFilters(): void {
     this.openedFilters = !this.openedFilters;
   }
 
-  private _navigate(page: number): void {
-    this.router.navigate(
-      [], {
-        relativeTo: this.route,
-        replaceUrl: true,
-        queryParams: { page },
-        // queryParamsHandling: 'merge'
-      });
-  }
-
-  private _listenQueryPrams(): void {
-    this.route.queryParamMap
+  private _listenParams(): void {
+    this.qParams.getParams$()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res: ParamsAsMap) => {
-        if (res.has('page')) {
-          this.pageIndex = res.get('page') - 1;
+      .subscribe(
+        (res) => {
+          this.getBooks(res);
         }
-        console.log(res.params);
-        this.qParams.setNewParams(res.params);
-
-        this.getBooks();
-      });
+      );
   }
-
 
 }

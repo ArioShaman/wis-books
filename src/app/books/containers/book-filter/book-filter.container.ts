@@ -10,7 +10,13 @@ import { GenresService } from '../../../core/services/genres.service';
 import { ParamsService } from '../../services/params.service';
 import { Author } from '../../../authors/models/author.model';
 import { Genre } from '../../../genres/models/genre.model';
+import { IFilterParam } from '../../models/filter-param.interface';
 
+const DEFAULT: IFilterParam = {
+  searchText: null,
+  genreNames: null,
+  authorIds: null
+};
 
 @Component({
   selector: 'app-book-filter',
@@ -18,8 +24,6 @@ import { Genre } from '../../../genres/models/genre.model';
   styleUrls: ['./book-filter.container.sass']
 })
 export class BookFilterContainer implements OnInit, OnDestroy {
-
-  @Output('setRanSack')
 
   public disabled = true;
 
@@ -32,21 +36,16 @@ export class BookFilterContainer implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
     private authorsService: AuthorsService,
     private genresService: GenresService,
     private qParams: ParamsService
   ) {
-    this._initForm();
-    this._setValueChanges();
+    this._getParams();
   }
 
   public ngOnInit(): void {
     this.getGenres();
     this.getAuthors();
-
-    this._listenQueryParams();
   }
 
   public ngOnDestroy(): void {
@@ -66,35 +65,7 @@ export class BookFilterContainer implements OnInit, OnDestroy {
 
   public clearFilter(): void {
     this.disabled = true;
-    this.filterForm.reset();
-    this._setTree();
-  }
-
-
-  private _listenQueryParams(): void {
-    this.route.queryParamMap
-      .pipe(
-        take(1),
-        takeUntil(this.destroy$)
-      ).subscribe(
-        (params: ParamMap) => {
-          this.qParams.setNewParams(params['params']);
-          this.filterForm.patchValue(this.qParams.getParams());
-          this._setTree();
-        }
-      );
-  }
-
-  private _setTree(): void {
-    console.log(this.qParams.getParams());
-
-    this.router.navigate(
-      [], {
-        relativeTo: this.route,
-        replaceUrl: true,
-        queryParams: this.qParams.getParams(),
-        // queryParamsHandling: 'merge'
-      });
+    this.qParams.setNewParams(DEFAULT);
   }
 
   private _setValueChanges(): void {
@@ -105,17 +76,28 @@ export class BookFilterContainer implements OnInit, OnDestroy {
       ).subscribe((res) => {
         this.disabled = false;
         this.qParams.setNewParams(res);
-        this._setTree();
       });
   }
-
-  private _initForm(): void {
-    this.filterForm = this.fb.group({
-      searchText: null,
-      authorIds: null,
-      genreNames: null
-    });
+  private _getParams(): void {
+    this.qParams.getParams$()
+      .pipe(
+        take(1),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        (res) => {
+          this._initForm(res);
+        }
+      );
   }
 
+  private _initForm(params: IFilterParam): void {
+    this.filterForm = this.fb.group({
+      searchText: [params.searchText],
+      authorIds: [params.authorIds],
+      genreNames: [params.genreNames]
+    });
+    this._setValueChanges();
+  }
 
 }

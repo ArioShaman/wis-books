@@ -1,4 +1,8 @@
 import { Injectable } from '@angular/core';
+import { Router, ActivatedRoute, ParamsAsMap } from '@angular/router';
+
+import { Observable, BehaviorSubject } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 import { IFilterParam } from '../models/filter-param.interface';
 
@@ -7,10 +11,16 @@ import { IFilterParam } from '../models/filter-param.interface';
 })
 export class ParamsService {
 
-  private curParams: IFilterParam;
+  private curParams: IFilterParam = {
+    page: 1
+  };
+  private curParams$ = new BehaviorSubject<IFilterParam>(this.curParams);
 
-  constructor() {
-    this.curParams = {};
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this._listenQueryParams();
   }
 
   public setNewParams(params: Object): void {
@@ -43,30 +53,51 @@ export class ParamsService {
 
         case 'authorIds':
           if (params['authorIds'] && params['authorIds'].length > 0) {
+            let authorIds = [];
             if (Array.isArray(params['authorIds'])) {
-              this.curParams.authorIds = params['authorIds'];
+              authorIds = params['authorIds'];
             } else {
-              const authorIds = Array(params['authorIds']);
-              this.curParams.authorIds = authorIds
-                .map((strId: string) => parseInt(strId, 0));
+              authorIds = Array(params['authorIds']);
             }
+            this.curParams.authorIds = authorIds
+              .map((strId: string) => parseInt(strId, 0));
           } else {
             delete this.curParams.authorIds;
           }
           break;
 
         case 'page':
-          if (params['authorIds'] && params['authorIds'].length > 0) {
-            this.curParams.page = params['page'];
-          } else {
-            delete this.curParams.page;
-          }
+          this.curParams.page = parseInt(params['page'], 0);
       }
     });
+    this.curParams$.next(this.curParams);
+    this._setTree();
   }
 
   public getParams(): IFilterParam {
     return this.curParams;
+  }
+
+  public getParams$(): Observable<IFilterParam> {
+    return this.curParams$.asObservable();
+  }
+  private _listenQueryParams(): void {
+    this.route.queryParamMap
+      .pipe(take(1))
+      .subscribe(
+        (params: ParamsAsMap) => {
+          this.setNewParams(params.params);
+        }
+      );
+  }
+
+  private _setTree(): void {
+    this.router.navigate(
+      [], {
+        relativeTo: this.route,
+        replaceUrl: true,
+        queryParams: this.getParams(),
+      });
   }
 
 }

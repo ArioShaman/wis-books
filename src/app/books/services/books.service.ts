@@ -7,7 +7,6 @@ import { map, debounce } from 'rxjs/operators';
 import { Book } from '../models/book.model';
 import { BooksResponse } from '../models/books-response.model';
 import { BookRequest } from '../models/book-request.model';
-import { RanSackParams } from '../models/ran-sack-params.model';
 import { IFilterParam } from '../models/filter-param.interface';
 
 @Injectable({
@@ -20,11 +19,10 @@ export class BooksService {
   ) { }
 
   public getBooks(
-    page: number,
-    ranSackParams: IFilterParam
+    qParams: IFilterParam
   ): Observable<BooksResponse> {
     const params = {
-      params: this._setParams(page, ranSackParams)
+      params: this._setParams(qParams)
     };
 
     return this.http.get('/books', params)
@@ -105,14 +103,14 @@ export class BooksService {
     return formData;
   }
 
-  private _setParams(page: number, ranSackParams: IFilterParam): HttpParams {
+  private _setParams(qParams: IFilterParam): HttpParams {
     let httpParams = new HttpParams()
       .set('limit', '12')
-      .set('page', String(page));
+      .set('page', String(qParams.page));
 
-    Object.keys(ranSackParams).forEach(
+    Object.keys(qParams).forEach(
       (key) => {
-        const param = ranSackParams[key];
+        const param = qParams[key];
         if (param) {
           switch (key) {
             case 'authorIds':
