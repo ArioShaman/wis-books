@@ -74,7 +74,7 @@ export class BooksListContainer implements OnInit, OnDestroy {
   }
 
   public selectGenre(genreNames: string[]): void {
-    this.qParams.setNewParams({ genreNames }); // ### FIX 
+    this.qParams.setNewParams({ genreNames });
   }
 
   public pageEvent(event: IPageEvent): void {

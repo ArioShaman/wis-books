@@ -81,10 +81,8 @@ export class BookFilterContainer implements OnInit, OnDestroy {
   private _getParams(): void {
     this.qParams.getParams$()
       .pipe(
-        take(1),
         takeUntil(this.destroy$)
-      )
-      .subscribe(
+      ).subscribe(
         (res) => {
           this._initForm(res);
         }

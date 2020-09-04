@@ -36,11 +36,8 @@ export class ParamsService {
           break;
 
         case 'genreNames':
-          if (params['genreNames']) {
-            if (
-              Array.isArray(params['genreNames']) &&
-              params['genreNames'].length > 0
-            ) {
+          if (params['genreNames'] && params['genreNames'].length > 0) {
+            if (Array.isArray(params['genreNames'])) {
               this.curParams.genreNames = params['genreNames'];
             } else {
               this.curParams.genreNames = Array(params['genreNames']);
@@ -81,6 +78,7 @@ export class ParamsService {
   public getParams$(): Observable<IFilterParam> {
     return this.curParams$.asObservable();
   }
+
   private _listenQueryParams(): void {
     this.route.queryParamMap
       .pipe(take(1))
