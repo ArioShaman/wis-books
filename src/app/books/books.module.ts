@@ -17,6 +17,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 
 import { BooksRoutingModule } from './books-routing.module';
 import { BooksService } from './services/books.service';
+import { ParamsService } from './services/params.service';
 import { BooksView } from './views/books/books.view';
 import { BooksListContainer } from './containers/books-list/books-list.container';
 import { BookComponent } from './components/book/book.component';
@@ -39,6 +40,7 @@ import { BookFilterContainer } from './containers/book-filter/book-filter.contai
   ],
   providers: [
     BooksService,
+    ParamsService,
     {
       provide: MAT_DATE_LOCALE,
       useValue: 'ru-RU'

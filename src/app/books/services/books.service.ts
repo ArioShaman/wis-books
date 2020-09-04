@@ -8,6 +8,7 @@ import { Book } from '../models/book.model';
 import { BooksResponse } from '../models/books-response.model';
 import { BookRequest } from '../models/book-request.model';
 import { RanSackParams } from '../models/ran-sack-params.model';
+import { IFilterParam } from '../models/filter-param.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class BooksService {
 
   public getBooks(
     page: number,
-    ranSackParams: RanSackParams
+    ranSackParams: IFilterParam
   ): Observable<BooksResponse> {
     const params = {
       params: this._setParams(page, ranSackParams)
@@ -104,7 +105,7 @@ export class BooksService {
     return formData;
   }
 
-  private _setParams(page: number, ranSackParams: RanSackParams): HttpParams {
+  private _setParams(page: number, ranSackParams: IFilterParam): HttpParams {
     let httpParams = new HttpParams()
       .set('limit', '12')
       .set('page', String(page));

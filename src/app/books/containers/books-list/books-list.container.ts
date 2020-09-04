@@ -6,8 +6,7 @@ import { takeUntil, delay } from 'rxjs/operators';
 
 import { BooksService } from '../../services/books.service';
 import { Book } from '../../models/book.model';
-import { RanSackParams } from '../../models/ran-sack-params.model';
-import { IFilterParam } from '../../models/filter-param.interface';
+import { ParamsService } from '../../services/params.service';
 
 interface IPageEvent {
   length: number;
@@ -15,7 +14,6 @@ interface IPageEvent {
   pageSize: number;
   previousPageIndex: number;
 }
-
 
 @Component({
   selector: 'books-list',
@@ -28,7 +26,6 @@ export class BooksListContainer implements OnInit, OnDestroy {
   public shadowBooks = new Array(6);
 
   public searchText: string;
-  public curRanSackParams = new RanSackParams();
 
   public selectedAuthors: number[];
   public selectedGenres: string[];
@@ -45,7 +42,8 @@ export class BooksListContainer implements OnInit, OnDestroy {
   constructor(
     private booksService: BooksService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private qParams: ParamsService
   ) {}
 
   public ngOnInit(): void {
@@ -61,7 +59,8 @@ export class BooksListContainer implements OnInit, OnDestroy {
     page: number = this.pageIndex + 1
   ): void {
     this.loaded = false;
-    this.booksService.getBooks(page, this.curRanSackParams)
+    console.log(this.qParams.getParams());
+    this.booksService.getBooks(page, this.qParams.getParams())
       .pipe(
         delay(700),
         takeUntil(this.destroy$)
@@ -99,18 +98,13 @@ export class BooksListContainer implements OnInit, OnDestroy {
     this.openedFilters = !this.openedFilters;
   }
 
-  public setRanSack(ranSackParams: RanSackParams): void {
-    this.curRanSackParams = ranSackParams;
-    this.getBooks();
-  }
-
   private _navigate(page: number): void {
     this.router.navigate(
       [], {
         relativeTo: this.route,
         replaceUrl: true,
         queryParams: { page },
-        queryParamsHandling: 'merge'
+        // queryParamsHandling: 'merge'
       });
   }
 
@@ -121,30 +115,9 @@ export class BooksListContainer implements OnInit, OnDestroy {
         if (res.has('page')) {
           this.pageIndex = res.get('page') - 1;
         }
+        console.log(res.params);
+        this.qParams.setNewParams(res.params);
 
-        if (res.has('searchText') && res.get('searchText')?.length > 0) {
-          this.curRanSackParams.searchText = res.get('searchText');
-        } else {
-          this.curRanSackParams.searchText = null;
-        }
-
-        if (res.has('genreNames') && res.getAll('genreNames')?.length > 0) {
-          this.curRanSackParams.genreNames = res.getAll('genreNames');
-        } else {
-          this.curRanSackParams.genreNames = null;
-        }
-
-        if (res.has('authorIds') && res.getAll('authorIds')?.length > 0) {
-          let authorIds = res.getAll('authorIds');
-          authorIds = authorIds.map((strId: string) => parseInt(strId, 2));
-          this.curRanSackParams.authorIds = authorIds;
-        } else {
-          this.curRanSackParams.authorIds = null;
-        }
-
-        if (Object.keys(res).length === 0) {
-          this.curRanSackParams.clear();
-        }
         this.getBooks();
       });
   }
