@@ -57,7 +57,6 @@ export class BookEditContainer implements OnInit, OnDestroy {
     private genresService: GenresService,
     private authorsService: AuthorsService,
     private fb: FormBuilder,
-    private dialog: MatDialog,
     private dialogService: DialogService
   ) { }
 

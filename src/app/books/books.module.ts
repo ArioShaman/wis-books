@@ -14,6 +14,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 import { BooksRoutingModule } from './books-routing.module';
 import { BooksService } from './services/books.service';
@@ -41,6 +42,7 @@ import { BookFilterContainer } from './containers/book-filter/book-filter.contai
   providers: [
     BooksService,
     ParamsService,
+    NgxImageCompressService,
     {
       provide: MAT_DATE_LOCALE,
       useValue: 'ru-RU'

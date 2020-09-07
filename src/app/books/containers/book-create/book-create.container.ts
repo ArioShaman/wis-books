@@ -13,6 +13,7 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
 
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 import {
   BookErrorStateMatcher
@@ -45,11 +46,13 @@ export class BookCreateContainer implements OnInit, OnDestroy {
 
   public imageChangedEvent: Event;
   public croppedImage: string;
+  public filename: string;
 
   public authors$: Observable<Author[]>;
   public genres$: Observable<Genre[]>;
 
   public file: File;
+  public compressedFile: string;
   public previews: FileList;
 
   private destroy$ = new Subject<void>();
@@ -62,7 +65,8 @@ export class BookCreateContainer implements OnInit, OnDestroy {
     private genresService: GenresService,
     private authorsService: AuthorsService,
     private fb: FormBuilder,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private compressService: NgxImageCompressService
   ) { }
 
   public ngOnInit(): void {
@@ -136,22 +140,21 @@ export class BookCreateContainer implements OnInit, OnDestroy {
       .getAllAuthors();
   }
 
-  public imageCropped(event: ImageCroppedEvent): void {
+  public imageCropped(event: ImageCroppedEvent, filename: string): void {
     this.croppedImage = event.base64;
     fetch(this.croppedImage)
       .then((res) => res.blob())
       .then((blob) => {
-        const filename = Math.random().toString(36).substring(7);
-        const file = new File([blob], filename, { type: 'image/png' });
-        this.bookForm.patchValue({
-          image: file
-        });
+        const file = new File([blob], this.filename, { type: 'image/png' });
+        this.compressImage(file);
       });
   }
 
   public upload(fileList: FileList, event: Event): void {
     this.file = fileList[0];
     this.uploadedImage = true;
+    this.filename = this.file.name;
+
     setTimeout(() => this.imageChangedEvent = event, 401);
   }
 
@@ -161,6 +164,36 @@ export class BookCreateContainer implements OnInit, OnDestroy {
       previews: this.previews
     });
     this.uploadedPreviews = true;
+  }
+
+  public compressImage(fie: File): void {
+    const reader = new FileReader();
+
+    reader.onload = (event: any) => {
+      const orientation = -1;
+      const localUrl = event.target.result;
+      this.compressService
+        .compressFile(localUrl, orientation, 50, 50)
+        .then(
+          (base64) => {
+            fetch(base64)
+              .then((res) => res.blob())
+              .then((blob) => {
+                const compressedFile = new File(
+                  [blob],
+                  this.filename,
+                  { type: 'image/png' }
+                );
+
+                this.bookForm.patchValue({
+                  image: compressedFile
+                });
+              });
+          }
+        );
+    };
+
+    reader.readAsDataURL(this.file);
   }
 
   public onSubmit(cf: IForm): void {
