@@ -8,10 +8,11 @@ import {
 } from '@angular/forms';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
 
-import { Observable, Subject, of } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil, take } from 'rxjs/operators';
+
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 import { BooksService } from '../../../books/services/books.service';
 import { AuthorsService } from '../../../core/services/authors.service';
@@ -57,7 +58,8 @@ export class BookEditContainer implements OnInit, OnDestroy {
     private genresService: GenresService,
     private authorsService: AuthorsService,
     private fb: FormBuilder,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private compressService: NgxImageCompressService
   ) { }
 
   public ngOnInit(): void {
@@ -144,7 +146,7 @@ export class BookEditContainer implements OnInit, OnDestroy {
     this.bookForm.valueChanges
       .pipe(
         takeUntil(this.destroy$)
-      ).subscribe(data => this.edited = true);
+      ).subscribe(() => this.edited = true);
   }
 
   public checkDateValidation: ValidatorFn =
@@ -171,15 +173,34 @@ export class BookEditContainer implements OnInit, OnDestroy {
   public upload(fileList: FileList): void {
     const file = fileList[0];
     const reader = new FileReader();
+    const filename = file.name;
+    const orientation = -1;
+
     reader.addEventListener('load', (event: Event) => {
-      this.fileUrl = `url('${event.target['result']}')`;
+      const localUrl = event.target['result'];
+      this.fileUrl = `url('${localUrl}')`;
+      this.compressService
+        .compressFile(localUrl, orientation, 50, 50)
+        .then(
+          (base64) => {
+            fetch(base64)
+              .then((res) => res.blob())
+              .then((blob) => {
+                const compressedFile = new File(
+                  [blob],
+                  filename,
+                  { type: 'image/png' }
+                );
+
+                this.bookForm.patchValue({
+                  image: compressedFile,
+                  uploadedImage: true
+                });
+              });
+          }
+        );
     });
     reader.readAsDataURL(file);
-
-    this.bookForm.patchValue({
-      image: file,
-      uploadedImage: true
-    });
   }
 
   public getGenres(): void {

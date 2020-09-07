@@ -12,6 +12,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { TranslateModule } from '@ngx-translate/core';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 import { CanDeactivateGuard } from '../core/guards/exit.guard';
 
@@ -57,6 +58,7 @@ import { LocalizedDatePipe } from './pipes/localized-date.pipe';
   providers: [
     BookResolve,
     CanDeactivateGuard,
+    NgxImageCompressService,
     {
       provide: MAT_DATE_LOCALE,
       useValue: 'ru-RU'

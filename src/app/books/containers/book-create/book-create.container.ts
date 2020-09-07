@@ -169,9 +169,9 @@ export class BookCreateContainer implements OnInit, OnDestroy {
   public compressImage(fie: File): void {
     const reader = new FileReader();
 
-    reader.onload = (event: any) => {
+    reader.onload = (event: Event) => {
       const orientation = -1;
-      const localUrl = event.target.result;
+      const localUrl = event.target['result'];
       this.compressService
         .compressFile(localUrl, orientation, 50, 50)
         .then(
