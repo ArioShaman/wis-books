@@ -29,8 +29,9 @@
   align-items: center
   flex-direction: column
   position: relative
-  animation: slide 0.9s ease-in-out 0.5s
-  animation-fill-mode: forwards
+  // animation: slide 0.9s ease-in-out 0.5s
+  // animation-fill-mode: both
+  transition: 0.9s
   transform: translateX(-500px)
 
   @include mobile
@@ -42,8 +43,15 @@
     height: 600px
     box-shadow: $shadow
     transform: translateX(-1000px)
-    animation: tablet-slide 0.6s ease-in-out 0.5s
-    animation-fill-mode: forwards
+
+  &.loaded
+    transform: translateX(0px)
+
+  &.leave
+    transform: translateX(-500px)
+
+    @include tablet
+      transform: translateX(-1000px)
 
   h1
     font-size: 50px
@@ -94,8 +102,13 @@ button[type="submit"]
   
   .line
     clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 0%)
-    animation: slide-text 1.2s ease-in-out 0.5s
-    animation-fill-mode: forwards
+    transition: 0.9s
+
+    &.loaded
+      clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%)
+
+    &.leave
+      clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 0%)
 
   span
     color: #54d6ba

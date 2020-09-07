@@ -1,7 +1,8 @@
 <div class="container">
     <form class="body"
           [formGroup]="signUpForm"
-          (ngSubmit)="onSubmit(signUpForm.value)">
+          (ngSubmit)="onSubmit(signUpForm.value)"
+          [ngClass]="[loaded && leave ? 'leave':'', loaded ? 'loaded': '']">
       <h1>Sign Up</h1>
 
       <!-- first name -->
@@ -96,13 +97,13 @@
     </form>
 
     <div class="text">
-      <div class="line">
+      <div class="line" [ngClass]="[loaded && leave ? 'leave':'', loaded ? 'loaded': '']">
         We provide <span>BEST</span> 
       </div>
-      <div class="line">
+      <div class="line" [ngClass]="[loaded && leave ? 'leave':'', loaded ? 'loaded': '']">
         solutions for
       </div>
-      <div class="line">
+      <div class="line" [ngClass]="[loaded && leave ? 'leave':'', loaded ? 'loaded': '']">
         reading
       </div>
     </div>    

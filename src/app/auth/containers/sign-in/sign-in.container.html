@@ -1,7 +1,8 @@
 <div class="container">
   <form class="body"
         [formGroup]="signInForm"
-        (ngSubmit)="onSubmit(signInForm.value)">
+        (ngSubmit)="onSubmit(signInForm.value)"
+        [ngClass]="[loaded && leave ? 'leave':'', loaded ? 'loaded': '']">
 
     <h1>Sign In</h1>
     <mat-form-field class="input">
@@ -44,13 +45,13 @@
   </form>
 
   <div class="text">
-    <div class="line">
+    <div class="line" [ngClass]="[loaded && leave ? 'leave':'', loaded ? 'loaded': '']">
       We provide <span>BEST</span> 
     </div>
-    <div class="line">
+    <div class="line" [ngClass]="[loaded && leave ? 'leave':'', loaded ? 'loaded': '']">
       solutions for
     </div>
-    <div class="line">
+    <div class="line" [ngClass]="[loaded && leave ? 'leave':'', loaded ? 'loaded': '']">
       reading
     </div>
   </div>

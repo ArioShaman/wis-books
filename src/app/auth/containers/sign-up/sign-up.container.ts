@@ -32,6 +32,8 @@ export class SignUpContainer implements OnInit, OnDestroy {
   public matcher = new BookErrorStateMatcher();
 
   public submited = false;
+  public leave = false;
+  public loaded = false;
 
   private destroy$ = new Subject<void>();
 
@@ -53,6 +55,9 @@ export class SignUpContainer implements OnInit, OnDestroy {
     }, {
       validators: [this.checkPasswordValidation]
     });
+    setTimeout(() => {
+      this.loaded = true;
+    }, 600);
   }
 
   public ngOnDestroy(): void {
@@ -91,6 +96,19 @@ export class SignUpContainer implements OnInit, OnDestroy {
     }
 
     return null;
+  }
+
+  public canDeactivate(): Promise<boolean> {
+    setTimeout(() => {
+      return true;
+    }, 6000);
+
+    return new Promise((resolve) => {
+      this.leave = true;
+      setTimeout(() => {
+        resolve(true);
+      }, 900);
+    });
   }
 
 }

@@ -16,7 +16,6 @@ import { AuthView } from './views/auth/auth.view';
 import { SignInContainer } from './containers/sign-in/sign-in.container';
 import { SignUpContainer } from './containers/sign-up/sign-up.container';
 
-
 @NgModule({
   declarations: [
     AuthView,

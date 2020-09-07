@@ -5,7 +5,7 @@ import {
   Validators
 } from '@angular/forms';
 
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { AuthService } from '../../services/auth.service';
@@ -21,10 +21,13 @@ import {
 })
 export class SignInContainer implements OnInit, OnDestroy {
 
-  public signInForm: FormGroup;
-  public matcher = new BookErrorStateMatcher();
+  public leave = false;
+  public loaded = false;
 
   public submited = false;
+
+  public signInForm: FormGroup;
+  public matcher = new BookErrorStateMatcher();
 
   private destroy$ = new Subject<void>();
 
@@ -38,6 +41,9 @@ export class SignInContainer implements OnInit, OnDestroy {
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
+    setTimeout(() => {
+      this.loaded = true;
+    }, 600);
   }
 
   public ngOnDestroy(): void {
@@ -53,6 +59,19 @@ export class SignInContainer implements OnInit, OnDestroy {
           takeUntil(this.destroy$)
         ).subscribe();
     }
+  }
+
+  public canDeactivate(): Promise<boolean> {
+    setTimeout(() => {
+      return true;
+    }, 6000);
+
+    return new Promise((resolve) => {
+      this.leave = true;
+      setTimeout(() => {
+        resolve(true);
+      }, 900);
+    });
   }
 
 }
