@@ -24,7 +24,7 @@ import {
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.container.html',
-  styleUrls: ['./sign-up.container.sass']
+  styleUrls: ['../sign-in/sign-in.container.sass']
 })
 export class SignUpContainer implements OnInit, OnDestroy {
 

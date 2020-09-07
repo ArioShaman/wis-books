@@ -29,6 +29,9 @@
   align-items: center
   flex-direction: column
   position: relative
+  animation: slide 0.9s ease-in-out 0.5s
+  animation-fill-mode: forwards
+  transform: translateX(-500px)
 
   @include mobile
     width: 350px
@@ -38,6 +41,9 @@
   @include tablet
     height: 600px
     box-shadow: $shadow
+    transform: translateX(-1000px)
+    animation: tablet-slide 0.6s ease-in-out 0.5s
+    animation-fill-mode: forwards
 
   h1
     font-size: 50px
@@ -73,5 +79,43 @@ button[type="submit"]
   font-size: 66px
   font-weight: 700
 
+  @include mobile
+    display: none
+
+  @include tablet
+    display: none
+
+  @include desk
+    right: 75px
+    bottom: 35px
+    width: 370px
+    font-size: 46px
+
+  
+  .line
+    clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 0%)
+    animation: slide-text 1.2s ease-in-out 0.5s
+    animation-fill-mode: forwards
+
   span
     color: #54d6ba
+
+@keyframes slide
+  0%
+    transform: translateX(-500px)
+  100%
+    transform: translateX(0px)
+
+@keyframes tablet-slide
+  0%
+    transform: translateX(-1000px)
+  100%
+    transform: translateX(0px)
+
+
+@keyframes slide-text
+  0%
+    clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 0%)
+  100%
+    clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%)
+    
