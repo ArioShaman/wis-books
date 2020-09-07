@@ -5,6 +5,13 @@
     <mat-sidenav #sidenav>
       <div class="side-cont">
         <mat-list>
+          <a  routerLink="home" 
+              routerLinkActive="active"
+              mat-list-item
+              (click)="sidenav.toggle()"
+              matRipple>
+            Home
+          </a>
           <a  routerLink="books" 
               routerLinkActive="active"
               mat-list-item
@@ -55,9 +62,9 @@
                 (click)="sidenav.toggle()">
         menu
       </mat-icon>
-      <div class="grid">
-        <router-outlet></router-outlet>
-      </div>
+      
+      <router-outlet></router-outlet>
+
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

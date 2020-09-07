@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router, ParamsAsMap, ParamMap } from '@angular/router';
 
 import { Subject, Observable } from 'rxjs';
 import { takeUntil, debounceTime, take } from 'rxjs/operators';
@@ -85,6 +84,7 @@ export class BookFilterContainer implements OnInit, OnDestroy {
       ).subscribe(
         (res) => {
           this._initForm(res);
+          this.disabled = false;
         }
       );
   }

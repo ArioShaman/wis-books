@@ -1,0 +1,115 @@
+@import "./../../../../mixins.sass"
+@import "./../../../../variables.sass"
+
+.subtitle
+  color: $blue
+  text-align: center
+  font-size: 30px
+  font-weight: 500
+  
+  @include mobile
+    font-size: 15px
+
+  @include tablet
+    font-size: 18px
+
+  @include desk
+    font-size: 20px
+
+.title
+  width: 1000px
+  margin: 0px auto
+  font-size: 69px
+  color: $black
+  text-align: center
+  font-weight: 600
+
+  @include mobile
+    width: 320px
+    font-size: 29px
+
+  @include tablet
+    width: 550px
+    font-size: 38px
+
+  @include desk
+    width: 800px
+    font-size: 49px
+
+.purposes
+  width: 1550px
+  height: 450px
+  margin: 120px auto 
+  display: flex
+  justify-content: space-between
+  
+  @include mobile
+    width: 320px
+    height: 900px
+    flex-direction: column
+    margin: 60px auto 
+
+  @include tablet
+    width: 600px
+    height: 550px
+    flex-wrap: wrap
+    margin: 30px auto 
+    justify-content: space-around
+
+  @include desk
+    width: 1000px
+    height: 310px
+    margin: 60px auto 
+
+  .purpose
+    height: 450px
+    width: 450px
+    background: white
+    box-shadow: $shadow
+    border-radius: 18px
+    position: relative
+
+    @include mobile
+      width: 320px
+      height: 290px
+      border-radius: 10px
+
+    @include tablet
+      width: 275px
+      height: 250px
+      border-radius: 10px
+
+    @include desk
+      width: 310px
+      height: 310px
+      border-radius: 10px
+
+    img
+      border-radius: 18px
+
+      @include mobile
+        border-radius: 10px
+
+      @include desk
+        border-radius: 10px
+
+    .text
+      text-align: center
+      font-weight: 500
+      font-size: 30px
+      margin-top: 50px
+      
+      @include mobile
+        margin-top: 15px
+        font-size: 20px
+
+      @include desk
+        margin-top: 30px
+        font-size: 20px
+
+    img
+      width: 100%
+      height: auto
+      position: absolute
+      bottom: 0px
+

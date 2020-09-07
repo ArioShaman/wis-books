@@ -17,7 +17,7 @@ interface IPageEvent {
 }
 
 @Component({
-  selector: 'books-list',
+  selector: 'app-books-list',
   templateUrl: './books-list.container.html',
   styleUrls: ['./books-list.container.sass']
 })

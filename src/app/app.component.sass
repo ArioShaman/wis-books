@@ -18,6 +18,7 @@
     
 .mat-drawer-container 
   height: 100%
+  background: white
 
 a
   font-size: 20px
@@ -28,19 +29,6 @@ a
   &:hover, &.active
     background: rgba(0,0,0,.04)
     color: rgba(0,0,0,.87)
-
-.grid
-  position: relative
-  top: 20px
-  width: 960px
-  margin: 0px auto
-  min-height: 100%
-  
-  @include tablet
-    width: 580px
-  
-  @include mobile
-    width: 275px
 
 mat-sidenav
   width: 400px
@@ -53,6 +41,7 @@ mat-list-item
 mat-icon
   cursor: pointer
   background: #ececec
-  position: absolute
+  position: fixed
+  z-index: 3000
   top: 20px
   left: 20px

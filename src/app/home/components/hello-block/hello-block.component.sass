@@ -1,0 +1,76 @@
+@import "./../../../../mixins.sass"
+@import "./../../../../variables.sass"
+
+.main-cont
+  position: relative
+  width: 100%
+  height: 100%
+  background-image: url('../../../../assets/images/background.png')
+  background-repeat: none
+  background-size: cover
+  background-position: center 
+
+  @include mobile
+    display: flex
+    flex-direction: column
+    justify-content: center
+    background-position: 550px 0px 
+
+  @include tablet
+    display: flex
+    flex-direction: column
+    justify-content: center
+    background-position: 550px 0p
+
+  .info-text
+    position: absolute
+    top: 150px
+    left: 150px
+
+    @include mobile
+      position: relative
+      top: 0px
+      left: 0px
+      width: 320px
+      margin: 0px auto
+
+    @include tablet
+      width: 500px
+      position: relative
+      top: 0px
+      left: 0px
+      margin: 0px auto
+
+
+    @include desk
+      top: 120px
+      left: 120px
+
+    .title
+      color: $blue
+      font-size: 6em
+      font-weight: 900
+
+      @include mobile
+        font-size: 40px
+        width: 320px
+
+      @include tablet
+        text-align: center
+        font-size: 70px
+
+      @include desk
+        font-size: 6em
+
+  .button-line
+    height: 60px
+    width: 100%
+    position: absolute
+    bottom: 50px
+    display: flex
+    justify-content: center
+
+    @include mobile
+      position: relative
+      bottom: 0px
+      margin-top: 20px
