@@ -41,9 +41,9 @@ export class SignInContainer implements OnInit, OnDestroy {
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
-    setTimeout(() => {
-      this.loaded = true;
-    }, 600);
+
+
+    this._setLoaded();
   }
 
   public ngOnDestroy(): void {
@@ -62,16 +62,18 @@ export class SignInContainer implements OnInit, OnDestroy {
   }
 
   public canDeactivate(): Promise<boolean> {
-    setTimeout(() => {
-      return true;
-    }, 6000);
-
     return new Promise((resolve) => {
       this.leave = true;
       setTimeout(() => {
         resolve(true);
       }, 900);
     });
+  }
+
+  private _setLoaded(): void {
+    setTimeout(() => {
+      this.loaded = true;
+    }, 600);
   }
 
 }

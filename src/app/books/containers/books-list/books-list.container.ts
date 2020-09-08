@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-// import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { takeUntil, delay, debounceTime, skip } from 'rxjs/operators';
@@ -36,7 +35,7 @@ export class BooksListContainer implements OnInit, OnDestroy {
   public countPages = 1;
   public countRecords = 0;
   public loaded = false;
-  public openedFilters = false;
+
 
   private destroy$ = new Subject<void>();
 
@@ -62,8 +61,7 @@ export class BooksListContainer implements OnInit, OnDestroy {
       .pipe(
         delay(700),
         takeUntil(this.destroy$)
-      )
-      .subscribe(
+      ).subscribe(
         (res) => {
           this.loaded = true;
           this.books = res.books;
@@ -85,18 +83,11 @@ export class BooksListContainer implements OnInit, OnDestroy {
     });
   }
 
-  public toggleFilters(): void {
-    this.openedFilters = !this.openedFilters;
-  }
 
   private _listenParams(): void {
     this.qParams.getParams$()
       .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (res) => {
-          this.getBooks(res);
-        }
-      );
+      .subscribe((res) => this.getBooks(res));
   }
 
 }

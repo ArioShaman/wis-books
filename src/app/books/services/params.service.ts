@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router, ActivatedRoute, ParamsAsMap } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { Observable, BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -83,8 +83,8 @@ export class ParamsService {
     this.route.queryParamMap
       .pipe(take(1))
       .subscribe(
-        (params: ParamsAsMap) => {
-          this.setNewParams(params.params);
+        (params) => {
+          this.setNewParams(params['params']);
         }
       );
   }

@@ -64,9 +64,11 @@ export class BookEditContainer implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.book = this.route.snapshot.parent.data.book;
+
     if (this.book.image) {
       this.imageSrc = environment.hosts.imgHost + this.book.image;
     }
+
     this.getAuthors();
     this.getGenres();
     this.loadForm();
@@ -79,19 +81,13 @@ export class BookEditContainer implements OnInit, OnDestroy {
 
   public onSubmit(cf: IForm): void {
     this.submited = true;
+
     if (!this.bookForm.invalid) {
       const bookRequest = BookRequest.new(BookRequest, cf);
       this.booksService.updateBook(bookRequest)
         .pipe(takeUntil(this.destroy$))
         .subscribe(
-          (res) => {
-            this.snack.open('Book edited', 'Ok', {
-              duration: 3000,
-              horizontalPosition: 'end',
-              verticalPosition: 'top'
-            });
-            this.router.navigate(['/books']);
-          }
+          () => this._snackMessage()
         );
     }
   }
@@ -211,6 +207,16 @@ export class BookEditContainer implements OnInit, OnDestroy {
   public getAuthors(): void {
     this.authors$ = this.authorsService
       .getAllAuthors();
+  }
+
+  private _snackMessage(): void {
+    this.snack.open('Book edited', 'Ok', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'top'
+    });
+
+    this.router.navigate(['/books']);
   }
 
 }

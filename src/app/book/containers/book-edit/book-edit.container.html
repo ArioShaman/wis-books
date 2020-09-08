@@ -14,6 +14,7 @@
                 (change)="upload($event.target.files)"
                 name="file"
                 accept="image/png, image/jpeg">
+        
         <div  class="placeholder"
               [style.background-image]="fileUrl">
           {{ bookForm.get('uploadedImage').value ? '': 'Choose a cover *' }}
@@ -24,6 +25,7 @@
     <div class="info">
       <mat-form-field class="input">
         <mat-label>Title</mat-label>
+        
         <input  matInput
                 #title
                 placeholder="Enter a title"
@@ -31,6 +33,7 @@
                 required
                 autocomplete="off"
                 [errorStateMatcher]="matcher">
+        
         <mat-error  *ngIf="bookForm.get('title').hasError('required') && submited"
                     class="error">
           Oops, title is required!
@@ -63,6 +66,7 @@
                             *ngIf="(genres$ | async) as resultGenres">
     
               <mat-label>Choose a genres</mat-label>
+              
               <mat-select multiple formControlName="genres"
                           [errorStateMatcher]="matcher">
                 <mat-option *ngFor="let genre of resultGenres"
@@ -83,6 +87,7 @@
         <div class="form-group">
           <mat-form-field (click)="writingPicker.open()">
             <mat-label>Writing date</mat-label>
+            
             <input  matInput
                     autocomplete="off"
                     required 
@@ -90,7 +95,9 @@
                     placeholder="Enter a writing date"
                     formControlName="writingDate"
                     [errorStateMatcher]="matcher">
+            
             <mat-datepicker-toggle matSuffix [for]="writingPicker"></mat-datepicker-toggle>
+            
             <mat-datepicker disabled="false" #writingPicker></mat-datepicker>
             
             <mat-error  *ngIf="bookForm.get('writingDate').hasError('required') && submited"
@@ -99,6 +106,7 @@
             </mat-error>
           </mat-form-field>          
         </div>
+
         <div class="form-group">
           <mat-form-field (click)="releasePicker.open()">
             <mat-label>Release date</mat-label>
@@ -126,6 +134,7 @@
       </div>
     </div>
   </div>
+
   <p class="description">
     <mat-form-field>
       <mat-label>Description</mat-label>
@@ -142,6 +151,7 @@
       </mat-error>
     </mat-form-field>  
   </p>
+
   <div class="flex-line">
     <div class="price">
       <mat-form-field>
@@ -159,6 +169,7 @@
         </mat-error>             
       </mat-form-field>
     </div>
+
     <button type="submit" mat-flat-button
             color="primary"
             [disabled]="!edited && bookForm.valid">

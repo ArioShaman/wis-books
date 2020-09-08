@@ -12,7 +12,6 @@ import { environment } from '../../../../environments/environment';
 })
 export class BookShowComponent implements OnInit {
 
-
   public book: Book;
   public imageSrc: string;
 

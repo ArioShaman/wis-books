@@ -16,4 +16,3 @@ export class SignInRequest extends Model {
   public passwordConfirmation: string;
 
 }
-

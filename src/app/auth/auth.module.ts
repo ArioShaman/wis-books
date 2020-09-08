@@ -33,7 +33,7 @@ import { SignUpContainer } from './containers/sign-up/sign-up.container';
     MatSelectModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    MatSnackBarModule,
+    MatSnackBarModule
   ],
   providers: [
     AuthService

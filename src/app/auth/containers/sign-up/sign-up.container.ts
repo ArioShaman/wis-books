@@ -40,7 +40,6 @@ export class SignUpContainer implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
-    private dialog: MatDialog,
     private router: Router,
     private dialogService: DialogService
   ) { }
@@ -55,9 +54,8 @@ export class SignUpContainer implements OnInit, OnDestroy {
     }, {
       validators: [this.checkPasswordValidation]
     });
-    setTimeout(() => {
-      this.loaded = true;
-    }, 600);
+
+    this._setLoaded();
   }
 
   public ngOnDestroy(): void {
@@ -71,16 +69,7 @@ export class SignUpContainer implements OnInit, OnDestroy {
       this.auth.signUp(cf)
         .pipe(
           map((res) => {
-            const data: IDialogBody = {
-              message: 'Confirmation email was sended to you!',
-              type: 'single'
-            };
-            this.dialogService.openDialog(data)
-              .pipe(
-                takeUntil(this.destroy$)
-              ).subscribe(
-                () => this.router.navigate(['/auth/signIn'])
-              );
+            this._showConfimationMessage();
           }),
           takeUntil(this.destroy$)
         ).subscribe();
@@ -91,6 +80,7 @@ export class SignUpContainer implements OnInit, OnDestroy {
   (control: FormGroup): null => {
     const password = control.get('password');
     const passwordConfirmation = control.get('passwordConfirmation');
+
     if (password.value !== passwordConfirmation.value) {
       passwordConfirmation.setErrors({ confirmationInvalid: true });
     }
@@ -99,16 +89,32 @@ export class SignUpContainer implements OnInit, OnDestroy {
   }
 
   public canDeactivate(): Promise<boolean> {
-    setTimeout(() => {
-      return true;
-    }, 6000);
-
     return new Promise((resolve) => {
       this.leave = true;
       setTimeout(() => {
         resolve(true);
       }, 900);
     });
+  }
+
+  private _setLoaded(): void {
+    setTimeout(() => {
+      this.loaded = true;
+    }, 600);
+  }
+
+  private _showConfimationMessage(): void {
+    const data: IDialogBody = {
+      message: 'Confirmation email was sended to you!',
+      type: 'single'
+    };
+
+    this.dialogService.openDialog(data)
+      .pipe(
+        takeUntil(this.destroy$)
+      ).subscribe(
+        () => this.router.navigate(['/auth/signIn'])
+      );
   }
 
 }

@@ -27,6 +27,7 @@ export class BookFilterContainer implements OnInit, OnDestroy {
   public disabled = true;
 
   public filterForm: FormGroup;
+  public openedFilters = false;
 
   public authors$: Observable<Author[]>;
   public genres$: Observable<Genre[]>;
@@ -67,6 +68,10 @@ export class BookFilterContainer implements OnInit, OnDestroy {
     this.qParams.setNewParams(DEFAULT);
   }
 
+  public toggleFilters(): void {
+    this.openedFilters = !this.openedFilters;
+  }
+
   private _setValueChanges(): void {
     this.filterForm.valueChanges
       .pipe(
@@ -77,6 +82,7 @@ export class BookFilterContainer implements OnInit, OnDestroy {
         this.qParams.setNewParams(res);
       });
   }
+
   private _getParams(): void {
     this.qParams.getParams$()
       .pipe(
@@ -88,6 +94,7 @@ export class BookFilterContainer implements OnInit, OnDestroy {
         }
       );
   }
+
 
   private _initForm(params: IFilterParam): void {
     this.filterForm = this.fb.group({
