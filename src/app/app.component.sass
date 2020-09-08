@@ -3,33 +3,43 @@
   height: 100%
   position: absolute
 
+.side-cont
+  height: 100%
+  width: 100%
+  display: flex 
+  flex-direction: column
+  justify-content: space-between
+
+  .select
+    width: 80%
+    margin: 0px auto
+    
 .mat-drawer-container 
   height: 100%
 
-.links
-  margin-top: 10px
-  display: flex
-  width: 100%
-  justify-content: space-between
-  flex-direction: column
+a
+  font-size: 20px
+  text-decoration: none !important
+  color: black
+  outline: none
 
-  a
-    font-size: 20px
-    text-decoration: none !important
-    color: black
-
-    &.active
-      color: #4982b8
-      font-family: 'roboto-medium'
+  &:hover, &.active
+    background: rgba(0,0,0,.04)
+    color: rgba(0,0,0,.87)
 
 .grid
   position: relative
   top: 70px
-  width: 1000px
+  width: 960px
   margin: 0px auto
 
 mat-sidenav
   width: 400px
+
+mat-list-item
+  cursor: pointer
+  user-select: none
+  -webkit-tap-highlight-color: transparent
 
 mat-icon
   cursor: pointer

@@ -1,19 +1,19 @@
 <div class="flex">
-  <mat-form-field class="input">
-    <input type="text" 
-           matInput
-           placeholder="Enter search value"
-           [ngModel]="searchText"
-           (ngModelChange)="search($event)">
+  <div class="inputs-cont">
+    <mat-form-field class="input">
+      <mat-label>Enter Search value</mat-label>
+      <input type="text" 
+             matInput
+             placeholder="Enter search value"
+             [formControl]="searchControl">
     </mat-form-field>
-
-    <mat-form-field class="select" 
-                    appearance="fill"
+  
+    <mat-form-field class="select"
                     *ngIf="(authors$ | async) as resultAuthors">
       <mat-label>Choose an Author</mat-label>
-
-      <mat-select [ngModel]="selectedAuthorId"
-                  (ngModelChange)="selectAuthor($event)">
+  
+      <mat-select [formControl]="authorsControl"
+                  multiple>
         <mat-option [value]="author.id"
                     *ngFor="let author of resultAuthors">
           {{ author.firstName }} {{ author.lastName }}
@@ -21,48 +21,63 @@
       </mat-select>
       
     </mat-form-field>
-
-    <mat-form-field class="select" 
-                    appearance="fill"
+  
+    <mat-form-field class="select"
                     *ngIf="(genres$ | async) as resultGenres">
       
       <mat-label>Choose a genre</mat-label>
-      <mat-select [ngModel]="selectedGenreId"
-                  (ngModelChange)="selectGenre($event)">
+      <mat-select [formControl]="genresControl"
+                  multiple>
         <mat-option *ngFor="let genre of resultGenres"
-                    [value]="genre.id">
+                    [value]="genre.name">
           {{ genre.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <button class="clear" 
-            mat-raised-button
-            *ngIf="selectedAuthorId !== undefined || selectedGenreId !== undefined"
-            (click)="clearFilter()">
-      Clear
-    </button>
+  </div>
+
+  <button class="clear" 
+          mat-flat-button
+          (click)="clearFilter()"
+          [disabled]="disabled">
+          Clear
+  </button>
 </div>
 
-<ng-container *ngIf="(books | filterByAuthor:selectedAuthorId | filterByGenre:selectedGenreId ) as resultBooks">
-  <div class="container" 
-       *ngIf="books.length > 0 ; else elseBlock">
-    <book *ngFor="let book of resultBooks"
+<div class="not-found" 
+      *ngIf="countRecords === 0 && loaded">
+  Not found
+</div>
+
+<ng-container *ngIf="loaded ; else elseBlock">
+  <div class="container">
+    <book *ngFor="let book of books"
           [book]="book"
-          (genreFilter)="selectGenre($event.id)">
-    </book>
-    <div class="not-found" 
-         *ngIf="resultBooks.length === 0">
-      Not found
-    </div>
-  </div>
+          (genreFilter)="selectGenre($event)">
+    </book>    
+  </div>  
 </ng-container>
+<mat-paginator [length]="countRecords"
+               [pageSize]="pageSize"
+               [pageIndex]="pageIndex"
+               (page)="pageEvent($event)">
+</mat-paginator>
 
 <ng-template #elseBlock>
   <div class="container">
-    <div 
-      class="shadow-book"
-      *ngFor="let book of shadowBooks">
+    <div  class="shadow-book"
+          *ngFor="let book of shadowBooks">
+      <div class="pad-cont">
+        <div class="img"></div>
+        <div class="title"></div>
+        <div class="text"></div>
+        <div class="price"></div>
+      </div>
+      <div class="genres">
+        <div class="genre"></div>
+        <div class="genre"></div>
+      </div>
     </div>
   </div>
 </ng-template>

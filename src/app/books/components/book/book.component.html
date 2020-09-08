@@ -4,7 +4,7 @@
       
       <div class="img"></div>
 
-      <mat-card-title>
+      <mat-card-title class="title">
         {{ book.title }}
       </mat-card-title>
       
@@ -15,7 +15,7 @@
       <mat-card-content>
         <div class="flex-cont">
           <div class="author">
-            {{ book.authorId }}
+            <!-- {{ book.authorId }} -->
           </div>
           <div class="price">
             {{ book.price | currency : 'USD' : 'symbol' : '1.0-0' }}
@@ -26,8 +26,8 @@
     
     <div class="genres">
       <div class="genre" 
-           *ngFor="let genre of book.genres"
-           (click)="filterByGenre(genre)">
+           *ngFor="let genre of book.genres | slice:0:2"
+           (click)="filterByGenre([genre.name])">
         {{ genre.name }}
       </div>
     </div>
