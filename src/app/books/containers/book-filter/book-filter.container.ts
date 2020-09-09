@@ -81,6 +81,8 @@ export class BookFilterContainer implements OnInit, OnDestroy {
       .subscribe((res) => {
         this.disabled = false;
         this.qParams.setNewParams(res);
+        this.qParams.setNewParams({ page: 1 });
+
       });
   }
 

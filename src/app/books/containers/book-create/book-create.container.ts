@@ -88,13 +88,13 @@ export class BookCreateContainer implements OnInit, OnDestroy {
   public close(): void {
     if (!this.created) {
       const data: IDialogBody = {
-        message: 'Are you sure you want to leave form?',
+        message: 'Do you want save your data?',
         type: 'multiple'
       };
 
       this.dialogService.openDialog(data)
         .pipe(
-          map(res => res ? this.dialogRef.close() : null),
+          map(res => res ? null : this.dialogRef.close()),
           takeUntil(this._destroy$)
         )
         .subscribe();

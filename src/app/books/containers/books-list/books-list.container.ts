@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Subject } from 'rxjs';
-import { takeUntil, delay, debounceTime, skip } from 'rxjs/operators';
+import { takeUntil, delay } from 'rxjs/operators';
 
 import { BooksService } from '../../services/books.service';
 import { Book } from '../../models/book.model';
@@ -23,7 +23,7 @@ interface IPageEvent {
 export class BooksListContainer implements OnInit, OnDestroy {
 
   public books: Book[] = [];
-  public shadowBooks = new Array(6);
+  public shadowBooks = new Array(12);
 
   public searchText: string;
 
@@ -41,7 +41,7 @@ export class BooksListContainer implements OnInit, OnDestroy {
 
   constructor(
     private readonly booksService: BooksService,
-    private readonly qParams: ParamsService
+    private readonly qParams: ParamsService,
   ) {}
 
   public ngOnInit(): void {
@@ -68,7 +68,7 @@ export class BooksListContainer implements OnInit, OnDestroy {
           this.books = res.books;
           this.countRecords = res.meta.records;
           this.countPages = res.meta.pages;
-        },
+        }
       );
   }
 
@@ -83,6 +83,9 @@ export class BooksListContainer implements OnInit, OnDestroy {
     this.qParams.setNewParams({
       page: this.pageIndex + 1
     });
+
+    const el = document.getElementsByClassName('grid')[0];
+    el.scrollIntoView();
   }
 
 

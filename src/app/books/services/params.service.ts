@@ -74,7 +74,6 @@ export class ParamsService {
           break;
       }
     });
-
     this._curParams$.next(this._curParams);
     this._setTree();
   }
