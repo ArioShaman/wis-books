@@ -1,9 +1,11 @@
+@import "./../../../../mixins.sass"
+
 mat-card::ng-deep
   margin-top: 30px
   padding: 0px !important
   opacity: 1px
-  animation: showing 1.5s linear
-
+  animation: showing 1s linear
+  outline: none
 
 @keyframes showing
   0%
@@ -20,25 +22,46 @@ mat-card::ng-deep
   height: 375px
   cursor: pointer
 
+  @include tablet
+    width: 275px
+
+  @include mobile
+    width: 275px
+
   &:hover
-    .img
-      background: #4982b8
+    .hover-cover
+      background-color: rgba(0,0,0,0.5)
 
   .pad-cont
     padding: 15px 15px 0px 15px
+    outline: none
 
   .content
     height: 50px
     overflow: hidden
     margin-bottom: 6px
   
+  .hover-cover
+    height: 100%
+    width: 100%
+    transition: 0.4s
+
   .img
+    position: relative
     height: 170px
     width: 270px
     transition: 0.6s
     box-sizing: border-box
     margin-bottom: 10px
-    background: #9ccfff
+    background-color: #9ccfff
+    background-size: cover
+    background-position: center
+
+    @include tablet
+      width: 245px
+
+    @include mobile
+      width: 245px
 
   .flex-cont
     display: flex
@@ -48,6 +71,12 @@ mat-card::ng-deep
     font-weight: 700
     font-size: 20px
     width: 40%
+
+    @include tablet
+      font-size: 18px
+
+    @include mobile
+      font-size: 18px
 
   .author
     font-family: 'roboto-medium'
@@ -68,6 +97,18 @@ mat-card::ng-deep
       user-select: none
       margin-left: 12px
       margin-top: 12px
+
+      @include tablet
+        margin-left: 8px
+        margin-top: 8px
+        font-size: 15px
+        padding: 4px
+
+      @include mobile
+        margin-left: 8px
+        margin-top: 8px
+        font-size: 15px
+        padding: 4px
 
       &:hover
         background: #4982b8

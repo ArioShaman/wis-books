@@ -12,7 +12,7 @@ export class FilterByAuthorPipe implements PipeTransform {
       return books;
     }
 
-    return books.filter((book) => book.authorId === authorId);
+    return books.filter(book => book.authorId === authorId);
   }
 
 }

@@ -1,0 +1,75 @@
+@import "./../../../../mixins.sass"
+@import "./../../../../variables.sass"
+
+.container
+  position: relative
+  height: 920px
+  width: 100%
+
+  @include desk
+    height: 740px
+
+  @include tablet
+    height: 650px
+  
+  @include mobile
+    height: 600px
+
+  .title
+    width: 900px
+    margin: 0px auto
+    font-size: 60px
+    color: $black
+    text-align: center
+    font-weight: 600
+    margin-top: 40px
+
+    @include mobile
+      width: 320px
+      margin-top: 20px
+      font-size: 24px
+
+    @include tablet
+      width: 600px
+      margin-top: 20px
+      font-size: 34px
+
+    @include desk
+      margin-top: 20px
+      font-size: 40px
+      
+  .video-cont
+    width: 1450px
+    height: 750px
+    margin: 0px auto
+    margin-top: 30px
+    position: relative
+    clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%)
+
+    @include mobile
+      width: 320px
+      height: 500px
+      background: #ececec
+    
+    @include tablet
+      height: 500px
+      width: 600px
+
+    @include desk
+      width: 1000px
+      height: 580px
+
+    video
+      height: 100%
+      width: 100%
+
+      @include mobile
+        width: initial
+        position: absolute
+        left: -200px
+
+      @include tablet
+        width: initial
+        position: absolute
+        left: -200px
+

@@ -1,0 +1,43 @@
+<app-book-filter></app-book-filter>
+
+<div class="not-found" 
+      *ngIf="!countRecords && loaded">
+  Not found
+</div>
+
+<ng-container *ngIf="loaded ; else elseBlock">
+  <div class="container">
+    <book *ngFor="let book of books"
+          [book]="book"
+          (genreFilter)="selectGenre($event)">
+    </book>    
+  </div>  
+</ng-container>
+
+<mat-paginator [length]="countRecords"
+               [pageSize]="pageSize"
+               [pageIndex]="pageIndex"
+               (page)="pageEvent($event)">
+</mat-paginator>
+
+<ng-template #elseBlock>
+  <div class="container">
+    <div  class="shadow-book"
+          *ngFor="let book of shadowBooks">
+      <div class="pad-cont">
+        <div class="img"></div>
+
+        <div class="title"></div>
+
+        <div class="text"></div>
+
+        <div class="price"></div>
+      </div>
+      <div class="genres">
+        <div class="genre"></div>
+
+        <div class="genre"></div>
+      </div>
+    </div>
+  </div>
+</ng-template>

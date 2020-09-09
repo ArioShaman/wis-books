@@ -12,13 +12,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
 import { MatRippleModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from '../app-routing.module';
 
 import { AuthorsService } from './services/authors.service';
 import { GenresService } from './services/genres.service';
+import { AppValidator } from './validators/app.validator';
 import { MatAppearenceService } from './services/mat-appearence.service';
 import { DomainInterceptor } from './interceptors/domain.interceptor';
+import { HttpConfigInterceptor } from './interceptors/httpconfig.interceptor';
+import { DialogComponent } from './components/dialog/dialog.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'standard'
@@ -27,7 +31,9 @@ const appearance: MatFormFieldDefaultOptions = {
 const appearenceFactory = () => new MatAppearenceService();
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    DialogComponent
+  ],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -38,7 +44,8 @@ const appearenceFactory = () => new MatAppearenceService();
     MatButtonModule,
     MatIconModule,
     MatListModule,
-    MatRippleModule
+    MatRippleModule,
+    MatDialogModule
   ],
   exports: [
     HttpClientModule,
@@ -55,10 +62,16 @@ const appearenceFactory = () => new MatAppearenceService();
   providers: [
     AuthorsService,
     GenresService,
+    AppValidator,
     MatAppearenceService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: DomainInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpConfigInterceptor,
       multi: true
     },
     {

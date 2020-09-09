@@ -1,9 +1,17 @@
 <mat-card fxLayoutAlign="start stretch">
   <div class="container">
-    <div class="pad-cont">
+    <div class="pad-cont" [routerLink]="book.id">
       
-      <div class="img"></div>
-
+      <div  class="img"
+            *ngIf="imageSrc; else elseBlock" 
+            [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}">
+          <div class="hover-cover"></div>
+      </div>
+      <ng-template #elseBlock>
+        <div class="img">
+        </div>
+      </ng-template>
+      
       <mat-card-title class="title">
         {{ book.title }}
       </mat-card-title>
@@ -15,7 +23,6 @@
       <mat-card-content>
         <div class="flex-cont">
           <div class="author">
-            <!-- {{ book.authorId }} -->
           </div>
           <div class="price">
             {{ book.price | currency : 'USD' : 'symbol' : '1.0-0' }}

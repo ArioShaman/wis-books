@@ -14,15 +14,16 @@ const appearences = [
 })
 export class MatAppearenceService {
 
-  private activeAppearence: string;
+  private _activeAppearence: string;
 
   constructor() {
     const localAppearence = localStorage.getItem('activeAppearence');
+
     if (localAppearence !== null) {
-      this.activeAppearence = localAppearence;
+      this._activeAppearence = localAppearence;
     } else {
       localStorage.setItem('activeAppearence', appearences[0]);
-      this.activeAppearence = appearences[0];
+      this._activeAppearence = appearences[0];
     }
   }
 
@@ -32,17 +33,18 @@ export class MatAppearenceService {
 
   public systemAppearence(): Object {
     return {
-      appearance: this.activeAppearence
+      appearance: this._activeAppearence
     };
   }
 
   public getActiveAppearance(): string {
-    return this.activeAppearence;
+    return this._activeAppearence;
   }
 
   public setActiveAppearance(appearence: string): void {
     localStorage.setItem('activeAppearence', appearence);
-    this.activeAppearence = appearence;
+
+    this._activeAppearence = appearence;
   }
 
 }

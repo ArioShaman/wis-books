@@ -1,0 +1,15 @@
+@import "./../../../../mixins.sass"
+
+.line
+  display: flex
+  justify-content: space-between
+  
+  @include mobile
+    flex-direction: column
+  
+  .create
+    height: 50px
+    width: 200px
+    
+    @include mobile
+      width: 100%

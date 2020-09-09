@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { Observable, of, timer } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import { map, debounce } from 'rxjs/operators';
 
 import { Book } from '../models/book.model';
 import { BooksResponse } from '../models/books-response.model';
 import { BookRequest } from '../models/book-request.model';
-import { RanSackParams } from '../models/ran-sack-params.model';
+import { IFilterParam } from '../models/filter-param.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -18,35 +18,16 @@ export class BooksService {
     private readonly http: HttpClient
   ) { }
 
-  public createBook(formData: BookRequest): Observable<Book> {
-    const body = {
-      title: formData.title,
-      description: formData.description,
-      // genres: formData.genres,
-      writing_date: formData.writingDate,
-      release_date: formData.releaseDate,
-      price: formData.price
-    };
-
-    const uri = `/authors/${formData.author.id}/books`;
-
-    return this.http.post(uri, body)
-      .pipe(
-        map((res) => Book.new(Book, res))
-      );
-  }
-
   public getBooks(
-    page: number,
-    ranSackParams: RanSackParams
+    qParams: IFilterParam
   ): Observable<BooksResponse> {
     const params = {
-      params: this.setParams(page, ranSackParams)
+      params: this._setParams(qParams)
     };
 
     return this.http.get('/books', params)
       .pipe(
-        debounce(() => timer(1000)),
+        debounce(() => timer(1500)),
         map((res: any) => {
           return BooksResponse.new(
             BooksResponse,
@@ -59,35 +40,96 @@ export class BooksService {
       );
   }
 
-  private setParams(page: number, ranSackParams: RanSackParams): HttpParams {
+  public getBook(id: number): Observable<Book> {
+    const uri = `/books/${id}`;
+
+    return this.http.get(uri)
+      .pipe(map((res: any) => Book.new(Book, res)));
+  }
+
+  public createBook(data: BookRequest): Observable<Book> {
+    const formData = this._setFormData(data);
+
+    const uri = `/authors/${data.author.id}/books`;
+
+    return this.http.post(uri, formData)
+      .pipe(map(res => Book.new(Book, res)));
+  }
+
+  public updateBook(data: BookRequest): Observable<Book> {
+    const formData = this._setFormData(data);
+
+    const uri = `/books/${data.id}`;
+
+    return this.http.put(uri, formData)
+      .pipe(map(res => Book.new(Book, res)));
+  }
+
+  public deleteBook(id: number): Observable<Book> {
+    const uri = `/books/${id}`;
+
+    return this.http.delete(uri)
+      .pipe(map((res: any) => Book.new(Book, res)));
+  }
+
+  private _setFormData(data: BookRequest): FormData {
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('description', data.description);
+    formData.append('writing_date', String(data.writingDate));
+    formData.append('release_date', String(data.releaseDate));
+    formData.append('price', String(data.price));
+
+    if (data.image) {
+      formData.append('image', data.image);
+    }
+
+    // ### FIX ###
+    // Uncomment when backend changes
+    // will be loaded to server
+    // Array.prototype
+    //   .forEach
+    //   .call(data.previews, (file) => {
+    //     formData.append('previews_attributes[][file]', file);
+    //   });
+
+    return formData;
+  }
+
+  private _setParams(qParams: IFilterParam): HttpParams {
     let httpParams = new HttpParams()
-      .set('limit', '9')
-      .set('page', String(page));
+      .set('limit', '12')
+      .set('page', String(qParams.page));
 
-    Object.keys(ranSackParams).forEach(
+    Object.keys(qParams).forEach(
       (key) => {
-        const param = ranSackParams[key];
+        const param = qParams[key];
+        if (param) {
+          switch (key) {
+            case 'authorIds':
+              param.map((id) => {
+                httpParams = httpParams.append('q[author_id_in][]', id);
+              });
 
-        switch (key) {
-          case 'authorIds':
-            param.map((id) => {
-              httpParams = httpParams.append('q[author_id_in][]', id);
-            });
+              break;
 
-            break;
-          case 'genreNames':
-            param.map((name) => {
-              httpParams = httpParams.append('q[genres_name_in][]', name);
-            });
-            break;
-          case 'searchText':
-            if (param) {
-              httpParams = httpParams.append(
-                'q[title_or_description_cont]', param
-              );
-            }
+            case 'genreNames':
+              param.map((name) => {
+                httpParams = httpParams.append('q[genres_name_in][]', name);
+              });
 
-            break;
+              break;
+
+            case 'searchText':
+
+              if (param) {
+                httpParams = httpParams.append(
+                  'q[title_or_description_cont]', param
+                );
+              }
+
+              break;
+          }
         }
       }
     );

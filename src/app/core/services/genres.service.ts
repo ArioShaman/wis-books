@@ -25,9 +25,7 @@ export class GenresService {
     };
 
     return this.http.get<IResponse>('/genres', params)
-      .pipe(
-        map(res => Genre.newCollection(Genre, res.genres))
-      );
+      .pipe(map(res => Genre.newCollection(Genre, res.genres)));
   }
 
 }

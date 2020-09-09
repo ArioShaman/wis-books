@@ -6,11 +6,19 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'books'
+    redirectTo: 'home'
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then((m) => m.HomeModule)
   },
   {
     path: 'books',
     loadChildren: () => import('./books/books.module').then((m) => m.BooksModule)
+  },
+  {
+    path: 'books/:id',
+    loadChildren: () => import('./book/book.module').then((m) => m.BookModule)
   },
   {
     path: 'genres',
@@ -19,6 +27,10 @@ const routes: Routes = [
   {
     path: 'authors',
     loadChildren: () => import('./authors/authors.module').then((m) => m.AuthorsModule)
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule)
   }
 ];
 

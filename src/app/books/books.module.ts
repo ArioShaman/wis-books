@@ -13,30 +13,36 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { NgxImageCompressService } from 'ngx-image-compress';
+
 import { BooksRoutingModule } from './books-routing.module';
 import { BooksService } from './services/books.service';
-import { BooksComponent } from './views/books/books.component';
-import { BooksListComponent } from './containers/books-list/books-list.component';
+import { ParamsService } from './services/params.service';
+import { BooksView } from './views/books/books.view';
+import { BooksListContainer } from './containers/books-list/books-list.container';
 import { BookComponent } from './components/book/book.component';
 import { FilterByAuthorPipe } from './pipes/filter-by-author.pipe';
 import { FilterByGenrePipe } from './pipes/filter-by-genre.pipe';
-import { BookCreateComponent } from './containers/book-create/book-create.component';
+import { BookCreateContainer } from './containers/book-create/book-create.container';
 import { SearchTextPipe } from './pipes/search-text.pipe';
-import { BookConfirmComponent } from './components/book-confirm/book-confirm.component';
+import { BookFilterContainer } from './containers/book-filter/book-filter.container';
 
 @NgModule({
   declarations: [
-    BooksComponent,
-    BooksListComponent,
+    BooksView,
+    BooksListContainer,
     BookComponent,
     FilterByAuthorPipe,
     FilterByGenrePipe,
-    BookCreateComponent,
+    BookCreateContainer,
     SearchTextPipe,
-    BookConfirmComponent
+    BookFilterContainer
   ],
   providers: [
     BooksService,
+    ParamsService,
+    NgxImageCompressService,
     {
       provide: MAT_DATE_LOCALE,
       useValue: 'ru-RU'
@@ -57,6 +63,8 @@ import { BookConfirmComponent } from './components/book-confirm/book-confirm.com
     MatNativeDateModule,
     MatDatepickerModule,
     MatSnackBarModule,
+
+    ImageCropperModule,
 
     BooksRoutingModule
   ]

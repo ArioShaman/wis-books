@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { GenresRoutingModule } from './genres-routing.module';
-import { GenresComponent } from './views/genres/genres.component';
+import { GenresView } from './views/genres/genres.view';
 
 
 @NgModule({
   declarations: [
-    GenresComponent
+    GenresView
   ],
   imports: [
     CommonModule,

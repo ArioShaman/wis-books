@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { GenresComponent } from './views/genres/genres.component';
+import { GenresView } from './views/genres/genres.view';
 
 const routes: Routes = [
   {
     path: '',
-    component: GenresComponent
+    component: GenresView
   }
 ];
 
