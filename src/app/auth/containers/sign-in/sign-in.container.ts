@@ -23,17 +23,15 @@ export class SignInContainer implements OnInit, OnDestroy {
 
   public leave = false;
   public loaded = false;
-
   public submited = false;
 
   public signInForm: FormGroup;
   public matcher = new BookErrorStateMatcher();
-
-  private destroy$ = new Subject<void>();
+  private _destroy$ = new Subject<void>();
 
   constructor(
-    private fb: FormBuilder,
-    private auth: AuthService
+    private readonly fb: FormBuilder,
+    private readonly auth: AuthService
   ) { }
 
   public ngOnInit(): void {
@@ -42,38 +40,33 @@ export class SignInContainer implements OnInit, OnDestroy {
       password: ['', Validators.required]
     });
 
-
     this._setLoaded();
   }
 
   public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   public onSubmit(cf: ISignInForm): void {
     this.submited = true;
+
     if (this.signInForm.valid) {
       this.auth.signIn(cf)
-        .pipe(
-          takeUntil(this.destroy$)
-        ).subscribe();
+        .pipe(takeUntil(this._destroy$))
+        .subscribe();
     }
   }
 
   public canDeactivate(): Promise<boolean> {
     return new Promise((resolve) => {
       this.leave = true;
-      setTimeout(() => {
-        resolve(true);
-      }, 900);
+      setTimeout(() => resolve(true), 900);
     });
   }
 
   private _setLoaded(): void {
-    setTimeout(() => {
-      this.loaded = true;
-    }, 600);
+    setTimeout(() => this.loaded = true, 600);
   }
 
 }

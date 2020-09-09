@@ -15,15 +15,15 @@
         <!-- Title -->
         <mat-form-field class="input">
           <mat-label>Title</mat-label>
-          <input  matInput
-                  #title
-                  placeholder="Enter a title"
-                  formControlName="title"
-                  required
-                  autocomplete="off"
-                  [errorStateMatcher]="matcher">
-          <mat-error  *ngIf="bookForm.get('title').hasError('required') && submited"
-                      class="error">
+          <input matInput
+                 #title
+                 placeholder="Enter a title"
+                 formControlName="title"
+                 required
+                 autocomplete="off"
+                 [errorStateMatcher]="matcher">
+          <mat-error *ngIf="bookForm.get('title').hasError('required') && submited"
+                     class="error">
             Oops, title is required!
           </mat-error>
         </mat-form-field>  
@@ -70,18 +70,18 @@
             <!-- Writing Date -->
             <mat-form-field (click)="writingPicker.open()">
               <mat-label>Writing date</mat-label>
-              <input  matInput
-                      autocomplete="off"
-                      required 
-                      [matDatepicker]="writingPicker" 
-                      placeholder="Enter a writing date"
-                      formControlName="writingDate"
-                      [errorStateMatcher]="matcher">
+              <input matInput
+                     autocomplete="off"
+                     required 
+                     [matDatepicker]="writingPicker" 
+                     placeholder="Enter a writing date"
+                     formControlName="writingDate"
+                     [errorStateMatcher]="matcher">
               <mat-datepicker-toggle matSuffix [for]="writingPicker"></mat-datepicker-toggle>
               <mat-datepicker disabled="false" #writingPicker></mat-datepicker>
               
-              <mat-error  *ngIf="bookForm.get('writingDate').hasError('required') && submited"
-                          class="error">
+              <mat-error *ngIf="bookForm.get('writingDate').hasError('required') && submited"
+                         class="error">
                 Oops, Writing date is required!
               </mat-error>
             </mat-form-field>
@@ -104,12 +104,12 @@
             
             <!-- file -->
             <div class="file" matRipple>
-              <input  type="file"
-                      (change)="upload($event.target.files, $event)"
-                      name="file"
-                      accept="image/png, image/jpeg">
-              <div  class="placeholder"
-                    [ngClass]="uploadedImage ? 'uploaded' : ''">
+              <input type="file"
+                     (change)="upload($event.target.files, $event)"
+                     name="file"
+                     accept="image/png, image/jpeg">
+              <div class="placeholder"
+                   [ngClass]="uploadedImage ? 'uploaded' : ''">
                 {{ uploadedImage ? 'Uploaded cover': 'Choose a cover *' }}
               </div>
             </div>
@@ -133,31 +133,31 @@
                 </mat-option>
               </mat-select>
               
-              <mat-error  *ngIf="bookForm.get('genres').hasError('required') && submited"
-                          class="error">
+              <mat-error *ngIf="bookForm.get('genres').hasError('required') && submited"
+                         class="error">
                 Oops, Genres is required!
               </mat-error>
-            </mat-form-field>        
+            </mat-form-field>
             <!-- Release date -->
             <mat-form-field (click)="releasePicker.open()">
               <mat-label>Release date</mat-label>
-              <input  class="unfocus"
-                      autocomplete="off" 
-                      matInput
-                      required
-                      [matDatepicker]="releasePicker" 
-                      placeholder="Enter a release date"
-                      formControlName="releaseDate"
-                      [errorStateMatcher]="matcher">
+              <input class="unfocus"
+                     autocomplete="off" 
+                     matInput
+                     required
+                     [matDatepicker]="releasePicker" 
+                     placeholder="Enter a release date"
+                     formControlName="releaseDate"
+                     [errorStateMatcher]="matcher">
               <mat-datepicker-toggle matSuffix [for]="releasePicker"></mat-datepicker-toggle>
               <mat-datepicker disabled="false" #releasePicker></mat-datepicker>
               
-              <mat-error  *ngIf="bookForm.get('releaseDate').hasError('required') && submited"
-                          class="error">
+              <mat-error *ngIf="bookForm.get('releaseDate').hasError('required') && submited"
+                         class="error">
                 Oops, Release date is required!
               </mat-error>
-              <mat-error  *ngIf="bookForm.get('releaseDate').hasError('invalidDate') && submited"
-                          class="error">
+              <mat-error *ngIf="bookForm.get('releaseDate').hasError('invalidDate') && submited"
+                         class="error">
                 Release date should be later than Writing date
               </mat-error>
             </mat-form-field>
@@ -165,12 +165,12 @@
             <div class="empty-field"></div>
 
             <div class="file" matRipple>
-              <input  type="file"
-                      (change)="uploadPreviews($event.target.files)"
-                      name="file"
-                      accept="image/png, image/jpeg">
-              <div  class="placeholder"
-                    [ngClass]="uploadedPreviews ? 'uploaded' : ''">
+              <input type="file"
+                     (change)="uploadPreviews($event.target.files)"
+                     name="file"
+                     accept="image/png, image/jpeg">
+              <div class="placeholder"
+                   [ngClass]="uploadedPreviews ? 'uploaded' : ''">
                 {{ uploadedPreviews ? 'Uploaded previews': 'Choose a previews *' }}
               </div>
             </div>
@@ -186,8 +186,8 @@
           Create
         </button>
       </div>
-      <div  class="md md-1"
-            [ngClass]="uploadedImage ? 'wide' : ''">
+      <div class="md md-1"
+           [ngClass]="uploadedImage ? 'wide' : ''">
         <div class="croper">
           <image-cropper
             [imageChangedEvent]="imageChangedEvent"

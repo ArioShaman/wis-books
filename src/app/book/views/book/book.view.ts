@@ -20,14 +20,15 @@ import { Book } from '../../../books/models/book.model';
 export class BookView implements OnInit, OnDestroy {
 
   public book: Book;
-  private destroy$ = new Subject<void>();
+
+  private _destroy$ = new Subject<void>();
 
   constructor(
-    private bookService: BooksService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dialog: MatDialog,
-    translate: TranslateService
+    private readonly bookService: BooksService,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly dialog: MatDialog,
+    private readonly translate: TranslateService
   ) {
     translate.setDefaultLang('en');
     translate.use('en');
@@ -38,8 +39,8 @@ export class BookView implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   public delete(): void {
@@ -47,16 +48,14 @@ export class BookView implements OnInit, OnDestroy {
 
     dialogRef
       .afterClosed()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (res) => res ? this._delete() : null
-      );
+      .pipe(takeUntil(this._destroy$))
+      .subscribe(res => res ? this._delete() : null);
   }
 
   private _delete(): void {
     this.bookService
       .deleteBook(this.book.id)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntil(this._destroy$))
       .subscribe(res => this.router.navigate(['/books']));
   }
 

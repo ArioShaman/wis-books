@@ -15,15 +15,15 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'signIn'
+        redirectTo: 'sign-in'
       },
       {
-        path: 'signIn',
+        path: 'sign-in',
         component: SignInContainer,
         canDeactivate: [CanDeactivateGuard]
       },
       {
-        path: 'signUp',
+        path: 'sign-up',
         component: SignUpContainer,
         canDeactivate: [CanDeactivateGuard]
       }

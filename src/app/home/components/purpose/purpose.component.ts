@@ -10,7 +10,6 @@ export class PurposeComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  public ngOnInit(): void { }
 
 }

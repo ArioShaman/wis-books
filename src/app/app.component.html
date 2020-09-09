@@ -5,39 +5,39 @@
     <mat-sidenav #sidenav>
       <div class="side-cont">
         <mat-list>
-          <a  routerLink="home" 
-              routerLinkActive="active"
-              mat-list-item
-              (click)="sidenav.toggle()"
-              matRipple>
+          <a [routerLink]="['home']" 
+             routerLinkActive="active"
+             mat-list-item
+             (click)="sidenav.toggle()"
+             matRipple>
             Home
           </a>
-          <a  routerLink="books" 
-              routerLinkActive="active"
-              mat-list-item
-              (click)="sidenav.toggle()"
-              matRipple>
+          <a [routerLink]="['books']" 
+             routerLinkActive="active"
+             mat-list-item
+             (click)="sidenav.toggle()"
+             matRipple>
             Books
           </a>
-          <a  routerLink="genres"
-              routerLinkActive="active"
-              mat-list-item
-              (click)="sidenav.toggle()"
-              matRipple>
+          <a [routerLink]="['genres']"
+             routerLinkActive="active"
+             mat-list-item
+             (click)="sidenav.toggle()"
+             matRipple>
             Genres
           </a>
-          <a  routerLink="authors" 
-              routerLinkActive="active"
-              mat-list-item
-              (click)="sidenav.toggle()"
-              matRipple>
+          <a [routerLink]="['authors']" 
+             routerLinkActive="active"
+             mat-list-item
+             (click)="sidenav.toggle()"
+             matRipple>
             Authors
           </a>
-          <a  routerLink="auth" 
-              routerLinkActive="active"
-              mat-list-item
-              (click)="sidenav.toggle()"
-              matRipple>
+          <a [routerLink]="['auth']" 
+             routerLinkActive="active"
+             mat-list-item
+             (click)="sidenav.toggle()"
+             matRipple>
             Sign In
           </a>
         </mat-list>

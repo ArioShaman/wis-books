@@ -10,7 +10,6 @@ export class ExplainBlockComponent implements OnInit {
 
   constructor() { }
 
-  public ngOnInit(): void {
-  }
+  public ngOnInit(): void { }
 
 }

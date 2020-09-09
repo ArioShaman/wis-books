@@ -5,7 +5,7 @@ import {
   HttpEvent,
   HttpInterceptor,
 } from '@angular/common/http';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -17,8 +17,8 @@ import { DialogService } from '../services/dialog.service';
 export class HttpConfigInterceptor implements HttpInterceptor {
 
   constructor(
-    private dialogService: DialogService,
-    private router: Router
+    private readonly dialogService: DialogService,
+    private readonly router: Router
   ) { }
 
   public intercept(
@@ -29,6 +29,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
       .pipe(
         catchError((error) => {
           let data: IDialogBody;
+
           if (error.error.errors) {
             data = {
               message: error.error.message ? error.error.message : error.error,
@@ -47,7 +48,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
               }
             };
           }
-          // const data: IDialogBody = 
+
           this.dialogService.openDialog(data)
             .subscribe(
               (res) => {

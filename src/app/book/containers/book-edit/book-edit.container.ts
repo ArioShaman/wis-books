@@ -3,8 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {
   FormGroup,
   FormBuilder,
-  Validators,
-  ValidatorFn
+  Validators
 } from '@angular/forms';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -28,6 +27,7 @@ import {
 import { Book } from '../../../books/models/book.model';
 import { IForm } from '../../../../lib/models/form.interface';
 import { environment } from '../../../../environments/environment';
+import { AppValidator } from '../../../core/validators/app.validator';
 
 @Component({
   selector: 'app-book-edit',
@@ -48,18 +48,19 @@ export class BookEditContainer implements OnInit, OnDestroy {
   public authors$: Observable<Author[]>;
   public genres$: Observable<Genre[]>;
 
-  private destroy$ = new Subject<void>();
+  private _destroy$ = new Subject<void>();
 
   constructor(
-    private snack: MatSnackBar,
-    private route: ActivatedRoute,
-    private router: Router,
-    private booksService: BooksService,
-    private genresService: GenresService,
-    private authorsService: AuthorsService,
-    private fb: FormBuilder,
-    private dialogService: DialogService,
-    private compressService: NgxImageCompressService
+    private readonly snack: MatSnackBar,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly booksService: BooksService,
+    private readonly genresService: GenresService,
+    private readonly authorsService: AuthorsService,
+    private readonly fb: FormBuilder,
+    private readonly dialogService: DialogService,
+    private readonly compressService: NgxImageCompressService,
+    private readonly validator: AppValidator
   ) { }
 
   public ngOnInit(): void {
@@ -75,8 +76,8 @@ export class BookEditContainer implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   public onSubmit(cf: IForm): void {
@@ -84,11 +85,10 @@ export class BookEditContainer implements OnInit, OnDestroy {
 
     if (!this.bookForm.invalid) {
       const bookRequest = BookRequest.new(BookRequest, cf);
+
       this.booksService.updateBook(bookRequest)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(
-          () => this._snackMessage()
-        );
+        .pipe(takeUntil(this._destroy$))
+        .subscribe(() => this._snackMessage());
     }
   }
 
@@ -103,11 +103,10 @@ export class BookEditContainer implements OnInit, OnDestroy {
         const close = this.dialogService.openDialog(data)
           .pipe(
             take(1),
-            takeUntil(this.destroy$)
-          ).subscribe(
-            (res: boolean) => {
-              resolve(res);
-            }
+            takeUntil(this._destroy$)
+          )
+          .subscribe(
+            res => resolve(res)
           );
       });
     }
@@ -131,7 +130,9 @@ export class BookEditContainer implements OnInit, OnDestroy {
         uploadedImage: false,
       },
       {
-        validators: [this.checkDateValidation, this.checkImageValidation]
+        validators: [
+          this.validator.checkDateValidation,
+          this.validator.checkImageValidation]
       }
     );
     if (this.book.image) {
@@ -140,30 +141,8 @@ export class BookEditContainer implements OnInit, OnDestroy {
       });
     }
     this.bookForm.valueChanges
-      .pipe(
-        takeUntil(this.destroy$)
-      ).subscribe(() => this.edited = true);
-  }
-
-  public checkDateValidation: ValidatorFn =
-  (control: FormGroup): null => {
-    const wDate = control.get('writingDate');
-    const rDate = control.get('releaseDate');
-    if (rDate.value < wDate.value) {
-      rDate.setErrors({ invalidDate: true });
-    }
-
-    return null;
-  }
-
-  public checkImageValidation: ValidatorFn =
-  (control: FormGroup): null => {
-    const imageState = control.get('uploadedImage');
-    if (!imageState.value) {
-      imageState.setErrors({ imageError: true });
-    }
-
-    return null;
+      .pipe(takeUntil(this._destroy$))
+      .subscribe(() => this.edited = true);
   }
 
   public upload(fileList: FileList): void {
@@ -175,12 +154,13 @@ export class BookEditContainer implements OnInit, OnDestroy {
     reader.addEventListener('load', (event: Event) => {
       const localUrl = event.target['result'];
       this.fileUrl = `url('${localUrl}')`;
+
       this.compressService
         .compressFile(localUrl, orientation, 50, 50)
         .then(
           (base64) => {
             fetch(base64)
-              .then((res) => res.blob())
+              .then(res => res.blob())
               .then((blob) => {
                 const compressedFile = new File(
                   [blob],

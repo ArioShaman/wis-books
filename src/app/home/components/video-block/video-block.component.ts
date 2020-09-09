@@ -10,7 +10,6 @@ export class VideoBlockComponent implements OnInit {
 
   constructor() { }
 
-  public ngOnInit(): void {
-  }
+  public ngOnInit(): void { }
 
 }

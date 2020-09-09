@@ -44,9 +44,7 @@ export class BooksService {
     const uri = `/books/${id}`;
 
     return this.http.get(uri)
-      .pipe(
-        map((res: any) => Book.new(Book, res))
-      );
+      .pipe(map((res: any) => Book.new(Book, res)));
   }
 
   public createBook(data: BookRequest): Observable<Book> {
@@ -55,9 +53,7 @@ export class BooksService {
     const uri = `/authors/${data.author.id}/books`;
 
     return this.http.post(uri, formData)
-      .pipe(
-        map((res) => Book.new(Book, res))
-      );
+      .pipe(map(res => Book.new(Book, res)));
   }
 
   public updateBook(data: BookRequest): Observable<Book> {
@@ -66,18 +62,14 @@ export class BooksService {
     const uri = `/books/${data.id}`;
 
     return this.http.put(uri, formData)
-      .pipe(
-        map((res) => Book.new(Book, res))
-      );
+      .pipe(map(res => Book.new(Book, res)));
   }
 
   public deleteBook(id: number): Observable<Book> {
     const uri = `/books/${id}`;
 
     return this.http.delete(uri)
-      .pipe(
-        map((res: any) => Book.new(Book, res))
-      );
+      .pipe(map((res: any) => Book.new(Book, res)));
   }
 
   private _setFormData(data: BookRequest): FormData {
@@ -87,6 +79,7 @@ export class BooksService {
     formData.append('writing_date', String(data.writingDate));
     formData.append('release_date', String(data.releaseDate));
     formData.append('price', String(data.price));
+
     if (data.image) {
       formData.append('image', data.image);
     }
@@ -119,12 +112,16 @@ export class BooksService {
               });
 
               break;
+
             case 'genreNames':
               param.map((name) => {
                 httpParams = httpParams.append('q[genres_name_in][]', name);
               });
+
               break;
+
             case 'searchText':
+
               if (param) {
                 httpParams = httpParams.append(
                   'q[title_or_description_cont]', param

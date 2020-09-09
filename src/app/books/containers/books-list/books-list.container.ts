@@ -37,11 +37,11 @@ export class BooksListContainer implements OnInit, OnDestroy {
   public loaded = false;
 
 
-  private destroy$ = new Subject<void>();
+  private _destroy$ = new Subject<void>();
 
   constructor(
-    private booksService: BooksService,
-    private qParams: ParamsService
+    private readonly booksService: BooksService,
+    private readonly qParams: ParamsService
   ) {}
 
   public ngOnInit(): void {
@@ -49,8 +49,8 @@ export class BooksListContainer implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   public getBooks(
@@ -60,8 +60,9 @@ export class BooksListContainer implements OnInit, OnDestroy {
     this.booksService.getBooks(params)
       .pipe(
         delay(700),
-        takeUntil(this.destroy$)
-      ).subscribe(
+        takeUntil(this._destroy$)
+      )
+      .subscribe(
         (res) => {
           this.loaded = true;
           this.books = res.books;
@@ -78,6 +79,7 @@ export class BooksListContainer implements OnInit, OnDestroy {
   public pageEvent(event: IPageEvent): void {
     this.pageIndex = event.pageIndex;
     this.books = [];
+
     this.qParams.setNewParams({
       page: this.pageIndex + 1
     });
@@ -86,8 +88,8 @@ export class BooksListContainer implements OnInit, OnDestroy {
 
   private _listenParams(): void {
     this.qParams.getParams$()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => this.getBooks(res));
+      .pipe(takeUntil(this._destroy$))
+      .subscribe(res => this.getBooks(res));
   }
 
 }

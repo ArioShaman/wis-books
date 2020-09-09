@@ -9,7 +9,6 @@ export class HomeView implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  public ngOnInit(): void { }
 
 }

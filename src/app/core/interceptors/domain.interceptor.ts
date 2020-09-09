@@ -8,7 +8,6 @@ import {
 
 import { Observable } from 'rxjs';
 
-
 @Injectable()
 export class DomainInterceptor implements HttpInterceptor {
 
@@ -16,9 +15,7 @@ export class DomainInterceptor implements HttpInterceptor {
     req: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    const apiReq = req.clone({
-      url: `/api${req.url}`
-    });
+    const apiReq = req.clone({ url: `/api${req.url}` });
 
     return next.handle(apiReq);
   }

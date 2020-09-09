@@ -1,20 +1,21 @@
 <div class="container">
     <form class="body"
-          [formGroup]="signUpForm"
-          (ngSubmit)="onSubmit(signUpForm.value)"
+          [formGroup]="signUpFormGroup"
+          (ngSubmit)="onSubmit(signUpFormGroup.value)"
           [ngClass]="[loaded && leave ? 'leave':'', loaded ? 'loaded': '']">
       <h1>Sign Up</h1>
 
       <!-- first name -->
       <mat-form-field class="input">
         <mat-label>First name</mat-label>
-        <input  matInput
-                placeholder="Enter a first name"
-                formControlName="firstName"
-                required
-                [errorStateMatcher]="matcher">
-        <mat-error  *ngIf="signUpForm.get('firstName').hasError('required') && submited"
-                    class="error">
+        <input matInput
+               placeholder="Enter a first name"
+               formControlName="firstName"
+               required
+               autocomplete="off"
+               [errorStateMatcher]="matcher">
+        <mat-error *ngIf="signUpFormGroup.get('firstName').hasError('required') && submited"
+                   class="error">
           Oops, first name is required!
         </mat-error>
       </mat-form-field>  
@@ -22,12 +23,13 @@
       <!-- last name -->
       <mat-form-field class="input">
         <mat-label>Last name</mat-label>
-        <input  matInput
-                placeholder="Enter a last name"
-                formControlName="lastName"
-                required
-                [errorStateMatcher]="matcher">
-        <mat-error  *ngIf="signUpForm.get('lastName').hasError('required') && submited"
+        <input matInput
+               placeholder="Enter a last name"
+               formControlName="lastName"
+               required
+               autocomplete="off"
+               [errorStateMatcher]="matcher">
+        <mat-error  *ngIf="signUpFormGroup.get('lastName').hasError('required') && submited"
                     class="error">
           Oops, login is required!
         </mat-error>
@@ -36,12 +38,13 @@
       <!-- login -->
       <mat-form-field class="input">
         <mat-label>Login</mat-label>
-        <input  matInput
-                placeholder="Enter a login"
-                formControlName="email"
-                required
-                [errorStateMatcher]="matcher">
-        <mat-error  *ngIf="signUpForm.get('email').hasError('required') && submited"
+        <input matInput
+               placeholder="Enter a login"
+               formControlName="email"
+               required
+               autocomplete="off"
+               [errorStateMatcher]="matcher">
+        <mat-error  *ngIf="signUpFormGroup.get('email').hasError('required') && submited"
                     class="error">
           Oops, login is required!
         </mat-error>
@@ -50,13 +53,14 @@
       <!-- password -->
       <mat-form-field class="input">
         <mat-label>Password</mat-label>
-        <input  matInput
-                placeholder="Enter a password"
-                formControlName="password"
-                required
-                type="password"
-                [errorStateMatcher]="matcher">
-        <mat-error  *ngIf="signUpForm.get('password').hasError('required') && submited"
+        <input matInput
+               placeholder="Enter a password"
+               formControlName="password"
+               autocomplete="off"
+               required
+               type="password"
+               [errorStateMatcher]="matcher">
+        <mat-error  *ngIf="signUpFormGroup.get('password').hasError('required') && submited"
                     class="error">
           Oops, password is required!
         </mat-error>
@@ -65,19 +69,19 @@
       <!-- password confirmation -->
       <mat-form-field class="input">
         <mat-label>Repeat Password</mat-label>
-        <input  matInput
-                placeholder="Repeat a password"
-                formControlName="passwordConfirmation"
-                required
-                name="passwordConfirmation"
-                autocomplete="false"
-                type="password"
-                [errorStateMatcher]="matcher">
-        <mat-error  *ngIf="signUpForm.get('passwordConfirmation').hasError('required') && submited"
+        <input matInput
+               placeholder="Repeat a password"
+               formControlName="passwordConfirmation"
+               required
+               name="password_confirmation"
+               autocomplete="off"
+               type="password"
+               [errorStateMatcher]="matcher">
+        <mat-error  *ngIf="signUpFormGroup.get('passwordConfirmation').hasError('required') && submited"
                     class="error">
           Oops, password is required!
         </mat-error>
-        <mat-error  *ngIf="signUpForm.get('passwordConfirmation').hasError('confirmationInvalid') && submited"
+        <mat-error  *ngIf="signUpFormGroup.get('passwordConfirmation').hasError('confirmationInvalid') && submited"
                     class="error">
           Oops, this field shold be the same value like 'Password' field!
         </mat-error>
@@ -87,7 +91,7 @@
               color="primary">
         SignUp
       </button>
-      <a class="link" routerLink="/auth/signIn">
+      <a class="link" [routerLink]="['/auth/sign-in']">
         SignIn
       </a>
 

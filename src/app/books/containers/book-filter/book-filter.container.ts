@@ -25,20 +25,20 @@ const DEFAULT: IFilterParam = {
 export class BookFilterContainer implements OnInit, OnDestroy {
 
   public disabled = true;
+  public openedFilters = false;
 
   public filterForm: FormGroup;
-  public openedFilters = false;
 
   public authors$: Observable<Author[]>;
   public genres$: Observable<Genre[]>;
 
-  private destroy$ = new Subject<void>();
+  private _destroy$ = new Subject<void>();
 
   constructor(
-    private fb: FormBuilder,
-    private authorsService: AuthorsService,
-    private genresService: GenresService,
-    private qParams: ParamsService
+    private readonly fb: FormBuilder,
+    private readonly authorsService: AuthorsService,
+    private readonly genresService: GenresService,
+    private readonly qParams: ParamsService
   ) {
     this._getParams();
   }
@@ -49,13 +49,13 @@ export class BookFilterContainer implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   public getGenres(): void {
     this.genres$ = this.genresService
-    .getAllGenres();
+      .getAllGenres();
   }
 
   public getAuthors(): void {
@@ -76,8 +76,9 @@ export class BookFilterContainer implements OnInit, OnDestroy {
     this.filterForm.valueChanges
       .pipe(
         debounceTime(1000),
-        takeUntil(this.destroy$)
-      ).subscribe((res) => {
+        takeUntil(this._destroy$)
+      )
+      .subscribe((res) => {
         this.disabled = false;
         this.qParams.setNewParams(res);
       });
@@ -85,9 +86,8 @@ export class BookFilterContainer implements OnInit, OnDestroy {
 
   private _getParams(): void {
     this.qParams.getParams$()
-      .pipe(
-        takeUntil(this.destroy$)
-      ).subscribe(
+      .pipe(takeUntil(this._destroy$))
+      .subscribe(
         (res) => {
           this._initForm(res);
           this.disabled = false;
@@ -102,6 +102,7 @@ export class BookFilterContainer implements OnInit, OnDestroy {
       authorIds: [params.authorIds],
       genreNames: [params.genreNames]
     });
+
     this._setValueChanges();
   }
 

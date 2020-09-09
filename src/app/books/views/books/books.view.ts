@@ -13,10 +13,7 @@ import {
 })
 export class BooksView implements OnInit, OnDestroy {
 
-
-  constructor(
-    private dialog: MatDialog
-  ) { }
+  constructor (private readonly dialog: MatDialog) { }
 
   public ngOnInit(): void {
     // this.openCreateModal();
@@ -25,7 +22,7 @@ export class BooksView implements OnInit, OnDestroy {
   public ngOnDestroy(): void { }
 
   public openCreateModal(): void {
-    const dialogRef = this.dialog.open(BookCreateContainer);
+    this.dialog.open(BookCreateContainer);
   }
 
 }

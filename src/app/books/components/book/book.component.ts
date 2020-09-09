@@ -23,7 +23,7 @@ export class BookComponent implements OnInit {
   public imageSrc: string;
 
   @Output('genreFilter')
-  private genreFilter = new EventEmitter<string[]>();
+  private _genreFilter = new EventEmitter<string[]>();
 
   public ngOnInit(): void {
     if (this.book.image) {
@@ -32,7 +32,7 @@ export class BookComponent implements OnInit {
   }
 
   public filterByGenre(genre: string[]): void {
-    this.genreFilter.emit(genre);
+    this._genreFilter.emit(genre);
   }
 
 }

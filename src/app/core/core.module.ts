@@ -18,6 +18,7 @@ import { AppRoutingModule } from '../app-routing.module';
 
 import { AuthorsService } from './services/authors.service';
 import { GenresService } from './services/genres.service';
+import { AppValidator } from './validators/app.validator';
 import { MatAppearenceService } from './services/mat-appearence.service';
 import { DomainInterceptor } from './interceptors/domain.interceptor';
 import { HttpConfigInterceptor } from './interceptors/httpconfig.interceptor';
@@ -61,6 +62,7 @@ const appearenceFactory = () => new MatAppearenceService();
   providers: [
     AuthorsService,
     GenresService,
+    AppValidator,
     MatAppearenceService,
     {
       provide: HTTP_INTERCEPTORS,

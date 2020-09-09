@@ -2,6 +2,7 @@
      *ngIf="data.type !== 'error-array'; else elseBlock">
   {{ data.message }}
 </h2>
+
 <ng-template #elseBlock>
   <span>Errors:</span>
     <div *ngFor="let key of Object.keys(data.payload.errors)"> 

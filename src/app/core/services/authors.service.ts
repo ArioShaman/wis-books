@@ -25,16 +25,12 @@ export class AuthorsService {
     };
 
     return this.http.get<IResponse>('/authors', params)
-      .pipe(
-        map((res) => Author.newCollection(Author, res.authors))
-      );
+      .pipe(map(res => Author.newCollection(Author, res.authors)));
   }
 
   public getAuthorById(id: number): Observable<Author> {
     return this.http.get(`/authors/${id}`)
-      .pipe(
-        map(res => Author.new(Author, res))
-      );
+      .pipe(map(res => Author.new(Author, res)));
   }
 
 }

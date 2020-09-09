@@ -15,7 +15,7 @@ export class FilterByGenrePipe implements PipeTransform {
     return books.filter(
       (book) => {
         return book.genres.findIndex(
-          (genre) => genre.id === genreId,
+          genre => genre.id === genreId,
         ) !== -1;
       },
     );

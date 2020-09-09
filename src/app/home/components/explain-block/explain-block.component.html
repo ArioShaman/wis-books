@@ -11,16 +11,14 @@
     <div class="button-line">
       <button mat-flat-button 
               class="blue my-butt"
-              routerLink="/auth/signUp">
+              [routerLink]="['/auth/sign-up']">
         Create a free Account
       </button>
 
       <span>or</span>
 
       <button mat-flat-button class="white my-butt">
-        <div class="icon">
-
-        </div>
+        <div class="icon"></div>
         Download an App
       </button>
     </div>

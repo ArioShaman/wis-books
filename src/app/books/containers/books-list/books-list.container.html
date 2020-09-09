@@ -1,7 +1,7 @@
 <app-book-filter></app-book-filter>
 
 <div class="not-found" 
-      *ngIf="countRecords === 0 && loaded">
+      *ngIf="!countRecords && loaded">
   Not found
 </div>
 
@@ -13,6 +13,7 @@
     </book>    
   </div>  
 </ng-container>
+
 <mat-paginator [length]="countRecords"
                [pageSize]="pageSize"
                [pageIndex]="pageIndex"
@@ -25,12 +26,16 @@
           *ngFor="let book of shadowBooks">
       <div class="pad-cont">
         <div class="img"></div>
+
         <div class="title"></div>
+
         <div class="text"></div>
+
         <div class="price"></div>
       </div>
       <div class="genres">
         <div class="genre"></div>
+
         <div class="genre"></div>
       </div>
     </div>

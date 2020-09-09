@@ -9,7 +9,6 @@ export class AuthView implements OnInit {
 
   constructor() { }
 
-  public ngOnInit(): void {
-  }
+  public ngOnInit(): void {}
 
 }

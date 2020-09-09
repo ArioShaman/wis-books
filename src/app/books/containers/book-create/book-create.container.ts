@@ -2,8 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
-  Validators,
-  ValidatorFn
+  Validators
 } from '@angular/forms';
 
 import { MatDialogRef } from '@angular/material/dialog';
@@ -27,7 +26,7 @@ import { Author } from '../../../authors/models/author.model';
 import { Genre } from '../../../genres/models/genre.model';
 import { BookRequest } from '../../models/book-request.model';
 import { IForm } from '../../../../lib/models/form.interface';
-
+import { AppValidator } from '../../../core/validators/app.validator';
 
 @Component({
   selector: 'app-book-create',
@@ -43,6 +42,7 @@ export class BookCreateContainer implements OnInit, OnDestroy {
   public created = false;
   public uploadedImage = false;
   public uploadedPreviews = false;
+  public compressedFile: string;
 
   public imageChangedEvent: Event;
   public croppedImage: string;
@@ -52,64 +52,37 @@ export class BookCreateContainer implements OnInit, OnDestroy {
   public genres$: Observable<Genre[]>;
 
   public file: File;
-  public compressedFile: string;
   public previews: FileList;
 
-  private destroy$ = new Subject<void>();
-
+  private _destroy$ = new Subject<void>();
 
   constructor(
-    private snack: MatSnackBar,
-    private dialogRef: MatDialogRef<BookCreateContainer>,
-    private booksService: BooksService,
-    private genresService: GenresService,
-    private authorsService: AuthorsService,
-    private fb: FormBuilder,
-    private dialogService: DialogService,
-    private compressService: NgxImageCompressService
+    private readonly snack: MatSnackBar,
+    private readonly dialogRef: MatDialogRef<BookCreateContainer>,
+    private readonly booksService: BooksService,
+    private readonly genresService: GenresService,
+    private readonly authorsService: AuthorsService,
+    private readonly fb: FormBuilder,
+    private readonly dialogService: DialogService,
+    private readonly compressService: NgxImageCompressService,
+    private readonly validator: AppValidator
   ) { }
 
   public ngOnInit(): void {
     this.dialogRef.disableClose = true;
     this.dialogRef.backdropClick()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (res) => this.close()
-      );
+      .pipe(takeUntil(this._destroy$))
+      .subscribe(res => this.close());
 
     this.getAuthors();
     this.getGenres();
-    this.bookForm = this.fb.group(
-      {
-        title: ['', Validators.required],
-        description: ['', Validators.required],
-        author: [null, Validators.required],
-        genres: [[]],
-        writingDate: [null, Validators.required],
-        releaseDate: [ null, Validators.required],
-        price: ['', Validators.required],
-        image: [null, Validators.required],
-        previews: [null]
-      },
-      {
-        validators: this.checkDatevalidation
-      }
-    );
+
+    this._initForm();
   }
 
   public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-  public checkDatevalidation: ValidatorFn =
-  (control: FormGroup): null => {
-    const wDate = control.get('writingDate');
-    const rDate = control.get('releaseDate');
-    if (rDate.value < wDate.value) {
-      rDate.setErrors({ invalidDate: true });
-    }
-
-    return null;
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   public close(): void {
@@ -121,8 +94,8 @@ export class BookCreateContainer implements OnInit, OnDestroy {
 
       this.dialogService.openDialog(data)
         .pipe(
-          map((res) => res ? this.dialogRef.close() : null),
-          takeUntil(this.destroy$)
+          map(res => res ? this.dialogRef.close() : null),
+          takeUntil(this._destroy$)
         )
         .subscribe();
     } else {
@@ -143,7 +116,7 @@ export class BookCreateContainer implements OnInit, OnDestroy {
   public imageCropped(event: ImageCroppedEvent, filename: string): void {
     this.croppedImage = event.base64;
     fetch(this.croppedImage)
-      .then((res) => res.blob())
+      .then(res => res.blob())
       .then((blob) => {
         const file = new File([blob], this.filename, { type: 'image/png' });
         this.compressImage(file);
@@ -160,9 +133,11 @@ export class BookCreateContainer implements OnInit, OnDestroy {
 
   public uploadPreviews(fileList: FileList): void {
     this.previews = fileList;
+
     this.bookForm.patchValue({
       previews: this.previews
     });
+
     this.uploadedPreviews = true;
   }
 
@@ -172,12 +147,13 @@ export class BookCreateContainer implements OnInit, OnDestroy {
     reader.onload = (event: Event) => {
       const orientation = -1;
       const localUrl = event.target['result'];
+
       this.compressService
         .compressFile(localUrl, orientation, 50, 50)
         .then(
           (base64) => {
             fetch(base64)
-              .then((res) => res.blob())
+              .then(res => res.blob())
               .then((blob) => {
                 const compressedFile = new File(
                   [blob],
@@ -198,22 +174,45 @@ export class BookCreateContainer implements OnInit, OnDestroy {
 
   public onSubmit(cf: IForm): void {
     this.submited = true;
+
     if (!this.bookForm.invalid) {
       const bookRequest = BookRequest.new(BookRequest, cf);
+
       this.booksService.createBook(bookRequest)
-        .pipe(takeUntil(this.destroy$))
+        .pipe(takeUntil(this._destroy$))
         .subscribe(
           (res) => {
             this.created = true;
+
             this.snack.open('Book created', 'Ok', {
               duration: 3000,
               horizontalPosition: 'end',
               verticalPosition: 'top'
             });
+
             this.close();
           }
         );
     }
+  }
+
+  private _initForm(): void {
+    this.bookForm = this.fb.group(
+      {
+        title: ['', Validators.required],
+        description: ['', Validators.required],
+        author: [null, Validators.required],
+        genres: [[]],
+        writingDate: [null, Validators.required],
+        releaseDate: [null, Validators.required],
+        price: ['', Validators.required],
+        image: [null, Validators.required],
+        previews: [null]
+      },
+      {
+        validators: this.validator.checkDateValidation
+      }
+    );
   }
 
 }

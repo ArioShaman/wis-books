@@ -9,7 +9,7 @@ import { Book } from '../../books/models/book.model';
 @Injectable()
 export class BookResolve implements Resolve<Book> {
 
-  constructor(private booksService: BooksService) {}
+  constructor(private readonly booksService: BooksService) {}
 
   public resolve(route: ActivatedRouteSnapshot): Observable<Book> {
     return this.booksService

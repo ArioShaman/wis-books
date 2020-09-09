@@ -29,6 +29,7 @@ export class AppComponent implements OnInit {
 
   public setActiveAppearence(event: MatSelectChange): void {
     this.appearenceService.setActiveAppearance(event.value);
+
     window.location.reload();
   }
 
