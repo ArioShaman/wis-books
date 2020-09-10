@@ -108,7 +108,6 @@ export class BookFilterContainer implements OnInit, OnDestroy {
     const curMatrixChanges = [isSameText];
     // console.log(this.prevMatrixChanges);
     // console.log(curMatrixChanges);
-    // Fix this functions
 
     return this._compareMatrixChanges(curMatrixChanges);
   }
