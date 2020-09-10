@@ -32,7 +32,7 @@ const appearenceFactory = () => new MatAppearenceService();
 
 @NgModule({
   declarations: [
-    DialogComponent
+    DialogComponent,
   ],
   imports: [
     CommonModule,

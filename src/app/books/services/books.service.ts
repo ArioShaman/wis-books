@@ -40,6 +40,29 @@ export class BooksService {
       );
   }
 
+  public getAuthorBooks(
+    authorId: number,
+    qParams: IFilterParam
+  ): Observable<BooksResponse> {
+    const params = {
+      params: this._setParams(qParams)
+    };
+
+    return this.http.get(`/authors/${authorId}/books/`, params)
+      .pipe(
+        debounce(() => timer(1500)),
+        map((res: any) => {
+          return BooksResponse.new(
+            BooksResponse,
+            {
+              books: Book.newCollection(Book, res.books),
+              meta: res.meta
+            }
+          );
+        }),
+      );
+  }
+
   public getBook(id: number): Observable<Book> {
     const uri = `/books/${id}`;
 
