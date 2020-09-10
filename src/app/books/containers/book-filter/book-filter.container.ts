@@ -17,7 +17,7 @@ const DEFAULT: IFilterParam = {
   authorIds: null
 };
 
-const DEFAULT_MATRIX_OF_CHANGES = [true, true, true];
+const DEFAULT_MATRIX_OF_CHANGES = [true];
 
 @Component({
   selector: 'app-book-filter',
@@ -84,12 +84,11 @@ export class BookFilterContainer implements OnInit, OnDestroy {
       )
       .subscribe((res: IFilterParam) => {
         this.disabled = false;
-        console.log(this._prevParams);
-
-        // if (!this._compareForm(res)) {
-        this.qParams.setNewParams(res);
-        this.qParams.setNewParams({ page: 1 });
-        // }
+        if (!this._compareForm(res)) {
+          this.qParams.setNewParams(res);
+          this.qParams.setNewParams({ page: 1 });
+        }
+        this._prevParams = res;
       });
   }
 
@@ -102,28 +101,27 @@ export class BookFilterContainer implements OnInit, OnDestroy {
       isSameText = true;
     }
 
-    isSameGenres = this._compareSelectArray(formData, 'genreNames');
-    isSameAuthors = this._compareSelectArray(formData, 'authorIds');
+    // isSameAuthors = this._compareSelectArray(formData, 'authorIds');
+    // isSameGenres = this._compareSelectArray(formData, 'genreNames');
+    //fix this part
 
-    const curMatrixChanges = [isSameText, isSameAuthors, isSameGenres];
-    console.log(this.prevMatrixChanges);
-    console.log(curMatrixChanges);
-    console.log(this._compareMatrixChanges(curMatrixChanges));
+    const curMatrixChanges = [isSameText];
+    // console.log(this.prevMatrixChanges);
+    // console.log(curMatrixChanges);
     // Fix this functions
-    return true;
+
+    return this._compareMatrixChanges(curMatrixChanges);
   }
 
   private _compareSelectArray(cur: IFilterParam, key: string): boolean {
     let isSame = false;
     const prev = this._prevParams;
-    this._prevParams = cur;
 
     if (cur[key] && prev[key]) {
       if (cur[key].length === prev[key].length) {
-        isSame = true;
         cur[key].forEach((el, index) => {
-          if (el !== prev[key][index]) {
-            isSame = false;
+          if (el === prev[key][index]) {
+            isSame = true;
           }
         });
       }
@@ -133,13 +131,15 @@ export class BookFilterContainer implements OnInit, OnDestroy {
   }
 
   private _compareMatrixChanges(curMatrix: boolean[]): boolean {
-    let isCompare = true;
+    let isCompare = false;
 
     curMatrix.forEach((el, index) => {
-      if (el !== this.prevMatrixChanges[index]) {
-        isCompare = false;
+      if (el && this.prevMatrixChanges[index]) {
+        isCompare = true;
       }
     });
+
+    this.prevMatrixChanges = curMatrix;
 
     return isCompare;
   }
@@ -165,6 +165,7 @@ export class BookFilterContainer implements OnInit, OnDestroy {
     });
 
     this._setValueChanges();
+    // this._compareForm(this.filterForm.value);
   }
 
 }
