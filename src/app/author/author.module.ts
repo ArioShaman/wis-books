@@ -11,7 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AuthorRoutingModule } from './author-routing.module';
-import { AuthorShowComponent } from './components/author-show/author-show.component';
+import { AuthorShowContainer } from './containers/author-show/author-show.container';
 import { AuthorEditContainer } from './containers/author-edit/author-edit.container';
 import { AuthorView } from './views/author/author.view';
 import { AuthorResolve } from './resolvers/author.resolver';
@@ -21,7 +21,7 @@ import { AuthorBookCardComponent } from './components/author-book-card/author-bo
 
 @NgModule({
   declarations: [
-    AuthorShowComponent,
+    AuthorShowContainer,
     AuthorEditContainer,
     AuthorView,
     AuthorBooksListContainer,

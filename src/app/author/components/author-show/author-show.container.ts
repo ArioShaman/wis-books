@@ -1,16 +1,15 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 
 import { Author } from '../../../authors/models/author.model';
 import { Book } from '../../../books/models/book.model';
 
 @Component({
   selector: 'app-author-show',
-  templateUrl: './author-show.component.html',
-  styleUrls: ['./author-show.component.sass']
+  templateUrl: './author-show.container.html',
+  styleUrls: ['./author-show.container.sass']
 })
-export class AuthorShowComponent implements OnInit {
+export class AuthorShowContainer implements OnInit {
 
   public author: Author;
   public books: Book[];

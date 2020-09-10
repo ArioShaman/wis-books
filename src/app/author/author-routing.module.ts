@@ -6,7 +6,7 @@ import { CanDeactivateGuard } from '../core/guards/exit.guard';
 import { AuthorResolve } from './resolvers/author.resolver';
 import { AuthorView } from './views/author/author.view';
 import { AuthorEditContainer } from './containers/author-edit/author-edit.container';
-import { AuthorShowComponent } from './components/author-show/author-show.component';
+import { AuthorShowContainer } from './containers/author-show/author-show.container';
 
 const routes: Routes = [
   {
@@ -23,7 +23,7 @@ const routes: Routes = [
       },
       {
         path: 'show',
-        component: AuthorShowComponent
+        component: AuthorShowContainer
       },
       {
         path: 'edit',
