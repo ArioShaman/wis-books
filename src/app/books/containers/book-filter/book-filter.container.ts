@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { Subject, Observable } from 'rxjs';
-import { takeUntil, debounceTime, take } from 'rxjs/operators';
+import { takeUntil, debounceTime, distinctUntilChanged, distinct } from 'rxjs/operators';
 
 import { AuthorsService } from '../../../core/services/authors.service';
 import { GenresService } from '../../../core/services/genres.service';
@@ -17,6 +17,8 @@ const DEFAULT: IFilterParam = {
   authorIds: null
 };
 
+const DEFAULT_MATRIX_OF_CHANGES = [true, true, true];
+
 @Component({
   selector: 'app-book-filter',
   templateUrl: './book-filter.container.html',
@@ -27,12 +29,14 @@ export class BookFilterContainer implements OnInit, OnDestroy {
   public disabled = true;
   public openedFilters = false;
 
+  public prevMatrixChanges = DEFAULT_MATRIX_OF_CHANGES;
   public filterForm: FormGroup;
 
   public authors$: Observable<Author[]>;
   public genres$: Observable<Genre[]>;
 
   private _destroy$ = new Subject<void>();
+  private _prevParams: IFilterParam;
 
   constructor(
     private readonly fb: FormBuilder,
@@ -78,12 +82,66 @@ export class BookFilterContainer implements OnInit, OnDestroy {
         debounceTime(1000),
         takeUntil(this._destroy$)
       )
-      .subscribe((res) => {
+      .subscribe((res: IFilterParam) => {
         this.disabled = false;
+        console.log(this._prevParams);
+
+        // if (!this._compareForm(res)) {
         this.qParams.setNewParams(res);
         this.qParams.setNewParams({ page: 1 });
-
+        // }
       });
+  }
+
+  private _compareForm(formData: IFilterParam): boolean {
+    let isSameText = false;
+    let isSameAuthors = false;
+    let isSameGenres = false;
+
+    if (formData.searchText === this._prevParams.searchText) {
+      isSameText = true;
+    }
+
+    isSameGenres = this._compareSelectArray(formData, 'genreNames');
+    isSameAuthors = this._compareSelectArray(formData, 'authorIds');
+
+    const curMatrixChanges = [isSameText, isSameAuthors, isSameGenres];
+    console.log(this.prevMatrixChanges);
+    console.log(curMatrixChanges);
+    console.log(this._compareMatrixChanges(curMatrixChanges));
+    // Fix this functions
+    return true;
+  }
+
+  private _compareSelectArray(cur: IFilterParam, key: string): boolean {
+    let isSame = false;
+    const prev = this._prevParams;
+    this._prevParams = cur;
+
+    if (cur[key] && prev[key]) {
+      if (cur[key].length === prev[key].length) {
+        isSame = true;
+        cur[key].forEach((el, index) => {
+          if (el !== prev[key][index]) {
+            isSame = false;
+          }
+        });
+      }
+    }
+
+    return isSame;
+  }
+
+  private _compareMatrixChanges(curMatrix: boolean[]): boolean {
+    let isCompare = true;
+
+    curMatrix.forEach((el, index) => {
+      if (el !== this.prevMatrixChanges[index]) {
+        isCompare = false;
+      }
+    });
+
+    return isCompare;
   }
 
   private _getParams(): void {
@@ -92,6 +150,7 @@ export class BookFilterContainer implements OnInit, OnDestroy {
       .subscribe(
         (res) => {
           this._initForm(res);
+          this._prevParams = res;
           this.disabled = false;
         }
       );
