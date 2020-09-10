@@ -21,7 +21,7 @@ export class AuthorsService {
 
   public getAllAuthors(): Observable<Author[]> {
     const params = {
-      params: new HttpParams().set('limit', '25')
+      params: new HttpParams().set('limit', '50')
     };
 
     return this.http.get<IResponse>('/authors', params)
@@ -33,5 +33,27 @@ export class AuthorsService {
       .pipe(map(res => Author.new(Author, res)));
   }
 
-}
+  public deleteAuthor(id: number): Observable<Author> {
+    const uri = `/authors/${id}`;
 
+    return this.http.delete(uri)
+      .pipe(map(res => Author.new(Author, res)));
+  }
+
+  public createAuthor(author: Author): Observable<Author> {
+    const uri = '/authors';
+    const formData = author._toJSON();
+
+    return this.http.post(uri, formData)
+      .pipe(map(res => Author.new(Author, res)));
+  }
+
+  public updateAuthor(author: Author): Observable<Author> {
+    const uri = `/authors/${author.id}`;
+    const formData = author._toJSON();
+
+    return this.http.put(uri, formData)
+      .pipe(map(res => Author.new(Author, res)));
+  }
+
+}

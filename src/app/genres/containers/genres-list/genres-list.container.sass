@@ -1,0 +1,17 @@
+@import "./../../../../mixins.sass"
+
+app-genre-card
+  margin-left: 20px
+  
+  @include mobile
+    margin-left: 0px
+
+  &:nth-child(4n+1)
+    margin-left: 0px
+
+.container
+  width: 100%
+  display: flex
+  flex-wrap: wrap
+  margin-bottom: 50px
+

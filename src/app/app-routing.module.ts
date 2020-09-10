@@ -25,8 +25,16 @@ const routes: Routes = [
     loadChildren: () => import('./genres/genres.module').then((m) => m.GenresModule)
   },
   {
+    path: 'genres/details/:id',
+    loadChildren: () => import('./genre/genre.module').then((m) => m.GenreModule)
+  },
+  {
     path: 'authors',
     loadChildren: () => import('./authors/authors.module').then((m) => m.AuthorsModule)
+  },
+  {
+    path: 'authors/details/:id',
+    loadChildren: () => import('./author/author.module').then((m) => m.AuthorModule)
   },
   {
     path: 'auth',

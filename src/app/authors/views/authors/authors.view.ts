@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-authors',
@@ -7,7 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthorsView implements OnInit {
 
+  constructor(
+    private readonly router: Router
+  ) {}
+
   public ngOnInit(): void {
+  }
+
+  public openCreate(): void {
+    this.router.navigate(['/authors/create']);
   }
 
 }

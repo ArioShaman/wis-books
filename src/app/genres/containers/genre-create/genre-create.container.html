@@ -1,0 +1,27 @@
+<form [formGroup]="genreForm"
+      (ngSubmit)="onSubmit(genreForm.value)">
+  
+  <h1>Create Genre</h1>
+  
+  <div class="line">
+    <mat-form-field>
+      <mat-label>Genre Name</mat-label>
+      
+      <input matInput
+              placeholder="Enter a Name of genre"
+              formControlName="name"
+              required
+              autocomplete="off">
+      
+      <mat-error *ngIf="genreForm.get('name').hasError('required') && submited"
+                  class="error">
+        Oops,  Name is required!
+      </mat-error>
+    </mat-form-field>  
+  </div>
+
+  <button type="submit" mat-flat-button
+          color="primary">
+    Save
+  </button>   
+</form>

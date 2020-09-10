@@ -46,15 +46,13 @@ export class BookView implements OnInit, OnDestroy {
   public delete(): void {
     const dialogRef = this.dialog.open(BookDeleteComponent);
 
-    dialogRef
-      .afterClosed()
+    dialogRef.afterClosed()
       .pipe(takeUntil(this._destroy$))
       .subscribe(res => res ? this._delete() : null);
   }
 
   private _delete(): void {
-    this.bookService
-      .deleteBook(this.book.id)
+    this.bookService.deleteBook(this.book.id)
       .pipe(takeUntil(this._destroy$))
       .subscribe(res => this.router.navigate(['/books']));
   }

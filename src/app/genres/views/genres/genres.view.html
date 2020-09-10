@@ -1,1 +1,12 @@
-<p>genres works!</p>
+<div class="grid">
+    <div class="line" 
+        routerLinkActive="active">
+      <h1>Genres</h1>
+      <button class="create"
+              mat-raised-button
+              (click)="openCreate()">
+        Create Genre
+      </button>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
