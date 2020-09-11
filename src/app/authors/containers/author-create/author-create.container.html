@@ -8,13 +8,13 @@
       <mat-label>First Name</mat-label>
       
       <input matInput
-              placeholder="Enter a First Name"
-              formControlName="firstName"
-              required
-              autocomplete="off">
+             placeholder="Enter a First Name"
+             formControlName="firstName"
+             required
+             autocomplete="off">
       
       <mat-error *ngIf="authorForm.get('firstName').hasError('required') && submited"
-                  class="error">
+                 class="error">
         Oops, First Name is required!
       </mat-error>
     </mat-form-field>  
@@ -23,10 +23,10 @@
       <mat-label>Last Name</mat-label>
       
       <input matInput
-              placeholder="Enter a First Name"
-              formControlName="lastName"
-              required
-              autocomplete="off">
+             placeholder="Enter a First Name"
+             formControlName="lastName"
+             required
+             autocomplete="off">
       
       <mat-error *ngIf="authorForm.get('lastName').hasError('required') && submited"
                   class="error">

@@ -39,8 +39,7 @@ export class AuthorView implements OnInit, OnDestroy {
     this.dialog.openDialog({
       message: 'Are you sure you want to delete this author?',
       type: 'multiple'
-    })
-      .pipe(takeUntil(this._destroy$))
+    }).pipe(takeUntil(this._destroy$))
       .subscribe(
         (res) => res ? this._delete() : null
       );

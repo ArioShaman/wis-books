@@ -33,9 +33,7 @@ export class AuthorsListContainer implements OnInit, OnDestroy {
   public getAuthors(): void {
     this.authorsService.getAllAuthors()
       .pipe(takeUntil(this._destroy$))
-      .subscribe(
-        res => this.authors = res
-      );
+      .subscribe(res => this.authors = res);
   }
 
 }

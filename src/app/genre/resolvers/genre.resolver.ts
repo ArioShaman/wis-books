@@ -12,8 +12,7 @@ export class GenreResolve implements Resolve<Genre> {
   constructor(private readonly genresService: GenresService) {}
 
   public resolve(route: ActivatedRouteSnapshot): Observable<Genre> {
-    return this.genresService
-      .getGenreById(route.params.id);
+    return this.genresService.getGenreById(route.params.id);
   }
 
 }

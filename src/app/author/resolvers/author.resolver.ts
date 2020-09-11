@@ -12,8 +12,7 @@ export class AuthorResolve implements Resolve<Author> {
   constructor(private readonly authorsService: AuthorsService) {}
 
   public resolve(route: ActivatedRouteSnapshot): Observable<Author> {
-    return this.authorsService
-      .getAuthorById(route.params.id);
+    return this.authorsService.getAuthorById(route.params.id);
   }
 
 }

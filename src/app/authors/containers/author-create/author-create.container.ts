@@ -56,9 +56,7 @@ export class AuthorCreateContainer implements OnInit, OnDestroy {
 
       this.authorsService.createAuthor(this.authorFormData)
         .pipe(takeUntil(this._destroy$))
-        .subscribe(
-          () => this._snackMessage()
-        );
+        .subscribe(() => this._snackMessage());
     }
   }
 
@@ -75,9 +73,7 @@ export class AuthorCreateContainer implements OnInit, OnDestroy {
             take(1),
             takeUntil(this._destroy$)
           )
-          .subscribe(
-            res => resolve(res)
-          );
+          .subscribe(res => resolve(res));
       });
     }
 

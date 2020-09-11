@@ -56,9 +56,7 @@ export class GenreCreateContainer implements OnInit, OnDestroy {
 
       this.genresService.updateGenre(this.genreFormData)
         .pipe(takeUntil(this._destroy$))
-        .subscribe(
-          () => this._snackMessage()
-        );
+        .subscribe(() => this._snackMessage());
     }
   }
 
@@ -75,9 +73,7 @@ export class GenreCreateContainer implements OnInit, OnDestroy {
             take(1),
             takeUntil(this._destroy$)
           )
-          .subscribe(
-            res => resolve(res)
-          );
+          .subscribe(res => resolve(res));
       });
     }
 

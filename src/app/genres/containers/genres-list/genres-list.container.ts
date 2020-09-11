@@ -34,9 +34,7 @@ export class GenresListContainer implements OnInit, OnDestroy {
   public getGenres(): void {
     this.genresService.getAllGenres()
       .pipe(takeUntil(this._destroy$))
-      .subscribe(
-        res => this.genres = res
-      );
+      .subscribe(res => this.genres = res);
   }
 
 }

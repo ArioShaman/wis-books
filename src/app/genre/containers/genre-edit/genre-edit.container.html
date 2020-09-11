@@ -8,10 +8,10 @@
       <mat-label>Genre Name</mat-label>
       
       <input matInput
-              placeholder="Enter a Name of genre"
-              formControlName="name"
-              required
-              autocomplete="off">
+             placeholder="Enter a Name of genre"
+             formControlName="name"
+             required
+             autocomplete="off">
       
       <mat-error *ngIf="genreForm.get('name').hasError('required') && submited"
                   class="error">
