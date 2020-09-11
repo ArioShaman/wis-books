@@ -8,16 +8,23 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
+import { UIModule } from '../ui/ui.module';
 
 import { GenreRoutingModule } from './genre-routing.module';
 import { GenreView } from './views/genre/genre.view';
-import { GenreShowComponent } from './components/genre-show/genre-show.component';
+import { GenreShowContainer } from './containers/genre-show/genre-show.container';
 import { GenreEditContainer } from './containers/genre-edit/genre-edit.container';
 import { GenreResolve } from './resolvers/genre.resolver';
+import { GenreBooksListContainer } from './containers/genre-books-list/genre-books-list.container';
 
 
 @NgModule({
-  declarations: [GenreView, GenreShowComponent, GenreEditContainer],
+  declarations: [
+    GenreView,
+    GenreShowContainer,
+    GenreEditContainer,
+    GenreBooksListContainer
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -27,6 +34,8 @@ import { GenreResolve } from './resolvers/genre.resolver';
     MatInputModule,
     MatSelectModule,
     MatSnackBarModule,
+
+    UIModule,
 
     GenreRoutingModule
   ],

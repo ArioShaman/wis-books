@@ -42,13 +42,41 @@ export class BooksService {
 
   public getAuthorBooks(
     authorId: number,
-    qParams: IFilterParam
+    page: number = 1
   ): Observable<BooksResponse> {
     const params = {
-      params: this._setParams(qParams)
+      params: this._setParams({
+        page
+      })
     };
 
     return this.http.get(`/authors/${authorId}/books/`, params)
+      .pipe(
+        debounce(() => timer(1500)),
+        map((res: any) => {
+          return BooksResponse.new(
+            BooksResponse,
+            {
+              books: Book.newCollection(Book, res.books),
+              meta: res.meta
+            }
+          );
+        }),
+      );
+  }
+
+  public getGenreBooks(
+    genre: string,
+    page: number = 1
+  ): Observable<BooksResponse> {
+    const params = {
+      params: this._setParams({
+        page,
+        genreNames: [genre]
+      })
+    };
+
+    return this.http.get('/books', params)
       .pipe(
         debounce(() => timer(1500)),
         map((res: any) => {

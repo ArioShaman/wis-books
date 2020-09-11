@@ -8,9 +8,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 
+import { UIModule } from '../ui/ui.module';
+
 import { AuthorsRoutingModule } from './authors-routing.module';
-import { AuthorsView } from './views/authors/authors.view';
 import { AuthorCardComponent } from './components/author-card/author-card.component';
+import { AuthorsView } from './views/authors/authors.view';
 import { AuthorsListContainer } from './containers/authors-list/authors-list.container';
 import { AuthorCreateContainer } from './containers/author-create/author-create.container';
 
@@ -18,9 +20,9 @@ import { AuthorCreateContainer } from './containers/author-create/author-create.
 @NgModule({
   declarations: [
     AuthorsView,
-    AuthorCardComponent,
     AuthorsListContainer,
-    AuthorCreateContainer
+    AuthorCreateContainer,
+    AuthorCardComponent
   ],
   imports: [
     CommonModule,
@@ -32,6 +34,7 @@ import { AuthorCreateContainer } from './containers/author-create/author-create.
     MatSelectModule,
     MatInputModule,
 
+    UIModule,
     AuthorsRoutingModule
   ]
 })

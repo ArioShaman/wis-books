@@ -10,13 +10,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
+import { UIModule } from '../ui/ui.module';
+
 import { AuthorRoutingModule } from './author-routing.module';
 import { AuthorShowContainer } from './containers/author-show/author-show.container';
 import { AuthorEditContainer } from './containers/author-edit/author-edit.container';
 import { AuthorView } from './views/author/author.view';
 import { AuthorResolve } from './resolvers/author.resolver';
 import { AuthorBooksListContainer } from './containers/author-books-list/author-books-list.container';
-import { AuthorBookCardComponent } from './components/author-book-card/author-book-card.component';
 
 
 @NgModule({
@@ -25,7 +26,6 @@ import { AuthorBookCardComponent } from './components/author-book-card/author-bo
     AuthorEditContainer,
     AuthorView,
     AuthorBooksListContainer,
-    AuthorBookCardComponent,
   ],
   imports: [
     CommonModule,
@@ -39,6 +39,7 @@ import { AuthorBookCardComponent } from './components/author-book-card/author-bo
     MatSnackBarModule,
     MatCardModule,
 
+    UIModule,
     AuthorRoutingModule
   ],
   providers: [

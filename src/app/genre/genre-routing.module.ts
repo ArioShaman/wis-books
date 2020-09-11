@@ -6,7 +6,7 @@ import { CanDeactivateGuard } from '../core/guards/exit.guard';
 import { GenreResolve } from './resolvers/genre.resolver';
 import { GenreView } from './views/genre/genre.view';
 import { GenreEditContainer } from './containers/genre-edit/genre-edit.container';
-import { GenreShowComponent } from './components/genre-show/genre-show.component';
+import { GenreShowContainer } from './containers/genre-show/genre-show.container';
 
 
 const routes: Routes = [
@@ -24,7 +24,7 @@ const routes: Routes = [
       },
       {
         path: 'show',
-        component: GenreShowComponent
+        component: GenreShowContainer
       },
       {
         path: 'edit',

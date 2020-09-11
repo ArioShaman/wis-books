@@ -7,14 +7,14 @@ import { BooksService } from '../../../books/services/books.service';
 import { Book } from '../../../books/models/book.model';
 
 @Component({
-  selector: 'app-author-books-list',
-  templateUrl: './author-books-list.container.html',
-  styleUrls: ['./author-books-list.container.sass']
+  selector: 'app-genre-books-list',
+  templateUrl: './genre-books-list.container.html',
+  styleUrls: ['./genre-books-list.container.sass']
 })
-export class AuthorBooksListContainer implements OnInit, OnDestroy {
+export class GenreBooksListContainer implements OnInit, OnDestroy {
 
-  @Input('authorId')
-  public authorId: number;
+  @Input('genre')
+  public genre: string;
 
   public shadowBooks = new Array(12);
   public pageSize = 12;
@@ -48,7 +48,7 @@ export class AuthorBooksListContainer implements OnInit, OnDestroy {
   private _getBooks(
     page: number
   ): void {
-    this.booksService.getAuthorBooks(this.authorId, page)
+    this.booksService.getGenreBooks(this.genre, page)
       .pipe(
         delay(700),
         takeUntil(this._destroy$)

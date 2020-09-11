@@ -2,25 +2,28 @@ import {
   Component,
   OnInit,
   Input,
+  Output,
   ChangeDetectionStrategy,
+  EventEmitter
 } from '@angular/core';
 
 import { Book } from '../../../books/models/book.model';
 import { environment } from '../../../../environments/environment';
 
 @Component({
-  selector: 'app-author-book-card',
-  templateUrl: './author-book-card.component.html',
-  styleUrls: ['./author-book-card.component.sass'],
+  selector: 'app-book',
+  templateUrl: './book.component.html',
+  styleUrls: ['./book.component.sass'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AuthorBookCardComponent implements OnInit {
+export class BookComponent implements OnInit {
 
   @Input('book')
   public book: Book;
   public imageSrc: string;
 
-  constructor() { }
+  @Output('genreFilter')
+  private _genreFilter = new EventEmitter<string[]>();
 
   public ngOnInit(): void {
     if (this.book.image) {
@@ -28,4 +31,9 @@ export class AuthorBookCardComponent implements OnInit {
     }
   }
 
+  public filterByGenre(genre: string[]): void {
+    this._genreFilter.emit(genre);
+  }
+
 }
+
