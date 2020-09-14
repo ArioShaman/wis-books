@@ -9,6 +9,8 @@
   background-size: cover
   background-repeat: no-repeat
   background-position: center
+  overflow-y: auto
+  min-height: 720px
 
   @include mobile
     display: flex
@@ -20,7 +22,7 @@
     justify-content: center
     align-items: center
 
-.body
+form
   background: white
   width: 500px
   height: 100%
@@ -29,8 +31,6 @@
   align-items: center
   flex-direction: column
   position: relative
-  // animation: slide 0.9s ease-in-out 0.5s
-  // animation-fill-mode: both
   transition: 0.9s
   transform: translateX(-500px)
 
