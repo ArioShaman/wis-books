@@ -11,6 +11,7 @@ import { ParamsService } from '../../services/params.service';
 import { Author } from '../../../authors/models/author.model';
 import { Genre } from '../../../genres/models/genre.model';
 import { IFilterParam } from '../../models/filter-param.interface';
+import { isMatchWith } from 'lodash';
 
 const DEFAULT: IFilterParam = {
   searchText: null,
@@ -72,6 +73,7 @@ export class BookFilterContainer implements OnInit, OnDestroy {
   public clearFilter(): void {
     this.disabled = true;
     this.qParams.setNewParams(DEFAULT);
+    this._setNullParams();
   }
 
   public toggleFilters(): void {
@@ -86,19 +88,14 @@ export class BookFilterContainer implements OnInit, OnDestroy {
       )
       .subscribe((res: IFilterParam) => {
         this.disabled = false;
-        const isMatch = this.helper.isMatchWith(res, this._prevParams);
 
-        if (this._prevParams) {
-          if (!isMatch) {
-            this.qParams.setNewParams(res);
-            this.qParams.setNewParams({ page: 1 });
-          }
-        } else {
+        const isMatch = this.helper.isMatchWith(res, this._prevParams);
+        this._prevParams = res;
+
+        if (!isMatch) {
           this.qParams.setNewParams(res);
           this.qParams.setNewParams({ page: 1 });
         }
-
-        this._prevParams = res;
       });
   }
 

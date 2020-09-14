@@ -13,6 +13,10 @@ export class HelperService {
     return _.isEqual(prev, cur);
   }
 
+  public isEqualWith(prev: any, cur: any): boolean {
+    return _.isEqualWith(prev, cur, this._compareNullAndArray);
+  }
+
   public isMatch(prev: any, cur: any): boolean {
     return _.isMatch(prev, cur);
   }
@@ -23,10 +27,13 @@ export class HelperService {
 
   private _compareNullAndArray(oldValue: any, newValue: any): boolean {
     if (oldValue === null && Array.isArray(newValue)) {
-      console.log('isArray');
       if (newValue.length === 0) {
         return true;
       }
+    } else if (oldValue === newValue) {
+      return true;
+    } else {
+      return false;
     }
   }
 
