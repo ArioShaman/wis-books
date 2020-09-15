@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import * as _ from 'lodash';
+import { isMatchWith, isEqual } from 'lodash-es';
 
 @Injectable({
   providedIn: 'root'
@@ -9,20 +9,8 @@ export class HelperService {
 
   constructor() { }
 
-  public isEqual(prev: any, cur: any): boolean {
-    return _.isEqual(prev, cur);
-  }
-
-  public isEqualWith(prev: any, cur: any): boolean {
-    return _.isEqualWith(prev, cur, this._compareNullAndArray);
-  }
-
-  public isMatch(prev: any, cur: any): boolean {
-    return _.isMatch(prev, cur);
-  }
-
   public isMatchWith(prev: any, cur: any): boolean {
-    return _.isMatchWith(cur, prev, this._compareNullAndArray);
+    return isMatchWith(cur, prev, this._compareNullAndArray);
   }
 
   private _compareNullAndArray(oldValue: any, newValue: any): boolean {
@@ -30,7 +18,9 @@ export class HelperService {
       if (newValue.length === 0) {
         return true;
       }
-    } else if (oldValue === newValue) {
+    } else if (isEqual(oldValue, newValue) || oldValue === newValue) {
+      return true;
+    } else if (oldValue === null && newValue.length === 0) {
       return true;
     } else {
       return false;

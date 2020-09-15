@@ -11,7 +11,6 @@ import { ParamsService } from '../../services/params.service';
 import { Author } from '../../../authors/models/author.model';
 import { Genre } from '../../../genres/models/genre.model';
 import { IFilterParam } from '../../models/filter-param.interface';
-import { isMatchWith } from 'lodash';
 
 const DEFAULT: IFilterParam = {
   searchText: null,
