@@ -40,6 +40,13 @@
              matRipple>
             Sign In
           </a>
+          <a [routerLink]="['account']" 
+             routerLinkActive="active"
+             mat-list-item
+             (click)="sidenav.toggle()"
+             matRipple>
+            Account
+          </a>
         </mat-list>
         
         <mat-form-field class="select" 

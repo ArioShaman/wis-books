@@ -1,0 +1,179 @@
+@import "./../../../../mixins.sass"
+@import "./../../../../variables.sass"
+
+h1
+  margin-block-end: 0em
+  margin-top: 40px
+
+.container
+  width: 1400px
+  top: 70px
+  position: relative
+  margin: 0px auto
+  margin-top: 10px
+  position: relative
+  display: flex
+  justify-content: space-between
+
+  .content-block
+    // background: #eeeeee
+    width: 960px
+    position: relative
+
+    .welcome-text
+      font-size: 20px
+
+    .info-cont
+      width: 100%
+      height: auto
+      margin-top: 25px
+      background: $blue
+      box-shadow: $shadow
+      color: white
+      position: relative
+
+      .wrapper
+        width: 92%
+        margin: 0px auto
+        position: relative
+        padding-top: 20px
+        padding-bottom: 20px
+
+        .info-cols
+          position: relative
+          width: 700px
+          height: 200px
+          margin: 0px auto
+          display: flex
+          justify-content: space-between
+
+          .delimeter
+            height: 140px
+            margin-top: 30px
+            width: 3px
+            background: white
+
+          .data-el
+            height: 200px
+            width: 200px
+            display: flex
+            justify-content: center
+            align-items: center
+            flex-direction: column
+            cursor: pointer
+
+            &:hover
+              .count
+                background: #111138
+                transform: scale(1.05, 1.05)
+
+            .count
+              height: 100px
+              width: 100px 
+              border-radius: 50%
+              font-size: 45px
+              display: flex
+              justify-content: center
+              align-items: center
+              transition: 0.4s
+              background: #4f4fc4
+
+            .text
+              margin-top: 20px
+              font-size: 18px
+              font-weight: 400
+
+        .email-title
+          font-size: 20px
+          font-weight: 500
+
+        p
+          font-size: 14px
+          font-weight: 300
+
+        .buttons
+          width: 300px
+          display: flex
+          justify-content: space-between
+
+        button
+          border-radius: 25px
+          height: 40px
+          font-weight: 400
+
+          &.white
+            width: 200px
+            color: $blue
+          
+          &.dark
+            color: white
+            background: #111138
+            width: 80px
+
+  .info-col
+    width: 400px
+
+    .info-block
+      background: white
+      width: 100%
+      height: auto
+      position: relative
+      box-shadow: $shadow
+      margin-top: 20px
+
+      .wrapper
+        width: 350px
+        height: auto
+        margin: 0px auto
+        padding-top: 25px
+        padding-bottom: 25px
+        position: relative
+        display: flex
+        align-items: center
+        flex-direction: column
+
+        .avatar
+          height: 200px
+          width: 200px
+          background: #e85348
+          border-radius: 50%
+          margin: 0px auto
+          position: relative
+          
+          img
+            height: 100%
+            width: 100%
+
+        .edit
+          width: 300px
+          // margin: 0px auto
+          margin-top: 15px
+          height: 50px
+          border-radius: 0px
+
+        .info
+          padding-top: 10px
+          border-radius: 0px
+
+        .name
+          font-size: 30px
+          font-weight: 800
+          text-align: center
+          margin-top: 10px
+
+  .info-link
+    cursor: pointer
+    height: 70px
+    width: 100%
+    background: white
+    box-shadow: $shadow
+    margin-top: 20px
+    outline: none
+    font-size: 16px
+    font-weight: 400
+    border-radius: 0px
+
+    mat-icon
+      width: 24px
+      height: 24px
+      margin-left: 10px
