@@ -43,7 +43,6 @@ export class AccountBooksListContainer implements OnInit, OnDestroy {
         (res) => {
           this.loaded = true;
           this.books = res.books;
-          console.log(this.books);
         }
       );
   }
