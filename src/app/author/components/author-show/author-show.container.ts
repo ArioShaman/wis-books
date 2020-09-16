@@ -14,7 +14,6 @@ export class AuthorShowContainer implements OnInit {
   public author: Author;
   public books: Book[];
 
-
   constructor(
     private readonly route: ActivatedRoute,
   ) { }
@@ -22,6 +21,5 @@ export class AuthorShowContainer implements OnInit {
   public ngOnInit(): void {
     this.author = this.route.snapshot.parent.data.author;
   }
-
 
 }

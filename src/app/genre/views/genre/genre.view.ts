@@ -43,8 +43,7 @@ export class GenreView implements OnInit, OnDestroy {
     this.dialog.openDialog({
       message: 'Are you sure you want to delete this genre?',
       type: 'multiple'
-    })
-      .pipe(takeUntil(this._destroy$))
+    }).pipe(takeUntil(this._destroy$))
       .subscribe(
         (res) => res ? this._delete() : null
       );

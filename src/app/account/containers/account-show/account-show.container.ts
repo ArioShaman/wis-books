@@ -5,6 +5,17 @@ import { MatIconRegistry } from '@angular/material/icon';
 
 import { Chart } from 'chart.js';
 
+const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July'
+];
+
+
 @Component({
   selector: 'app-account-show',
   templateUrl: './account-show.container.html',
@@ -16,7 +27,6 @@ export class AccountShowContainer implements OnInit {
   public myCanvas: ElementRef<HTMLCanvasElement>;
 
   public context: CanvasRenderingContext2D;
-
   public chart = [];
 
   constructor(
@@ -47,15 +57,7 @@ export class AccountShowContainer implements OnInit {
     this.chart = new Chart(this.context, {
       type: 'line',
       data: {
-        labels: [
-          'January',
-          'February',
-          'March',
-          'April',
-          'May',
-          'June',
-          'July'
-        ],
+        labels: months,
         datasets: [{
           backgroundColor: 'rgb(73, 77, 213)',
           borderColor: 'rgb(73, 77, 213)',
