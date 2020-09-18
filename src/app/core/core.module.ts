@@ -17,6 +17,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AppRoutingModule } from '../app-routing.module';
 
 import { HelperService } from './services/helper.service';
+import { RansackService } from './services/ransack.service';
 import { AuthorsService } from './services/authors.service';
 import { GenresService } from './services/genres.service';
 import { AppValidator } from './validators/app.validator';
@@ -64,6 +65,7 @@ const appearenceFactory = () => new MatAppearenceService();
     AuthorsService,
     GenresService,
     HelperService,
+    RansackService,
     AppValidator,
     MatAppearenceService,
     {
