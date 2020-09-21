@@ -14,7 +14,10 @@ import { MatListModule } from '@angular/material/list';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 
+import { NgxRansackService } from 'ngx-ransack';
+
 import { AppRoutingModule } from '../app-routing.module';
+
 
 import { HelperService } from './services/helper.service';
 import { RansackService } from './services/ransack.service';
@@ -62,6 +65,7 @@ const appearenceFactory = () => new MatAppearenceService();
     MatRippleModule
   ],
   providers: [
+    NgxRansackService,
     AuthorsService,
     GenresService,
     HelperService,
