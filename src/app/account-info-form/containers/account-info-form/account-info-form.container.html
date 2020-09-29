@@ -1,0 +1,36 @@
+<div class="steps">
+  <div class="step"
+       *ngFor="let step of steps"
+       [ngClass]="activeStep.id === step.id ? 'active':''"
+       (click)="activateStep(step)">
+    {{ step.label }}
+  </div>
+</div>
+
+<form class="form-container"
+     [ngSwitch]="activeStep.id"
+     [formGroup]="accountForm"
+     (ngSubmit)="onSubmit(accountForm.value)">
+    <ng-template ngSwitchCase="1">
+      <app-first-step [formGroup]="accountForm.get('firstStep')"
+                      [steps]="steps">
+      </app-first-step>
+    </ng-template>
+
+    <ng-template ngSwitchCase="2">
+      <app-second-step [formGroup]="accountForm.get('secondStep')"
+                        [steps]="steps">
+      </app-second-step>
+    </ng-template>
+
+    <ng-template ngSwitchCase="3">
+      <app-third-step [formGroup]="accountForm.get('thirdStep')"
+                      [steps]="steps">
+      </app-third-step>
+    </ng-template>
+
+    <app-step-buttons [steps]="steps"
+                      [activeStep]="activeStep"
+                      (action)="checkAction($event)">
+    </app-step-buttons>
+  </form>

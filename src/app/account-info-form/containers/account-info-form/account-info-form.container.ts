@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
-  FormArray,
   Validators
 } from '@angular/forms';
 
@@ -10,11 +9,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { DialogService } from '../../../core/services/dialog.service';
-import {
-  StepErrorStateMatcher
-} from '../../../core/matchers/step-error-state.matcher';
 import { IStep } from '../../../core/models/step.interface';
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-account-info-form',
@@ -48,15 +43,7 @@ export class AccountInfoFormContainer implements OnInit, OnDestroy {
     }
   ];
 
-  public firstMatcher = new StepErrorStateMatcher(this.steps[0]);
-  public secondMatcher = new StepErrorStateMatcher(this.steps[1]);
-  public thirdMatcher = new StepErrorStateMatcher(this.steps[2]);
-
-
-  public activeStep: IStep = this.steps[2];
-  public brandLogoSrc: string;
-  public bankLogoSrc: string;
-
+  public activeStep: IStep = this.steps[0];
 
   private _destroy$ = new Subject();
 
@@ -64,12 +51,6 @@ export class AccountInfoFormContainer implements OnInit, OnDestroy {
     private readonly fb: FormBuilder,
     private readonly dialog: DialogService
   ) { }
-
-  get questionsArray(): FormArray {
-    const secondStepGroup = this.accountForm.get('secondStep') as FormGroup;
-
-    return secondStepGroup.controls.questions as FormArray;
-  }
 
   public ngOnInit(): void {
     this._initForm();
@@ -85,26 +66,12 @@ export class AccountInfoFormContainer implements OnInit, OnDestroy {
         this.activeStep = step;
       }
     }
-
-  }
-
-  public deleteQuestion(index: number): void {
-    this.questionsArray.removeAt(index);
-  }
-
-  public createQuestion(): FormGroup {
-    return this.fb.group({
-      question: '',
-      answer: ''
-    });
-  }
-
-  public addQuestion(): void {
-    this.questionsArray.push(this.createQuestion());
   }
 
   public onSubmit(cf: any): void {
     this.activeStep.submitted = true;
+
+    console.log(cf);
 
     if (this.accountForm.valid) {
       const data = {
@@ -116,7 +83,7 @@ export class AccountInfoFormContainer implements OnInit, OnDestroy {
         .pipe(
           takeUntil(this._destroy$)
         )
-        .subscribe((res) => console.log(res));
+        .subscribe();
     }
   }
 
@@ -125,18 +92,24 @@ export class AccountInfoFormContainer implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  public nextStep(): void {
-    this.activeStep.submitted = true;
+  public checkAction(action): void {
+    console.log(action);
+    switch (action) {
+      case 'next':
+        this._nextStep();
+        break;
 
-    if (this.accountForm.get(this.activeStep.tag).valid) {
-      const nexInd = this.activeStep.id;
-      this.activeStep = this.steps[nexInd];
+      case 'prev':
+        this._prevStep();
+        break;
     }
   }
 
-  public prevStep(): void {
-    const prevInd = this.activeStep.id - 2;
-    this.activeStep = this.steps[prevInd];
+  public createQuestion(): FormGroup {
+    return this.fb.group({
+      question: '',
+      answer: ''
+    });
   }
 
   private _initForm(): void {
@@ -159,34 +132,19 @@ export class AccountInfoFormContainer implements OnInit, OnDestroy {
         cvv: ['', Validators.required]
       })
     });
-
-    this._getBankData();
   }
 
-  private _getBankData(): void {
-    this.accountForm.get('thirdStep.numberCard').valueChanges
-      .pipe(takeUntil(this._destroy$))
-      .subscribe((res) => {
-        this._apiBankCall(res);
-      });
+  private _nextStep(): void {
+    this.activeStep.submitted = true;
+
+    if (this.accountForm.get(this.activeStep.tag).valid) {
+      const nexInd = this.activeStep.id;
+      this.activeStep = this.steps[nexInd];
+    }
   }
 
-  private _apiBankCall(value: string): void {
-    const brandLogo = 'brandLogoLightSvg';
-    const bankLogo = 'bankLogoSmallLightSvg';
-
-    const url = `https://api.cardinfo.online/?input=${value}&apiKey=${environment.API_KEY}&fields=${brandLogo},${bankLogo}`;
-
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data[brandLogo]) {
-          this.brandLogoSrc = data[brandLogo];
-        }
-        if (data[bankLogo]) {
-          this.bankLogoSrc = data[bankLogo];
-        }
-      });
+  private _prevStep(): void {
+    const prevInd = this.activeStep.id - 2;
+    this.activeStep = this.steps[prevInd];
   }
-
 }
