@@ -59,13 +59,12 @@ export class AppComponent implements OnInit {
   public ngOnInit(): void {
     this.appearences$ = this.appearenceService.getAppearences();
 
-    const params = {
-      params: this.rsService.toRansack(testFilters, testOptions)
-    };
-    console.log(params);
+    // const params = {
+    //   params: this.rsService.toRansack(testFilters, testOptions)
+    // };
 
-    this.http.get('/books', params)
-      .subscribe((res) => console.log(res));
+    // this.http.get('/books', params)
+    //   .subscribe((res) => console.log(res));
   }
 
   public setActiveAppearence(event: MatSelectChange): void {

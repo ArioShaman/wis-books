@@ -43,6 +43,10 @@ const routes: Routes = [
   {
     path: 'account',
     loadChildren: () => import('./account/account.module').then((m) => m.AccountModule)
+  },
+  {
+    path: 'account/form',
+    loadChildren: () => import('./account-info-form/account-info-form.module').then((m) => m.AccountInfoFormModule)
   }
 ];
 

@@ -1,0 +1,294 @@
+<div class="steps">
+  <div class="step"
+       *ngFor="let step of steps"
+       [ngClass]="activeStep.id === step.id ? 'active':''"
+       (click)="activateStep(step)">
+    {{ step.label }}
+  </div>
+</div>
+
+<form class="form-container"
+     [ngSwitch]="activeStep.id"
+     [formGroup]="accountForm"
+     (ngSubmit)="onSubmit(accountForm.value)">
+      <ng-template ngSwitchCase="1">
+          <div class="wrapper"
+               formGroupName="firstStep">
+            <h1>{{ activeStep.label }}</h1>
+  
+            <div class="line">
+              <div class="half">
+                <mat-form-field>
+                  <mat-label>First name</mat-label>
+                  <input matInput
+                         placeholder="Enter a First name"
+                         formControlName="firstName"
+                         required
+                         autocomplete="off"
+                         [errorStateMatcher]="firstMatcher">
+                  <mat-error *ngIf="accountForm.get('firstStep.firstName').hasError('required') && steps[0].submitted"
+                      class="error">
+                    Oops, First Name is required!
+                  </mat-error>
+                </mat-form-field> 
+              </div>
+              <div class="half">
+                <mat-form-field>
+                  <mat-label>Last name</mat-label>
+                  <input matInput
+                         placeholder="Enter a Last name"
+                         formControlName="lastName"
+                         required
+                         autocomplete="off"
+                         [errorStateMatcher]="firstMatcher">
+                  <mat-error *ngIf="accountForm.get('firstStep.lastName').hasError('required') && steps[0].submitted"
+                             class="error">
+                    Oops, Last Name is required!
+                  </mat-error>
+                </mat-form-field>  
+              </div>
+            </div>
+
+            <div class="line">
+              <div class="third">
+                <mat-form-field>
+                  <mat-label>Country</mat-label>
+                  <input matInput
+                         placeholder="Enter a Country"
+                         formControlName="country"
+                         required
+                         autocomplete="off"
+                         [errorStateMatcher]="firstMatcher">
+                  <mat-error *ngIf="accountForm.get('firstStep.country').hasError('required') && steps[0].submitted"
+                             class="error">
+                    Oops, Country is required!
+                  </mat-error>
+                </mat-form-field>  
+              </div>
+              <div class="third">
+                <mat-form-field>
+                  <mat-label>City</mat-label>
+                  <input matInput
+                         placeholder="Enter a City"
+                         formControlName="city"
+                         required
+                         autocomplete="off"
+                         [errorStateMatcher]="firstMatcher">
+                  <mat-error *ngIf="accountForm.get('firstStep.city').hasError('required') && steps[0].submitted"
+                             class="error">
+                    Oops, City is required!
+                  </mat-error>
+                </mat-form-field>  
+              </div>
+
+              <div class="third">
+                <mat-form-field>
+                  <mat-label>Street</mat-label>
+                  <input matInput
+                         placeholder="Enter a Street"
+                         formControlName="street"
+                         required
+                         autocomplete="off"
+                         [errorStateMatcher]="firstMatcher">
+                  <mat-error *ngIf="accountForm.get('firstStep.street').hasError('required') && steps[0].submitted"
+                             class="error">
+                    Oops, Street is required!
+                  </mat-error>
+                </mat-form-field>  
+              </div>
+            </div>
+
+            <div class="line">
+              <div class="sm">
+                <mat-form-field>
+                  <mat-label>Home</mat-label>
+                  <input matInput
+                         placeholder="Enter a Home"
+                         formControlName="home"
+                         required
+                         autocomplete="off"
+                         [errorStateMatcher]="firstMatcher">
+                  <mat-error *ngIf="accountForm.get('firstStep.home').hasError('required') && steps[0].submitted"
+                            class="error">
+                    Oops, Home is required!
+                  </mat-error>
+                </mat-form-field>  
+              </div>
+            </div>
+
+            <div class="line line-buttons">
+              <div class="buttons">
+                <button type="button"
+                        (click)="nextStep()"
+                        mat-flat-button
+                        color="primary">
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+      </ng-template>
+
+      <ng-template ngSwitchCase="2">
+        <div class="wrapper"
+             formGroupName="secondStep">
+          <h1>{{ activeStep.label }}</h1>
+
+          <div formArrayName="questions" 
+               *ngFor="let item of questionsArray.controls; let i = index;">
+            <div class="action-line" 
+                 [formGroupName]="i">
+              <div class="title-line">
+                <div class="title">
+                  Question {{ i + 1}}
+                </div>
+                <button type="button"
+                        mat-flat-button
+                        color="primary"
+                        (click)="deleteQuestion(i)"
+                        *ngIf="i > 0">
+                  Remove question
+                </button>
+              </div> 
+
+              <mat-form-field>
+                <mat-label>Question</mat-label>
+                <input matInput
+                       placeholder="Enter a Question"
+                       formControlName="question"
+                       required
+                       autocomplete="off"
+                       [errorStateMatcher]="secondMatcher">
+                <mat-error *ngIf="item.invalid && steps[1].submitted"
+                           class="error">
+                  Oops, Question is required!
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Answer</mat-label>
+                <input matInput
+                       placeholder="Enter a answer"
+                       formControlName="answer"
+                       required
+                       autocomplete="off"
+                       [errorStateMatcher]="secondMatcher">
+                <mat-error *ngIf="item.invalid && steps[1].submitted"
+                           class="error">
+                  Oops, Answer is required!
+                </mat-error>
+              </mat-form-field>  
+
+            </div>
+          </div>
+
+          <button type="button"
+                  mat-flat-button
+                  color="primary"
+                  class="add-button"
+                  (click)="addQuestion()">
+            Add question
+          </button>
+  
+          <div class="line line-buttons">
+            <div class="buttons">
+              <button type="button"
+                      mat-flat-button
+                      class="grey"
+                      (click)="prevStep()">
+                Prev
+              </button>
+              <button type="button"
+                      mat-flat-button
+                      color="primary"
+                      (click)="nextStep()">
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template ngSwitchCase="3">
+        <div class="wrapper" 
+             formGroupName="thirdStep">
+          <h1>{{ activeStep.label }}</h1>
+          
+          <div class="card-wrapper">
+            <div class="cards">
+              <div class="card">
+                <div class="logo logo-l">
+                  <img [src]="brandLogoSrc">
+                </div>
+                <div class="logo logo-r">
+                  <img [src]="bankLogoSrc">
+                </div>
+                <div class="wrapper">
+                  <div class="inputs">
+                    <div class="input-line">
+                      <input type="text" 
+                             placeholder="1234 1234 1234 1234"
+                             formControlName="numberCard"
+                             [mask]="'0000 0000 0000 0000'"
+                             [ngClass]="accountForm.get('thirdStep.numberCard').invalid && steps[2].submitted ? 'errored':''">
+                    </div>
+
+                    <div class="input-line">
+                      <div class="md-2">
+                        <input type="text"
+                               placeholder="IVAN IVANOV"
+                               formControlName="cardOwner"
+                               [ngClass]="accountForm.get('thirdStep.cardOwner').invalid && steps[2].submitted ? 'errored':''">
+                      </div>
+
+                      <div class="md-1">
+                        <input type="text" 
+                               placeholder="MM/YY"
+                               formControlName="expiredDate"
+                               [mask]="'00/00'"
+                               [ngClass]="accountForm.get('thirdStep.expiredDate').invalid && steps[2].submitted ? 'errored':''">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="magnit">
+                  <div class="wrapper">
+                    <div class="inputs">
+                      <div class="input-line">
+                        <div class="sm-1">
+                          <input type="text" 
+                                 placeholder="CVV"
+                                 formControlName="cvv"
+                                 [mask]="'000'"
+                                 [ngClass]="accountForm.get('thirdStep.cvv').invalid && steps[2].submitted ? 'errored':''">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="line line-buttons">
+            <div class="buttons">
+              <button type="button"
+                      mat-flat-button
+                      (click)="prevStep()"
+                      class="grey">
+                Prev
+              </button>
+              <button type="submit"
+                      mat-flat-button
+                      color="primary">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </ng-template>
+  </form>
