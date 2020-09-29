@@ -43,7 +43,7 @@ export class AccountInfoFormContainer implements OnInit, OnDestroy {
     }
   ];
 
-  public activeStep: IStep = this.steps[0];
+  public activeStep: IStep = this.steps[2];
 
   private _destroy$ = new Subject();
 
@@ -127,7 +127,10 @@ export class AccountInfoFormContainer implements OnInit, OnDestroy {
       }),
       thirdStep: this.fb.group({
         numberCard: ['', Validators.required],
-        cardOwner: ['', Validators.required],
+        cardOwner: ['', Validators.compose([
+          Validators.required,
+          Validators.pattern('.*[A-Z0-9]+$')
+        ])],
         expiredDate: ['', Validators.required],
         cvv: ['', Validators.required]
       })

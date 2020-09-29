@@ -15,26 +15,27 @@
           <div class="inputs">
             <div class="input-line">
               <input type="text" 
-                      placeholder="1234 1234 1234 1234"
-                      formControlName="numberCard"
-                      [mask]="'0000 0000 0000 0000'"
-                      [ngClass]="formGroup.get('numberCard').invalid && steps[2].submitted ? 'errored':''">
+                     placeholder="1234 1234 1234 1234"
+                     formControlName="numberCard"
+                     [mask]="'0000 0000 0000 0000'"
+                     [ngClass]="formGroup.get('numberCard').invalid && steps[2].submitted ? 'errored':''">
             </div>
 
             <div class="input-line">
               <div class="md-2">
                 <input type="text"
-                        placeholder="IVAN IVANOV"
-                        formControlName="cardOwner"
-                        [ngClass]="formGroup.get('cardOwner').invalid && steps[2].submitted ? 'errored':''">
+                       class="uppercase"
+                       placeholder="IVAN IVANOV"
+                       formControlName="cardOwner"
+                       [ngClass]="formGroup.get('cardOwner').invalid && steps[2].submitted ? 'errored':''">
               </div>
 
               <div class="md-1">
                 <input type="text" 
-                        placeholder="MM/YY"
-                        formControlName="expiredDate"
-                        [mask]="'00/00'"
-                        [ngClass]="formGroup.get('expiredDate').invalid && steps[2].submitted ? 'errored':''">
+                       placeholder="MM/YY"
+                       formControlName="expiredDate"
+                       [mask]="'00/00'"
+                       [ngClass]="formGroup.get('expiredDate').invalid && steps[2].submitted ? 'errored':''">
               </div>
             </div>
           </div>
