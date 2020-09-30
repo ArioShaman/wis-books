@@ -43,7 +43,7 @@ export class AccountInfoFormContainer implements OnInit, OnDestroy {
     }
   ];
 
-  public activeStep: IStep = this.steps[2];
+  public activeStep: IStep = this.steps[0];
 
   private _destroy$ = new Subject();
 
