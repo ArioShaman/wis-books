@@ -1,6 +1,10 @@
 @import "./../../../../mixins.sass"
 @import "./../../../../variables.sass"
 
+h1
+  @include mobile
+    font-size: 25px
+
 .title-line
   font-weight: 700
   font-size: 20px
@@ -9,10 +13,20 @@
   align-items: center
   background: #ececec
 
+  @include mobile
+    font-size: 14px
+
 .steps
   width: 100%
   height: 50px
   display: flex
+
+  @include tablet
+    height: 40px
+
+  @include mobile
+    flex-direction: column
+    height: 120px
   
   .step
     width: 34%
@@ -25,6 +39,14 @@
     font-size: 18px
     transition: 0.4s
     user-select: none
+
+    @include tablet
+      font-size: 14px
+
+    @include mobile
+      font-size: 13px
+      width: 100%
+      height: 40px
 
     &:hover
       background: rgba(73, 77, 213, 0.4)
@@ -49,6 +71,11 @@
   box-sizing: border-box
   position: relative
 
+  @include mobile
+    margin-top: 20px
+    margin-bottom: 20px
+    padding: 5px 15px 5px 15px
+
 
 
 .action-line
@@ -61,6 +88,9 @@
   width: 150px
   margin-top: 20px
 
+  @include mobile
+    width: 100%
+
 .line
   width: 100%
   height: 60px
@@ -69,15 +99,28 @@
   display: flex
   justify-content: space-between
 
+  @include mobile
+    flex-direction: column
+    height: auto
+
 .half
   width: 48%
   position: relative
 
+  @include mobile
+    width: 100%
+
 .third
   width: 31%
 
+  @include mobile
+    width: 100%
+
 .sm
   width: 15%
+
+  @include mobile
+    width: 100%
 
 mat-form-field
   width: 100%

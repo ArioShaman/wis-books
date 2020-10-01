@@ -20,11 +20,6 @@ const COUNTRIES_URL = 'https://restcountries.eu/rest/v2/all';
   styleUrls: ['./../account-info-form/account-info-form.container.sass']
 })
 export class FirstStepContainer implements OnInit, OnDestroy {
-
-  public testOptions = [
-    'aaa',
-    'bbb'
-  ];
   public filteredCountries$: Observable<string[]>;
 
   @Input('steps')

@@ -5,6 +5,11 @@
   height: 40px
   justify-content: flex-end
   margin-top: 20px
+  
+  @include mobile
+    min-height: 40px
+    height: auto
+    max-height: 90px
 
 .buttons
   display: flex
@@ -12,11 +17,22 @@
   max-width: 400px
   min-width: 180px
 
+  @include mobile
+    width: 100%
+    flex-direction: column
+
   button
     width: 180px
 
+    @include mobile
+      width: 100%
+
     &:nth-child(2)        
       margin-left: 20px
+
+      @include mobile
+        margin-left: 0px
+        margin-top: 10px
 
     &.grey
       background: #ececec
