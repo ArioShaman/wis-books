@@ -26,7 +26,7 @@ export default {
         }
       ]
     }),
-  ],
+  ]
 };
 
 const Template: Story<BookComponent> = (args: BookComponent) => ({
