@@ -6,6 +6,13 @@ mat-card::ng-deep
   opacity: 1px
   animation: showing 1s linear
   outline: none
+  width: 300px
+
+  @include tablet
+    width: 275px
+
+  @include mobile
+    width: 275px
 
 @keyframes showing
   0%
@@ -18,9 +25,9 @@ mat-card::ng-deep
   overflow: hidden
 
 .container
-  width: 300px
   height: 375px
   cursor: pointer
+  width: 300px
 
   @include tablet
     width: 275px
