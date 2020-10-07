@@ -6,13 +6,15 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatCardModule } from '@angular/material/card';
 
 import { AuthDirective } from '../auth/directives/auth.directive';
+import { AdminShowDirective } from '../auth/directives/admin-show.directive';
 
 import { BookComponent } from './components/book/book.component';
 
 @NgModule({
   declarations: [
     BookComponent,
-    AuthDirective
+    AuthDirective,
+    AdminShowDirective
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,8 @@ import { BookComponent } from './components/book/book.component';
   ],
   exports: [
     BookComponent,
-    AuthDirective
+    AuthDirective,
+    AdminShowDirective
   ]
 })
 export class UIModule { }

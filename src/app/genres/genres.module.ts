@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 
+import { UIModule } from '../ui/ui.module';
+
 import { GenresRoutingModule } from './genres-routing.module';
 import { GenresView } from './views/genres/genres.view';
 import { GenreCreateContainer } from './containers/genre-create/genre-create.container';
@@ -32,6 +34,7 @@ import { GenreCardComponent } from './components/genre-card/genre-card.component
     MatSelectModule,
     MatInputModule,
 
+    UIModule,
     GenresRoutingModule
   ]
 })

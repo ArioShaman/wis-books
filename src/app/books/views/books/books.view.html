@@ -4,12 +4,12 @@
   <div class="line">
     <h1>Books</h1>
 
-      <button class="create"
-        *showAuth
-        mat-raised-button
-        (click)="openCreateModal()">
-        Create book
-      </button>
+    <button class="create"
+      mat-raised-button
+      (click)="openCreateModal()"
+      *showAdmin>
+      Create book
+    </button>
   </div>
 
   <app-books-list></app-books-list>

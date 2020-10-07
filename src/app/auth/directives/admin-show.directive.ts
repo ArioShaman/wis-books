@@ -13,20 +13,13 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { AuthService } from '../../core/services/auth.service';
+import { IUser } from '../../core/models/user.interface';
 
 @Directive({
-  selector: '[showAuth]'
+  selector: '[showAdmin]'
 })
-export class AuthDirective implements OnInit, OnDestroy {
-
-  @Input()
-  set showAuth(condition: boolean) {
-    this._condition = coerceBooleanProperty(condition);
-  }
-
+export class AdminShowDirective implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
-  private _condition = true;
-
 
   constructor(
     private readonly _authService: AuthService,
@@ -35,11 +28,11 @@ export class AuthDirective implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    // console.log('hey');
     this._authService.isLogined()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((isAuth) => {
-        if (isAuth && this._condition || !isAuth && !this._condition) {
+      .subscribe((isAuthenticated) => {
+        const user = this._authService.getCurrentUser();
+        if (user.role === 'ADMIN' && isAuthenticated) {
           this._viewContainer.createEmbeddedView(this._templateRef);
         } else {
           this._viewContainer.clear();

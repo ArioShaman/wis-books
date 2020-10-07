@@ -12,13 +12,15 @@
     <button mat-flat-button 
             color="primary"
             [routerLink]="['edit']"
-            routerLinkActive="active">
+            routerLinkActive="active"
+            *showAdmin>
       Edit
     </button>
 
     <button mat-flat-button 
             color="primary"
-            (click)="delete()">
+            (click)="delete()"
+            *showAdmin>
       Delete
     </button>
   </div>

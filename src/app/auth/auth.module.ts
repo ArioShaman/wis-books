@@ -19,7 +19,7 @@ import { SignUpContainer } from './containers/sign-up/sign-up.container';
   declarations: [
     AuthView,
     SignInContainer,
-    SignUpContainer,
+    SignUpContainer
   ],
   imports: [
     CommonModule,
