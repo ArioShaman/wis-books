@@ -1,41 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router'
 
 import { MatSelectChange } from '@angular/material/select';
 
 import { Observable } from 'rxjs';
 
 import { MatAppearenceService } from './core/services/mat-appearence.service';
-import { RansackService } from './core/services/ransack.service';
-import { Ransack } from './core/models/ransack.enum';
-
-const testFilters = {
-  // author: [1, 2],
-  authorId: [1, 2],
-  price: {
-    min: 1,
-    max: 2000,
-  },
-  title: 'Nine Coaches Waiting'
-};
-
-const testOptions = {
-  authorId: {
-    matcher: Ransack.In,
-    // postfix: 'id'
-  },
-  price: [
-    {
-      matcher: Ransack.Gt,
-      from: 'min'
-    },
-    {
-      matcher: Ransack.Lt,
-      from: 'max'
-    }
-  ],
-  title: Ransack.NotEq,
-};
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -47,30 +18,32 @@ export class AppComponent implements OnInit {
   public activeAppearence: string;
   public appearences$ = new Observable<string[]>();
 
+  @ViewChild('sidenav')
+  public sidenav;
 
   constructor(
     private appearenceService: MatAppearenceService,
-    private readonly rsService: RansackService,
-    private readonly http: HttpClient
+    private readonly auth: AuthService,
+    private readonly router: Router
   ) {
     this.activeAppearence = appearenceService.getActiveAppearance();
   }
 
   public ngOnInit(): void {
     this.appearences$ = this.appearenceService.getAppearences();
-
-    // const params = {
-    //   params: this.rsService.toRansack(testFilters, testOptions)
-    // };
-
-    // this.http.get('/books', params)
-    //   .subscribe((res) => console.log(res));
+    this.auth.checkCache();
   }
 
   public setActiveAppearence(event: MatSelectChange): void {
     this.appearenceService.setActiveAppearance(event.value);
 
     window.location.reload();
+  }
+
+  public logOut(): void {
+    this.sidenav.toggle();
+    this.auth.logOut();
+    // this.router.navigate(['/auth/sign-in']);
   }
 
 }

@@ -10,7 +10,6 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
-import { AuthService } from './services/auth.service';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthView } from './views/auth/auth.view';
 import { SignInContainer } from './containers/sign-in/sign-in.container';
@@ -20,7 +19,7 @@ import { SignUpContainer } from './containers/sign-up/sign-up.container';
   declarations: [
     AuthView,
     SignInContainer,
-    SignUpContainer
+    SignUpContainer,
   ],
   imports: [
     CommonModule,
@@ -34,9 +33,6 @@ import { SignUpContainer } from './containers/sign-up/sign-up.container';
     MatNativeDateModule,
     MatDatepickerModule,
     MatSnackBarModule
-  ],
-  providers: [
-    AuthService
   ]
 })
 export class AuthModule { }

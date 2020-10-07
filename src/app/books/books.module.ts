@@ -37,7 +37,7 @@ import { BookFilterContainer } from './containers/book-filter/book-filter.contai
     FilterByGenrePipe,
     BookCreateContainer,
     SearchTextPipe,
-    BookFilterContainer
+    BookFilterContainer,
   ],
   providers: [
     BooksService,

@@ -18,7 +18,7 @@ import { NgxRansackService } from 'ngx-ransack';
 
 import { AppRoutingModule } from '../app-routing.module';
 
-
+import { AuthService } from './services/auth.service';
 import { HelperService } from './services/helper.service';
 import { RansackService } from './services/ransack.service';
 import { AuthorsService } from './services/authors.service';
@@ -67,6 +67,7 @@ const appearenceFactory = () => new MatAppearenceService();
   providers: [
     NgxRansackService,
     AuthorsService,
+    AuthService,
     GenresService,
     HelperService,
     RansackService,

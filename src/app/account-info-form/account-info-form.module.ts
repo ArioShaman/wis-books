@@ -16,7 +16,6 @@ import { SecondStepContainer } from './containers/second-step/second-step.contai
 import { ThirdStepContainer } from './containers/third-step/third-step.container';
 import { StepButtonsComponent } from './components/step-buttons/step-buttons.component';
 
-
 @NgModule({
   declarations: [
     AccountInfoFormView,

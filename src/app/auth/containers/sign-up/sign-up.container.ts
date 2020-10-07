@@ -9,7 +9,7 @@ import {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { DialogService } from '../../../core/services/dialog.service';
 import { IDialogBody } from '../../../core/models/dialog-body.interface';
 import { SignUpForm } from '../../models/sign-up-form.model';

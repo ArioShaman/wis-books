@@ -5,12 +5,14 @@ import { RouterModule } from '@angular/router';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatCardModule } from '@angular/material/card';
 
-import { BookComponent } from './components/book/book.component';
+import { AuthDirective } from '../auth/directives/auth.directive';
 
+import { BookComponent } from './components/book/book.component';
 
 @NgModule({
   declarations: [
-    BookComponent
+    BookComponent,
+    AuthDirective
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,8 @@ import { BookComponent } from './components/book/book.component';
     MatCardModule
   ],
   exports: [
-    BookComponent
+    BookComponent,
+    AuthDirective
   ]
 })
 export class UIModule { }

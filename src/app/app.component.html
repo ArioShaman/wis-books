@@ -33,19 +33,32 @@
              matRipple>
             Authors
           </a>
+
+
           <a [routerLink]="['auth']" 
-             routerLinkActive="active"
-             mat-list-item
-             (click)="sidenav.toggle()"
-             matRipple>
+              routerLinkActive="active"
+              mat-list-item
+              (click)="sidenav.toggle()"
+              matRipple
+              *showAuth="false">
             Sign In
           </a>
+
           <a [routerLink]="['account']" 
-             routerLinkActive="active"
-             mat-list-item
-             (click)="sidenav.toggle()"
-             matRipple>
+              routerLinkActive="active"
+              mat-list-item
+              (click)="sidenav.toggle()"
+              matRipple
+              *showAuth>
             Account
+          </a>
+
+          <a
+              mat-list-item
+              (click)="logOut()"
+              matRipple
+              *showAuth>
+            Log out
           </a>
         </mat-list>
         
