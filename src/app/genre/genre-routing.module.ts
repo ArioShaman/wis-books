@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { CanDeactivateGuard } from '../core/guards/exit.guard';
+import { AdminGuard } from '../core/guards/admin.guard';
 
 import { GenreResolve } from './resolvers/genre.resolver';
 import { GenreView } from './views/genre/genre.view';
@@ -29,6 +30,7 @@ const routes: Routes = [
       {
         path: 'edit',
         component: GenreEditContainer,
+        canActivate: [AdminGuard],
         canDeactivate: [CanDeactivateGuard]
       }
     ]
