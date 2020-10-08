@@ -47,6 +47,10 @@ const routes: Routes = [
   {
     path: 'account/form',
     loadChildren: () => import('./account-info-form/account-info-form.module').then((m) => m.AccountInfoFormModule)
+  },
+  {
+    path: 'shoping-cart',
+    loadChildren: () => import('./shoping-cart/shoping-cart.module').then((m) => m.ShopingCartModule)
   }
 ];
 

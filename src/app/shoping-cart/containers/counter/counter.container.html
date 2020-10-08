@@ -1,0 +1,28 @@
+<div class="wrapper">
+  <h2>Chouse count of books</h2>
+  
+  <div class="container">
+    <button mat-raised-button
+            color="primary"
+            (click)="decrement()"
+            class="counter">
+      -
+    </button>
+  
+    <div class="count">{{ count }}</div>
+  
+    <button mat-raised-button
+            class="counter"
+            color="primary"
+            (click)="increment()">
+      +
+    </button>
+  </div>
+
+  <button mat-raised-button
+          color="primary"
+          class="submit"
+          [mat-dialog-close]="count">
+    Submit
+  </button>
+</div>

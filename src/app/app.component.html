@@ -34,22 +34,30 @@
             Authors
           </a>
 
+          <a [routerLink]="['shoping-cart']" 
+             routerLinkActive="active"
+             mat-list-item
+             (click)="sidenav.toggle()"
+             matRipple>
+            Shoping Cart
+          </a>
+
 
           <a [routerLink]="['auth']" 
-              routerLinkActive="active"
-              mat-list-item
-              (click)="sidenav.toggle()"
-              matRipple
-              *showAuth="false">
+             routerLinkActive="active"
+             mat-list-item
+             (click)="sidenav.toggle()"
+             matRipple
+             *showAuth="false">
             Sign In
           </a>
 
           <a [routerLink]="['account']" 
-              routerLinkActive="active"
-              mat-list-item
-              (click)="sidenav.toggle()"
-              matRipple
-              *showAuth>
+             routerLinkActive="active"
+             mat-list-item
+             (click)="sidenav.toggle()"
+             matRipple
+             *showAuth>
             Account
           </a>
 

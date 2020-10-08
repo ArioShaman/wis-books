@@ -37,6 +37,13 @@
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ book.description }}
 </p>
 
+<button class="add-cart"
+        mat-raised-button
+        color="primary"
+        (click)="addToCart()">
+  Add to shoping cart
+</button>
+
 <div class="price">
   {{ book.price | currency : 'USD' : 'symbol' : '1.0-0' }}
 </div>

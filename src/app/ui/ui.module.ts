@@ -9,12 +9,16 @@ import { AuthDirective } from '../auth/directives/auth.directive';
 import { AdminShowDirective } from '../auth/directives/admin-show.directive';
 
 import { BookComponent } from './components/book/book.component';
+import { NavbarContainer } from './containers/navbar/navbar.container';
+import { CartCounterContainer } from './containers/cart-counter/cart-counter.container';
 
 @NgModule({
   declarations: [
     BookComponent,
     AuthDirective,
-    AdminShowDirective
+    AdminShowDirective,
+    NavbarContainer,
+    CartCounterContainer
   ],
   imports: [
     CommonModule,
@@ -25,6 +29,7 @@ import { BookComponent } from './components/book/book.component';
   ],
   exports: [
     BookComponent,
+    NavbarContainer,
     AuthDirective,
     AdminShowDirective
   ]

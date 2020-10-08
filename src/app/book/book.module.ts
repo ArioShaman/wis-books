@@ -15,6 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NgxImageCompressService } from 'ngx-image-compress';
 
 import { CanDeactivateGuard } from '../core/guards/exit.guard';
+import { UIModule } from '../ui/ui.module';
 
 import { BookRoutingModule } from './book-routing.module';
 import { BookResolve } from './resolvers/book.resolver';
@@ -54,6 +55,7 @@ import { LocalizedDatePipe } from './pipes/localized-date.pipe';
 
     // custom
     BookRoutingModule,
+    UIModule
   ],
   providers: [
     BookResolve,
