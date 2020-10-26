@@ -4,6 +4,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, timer } from 'rxjs';
 import { map, debounce } from 'rxjs/operators';
 
+import { NgxRansackService, Ransack } from 'ngx-ransack';
+
 import { Book } from '../models/book.model';
 import { BooksResponse } from '../models/books-response.model';
 import { BookRequest } from '../models/book-request.model';
@@ -15,7 +17,8 @@ import { IFilterParam } from '../models/filter-param.interface';
 export class BooksService {
 
   constructor(
-    private readonly http: HttpClient
+    private readonly http: HttpClient,
+    private readonly ransackSerivce: NgxRansackService
   ) { }
 
   public getBooks(
@@ -23,6 +26,57 @@ export class BooksService {
   ): Observable<BooksResponse> {
     const params = {
       params: this._setParams(qParams)
+    };
+
+    return this.http.get('/books', params)
+      .pipe(
+        debounce(() => timer(1500)),
+        map((res: any) => {
+          return BooksResponse.new(
+            BooksResponse,
+            {
+              books: Book.newCollection(Book, res.books),
+              meta: res.meta
+            }
+          );
+        }),
+      );
+  }
+
+  public getAuthorBooks(
+    authorId: number,
+    page: number = 1
+  ): Observable<BooksResponse> {
+    const params = {
+      params: this._setParams({
+        page
+      })
+    };
+
+    return this.http.get(`/authors/${authorId}/books/`, params)
+      .pipe(
+        debounce(() => timer(1500)),
+        map((res: any) => {
+          return BooksResponse.new(
+            BooksResponse,
+            {
+              books: Book.newCollection(Book, res.books),
+              meta: res.meta
+            }
+          );
+        }),
+      );
+  }
+
+  public getGenreBooks(
+    genre: string,
+    page: number = 1
+  ): Observable<BooksResponse> {
+    const params = {
+      params: this._setParams({
+        page,
+        genreNames: [genre]
+      })
     };
 
     return this.http.get('/books', params)
@@ -97,42 +151,28 @@ export class BooksService {
   }
 
   private _setParams(qParams: IFilterParam): HttpParams {
-    let httpParams = new HttpParams()
-      .set('limit', '12')
-      .set('page', String(qParams.page));
+    const page = qParams.page;
 
-    Object.keys(qParams).forEach(
-      (key) => {
-        const param = qParams[key];
-        if (param) {
-          switch (key) {
-            case 'authorIds':
-              param.map((id) => {
-                httpParams = httpParams.append('q[author_id_in][]', id);
-              });
-
-              break;
-
-            case 'genreNames':
-              param.map((name) => {
-                httpParams = httpParams.append('q[genres_name_in][]', name);
-              });
-
-              break;
-
-            case 'searchText':
-
-              if (param) {
-                httpParams = httpParams.append(
-                  'q[title_or_description_cont]', param
-                );
-              }
-
-              break;
-          }
-        }
+    const options = {
+      searchText: {
+        matcher: Ransack.Cont,
+        name: 'title_or_description'
+      },
+      genreNames: {
+        matcher: Ransack.In,
+        name: 'genres_name'
+      },
+      authorIds: {
+        matcher: Ransack.In,
+        name: 'author_id'
       }
-    );
+    };
+
+    delete qParams.page;
+
+    let httpParams = this.ransackSerivce.toRansack(qParams, options);
+    httpParams = httpParams.append('page', String(page));
+    httpParams = httpParams.append('limit', '12');
 
     return httpParams;
   }

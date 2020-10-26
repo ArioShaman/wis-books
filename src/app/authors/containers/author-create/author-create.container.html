@@ -1,0 +1,42 @@
+<form [formGroup]="authorForm"
+      (ngSubmit)="onSubmit(authorForm.value)">
+  
+  <h1>Create Author</h1>
+  
+  <div class="line">
+    <mat-form-field>
+      <mat-label>First Name</mat-label>
+      
+      <input matInput
+             placeholder="Enter a First Name"
+             formControlName="firstName"
+             required
+             autocomplete="off">
+      
+      <mat-error *ngIf="authorForm.get('firstName').hasError('required') && submited"
+                 class="error">
+        Oops, First Name is required!
+      </mat-error>
+    </mat-form-field>  
+
+    <mat-form-field>
+      <mat-label>Last Name</mat-label>
+      
+      <input matInput
+             placeholder="Enter a First Name"
+             formControlName="lastName"
+             required
+             autocomplete="off">
+      
+      <mat-error *ngIf="authorForm.get('lastName').hasError('required') && submited"
+                  class="error">
+        Oops, Last Name is required!
+      </mat-error>
+    </mat-form-field> 
+  </div>
+
+  <button type="submit" mat-flat-button
+          color="primary">
+    Save
+  </button>   
+</form>

@@ -1,0 +1,18 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "login": "ariosha6@gmail.com",
+      "password": "5ibmphdactmtv5",
+      "firstName": "Daniyl",
+      "role": "ADMIN" 
+    },
+    {
+      "id": 2,
+      "login": "ariosha5@gmail.com",
+      "password": "12345",
+      "firstName": "Matilda",
+      "role": "USER" 
+    }
+  ]
+}

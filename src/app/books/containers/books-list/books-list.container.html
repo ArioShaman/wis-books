@@ -7,10 +7,10 @@
 
 <ng-container *ngIf="loaded ; else elseBlock">
   <div class="container">
-    <book *ngFor="let book of books"
-          [book]="book"
-          (genreFilter)="selectGenre($event)">
-    </book>    
+    <app-book *ngFor="let book of books"
+              [book]="book"
+              (genreFilter)="selectGenre($event)">
+    </app-book>    
   </div>  
 </ng-container>
 

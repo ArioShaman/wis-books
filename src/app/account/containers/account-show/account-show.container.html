@@ -1,0 +1,124 @@
+<div class="container">
+  <div class="content-block">
+    <div class="info-cont">
+      <div class="wrapper">
+        <div class="email-title">
+          Link your bank account to your friendly account
+        </div>
+
+        <p>
+          Get a better overview of your rental income by having us scan your account for you
+        </p>
+
+        <div class="buttons">
+          <button mat-flat-button
+                  class="white"
+                  routerLink="form">
+            Link bank account
+          </button>
+
+          <button mat-flat-button
+                  class="dark">
+            Later
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-cont">
+      <div class="wrapper">
+        <div class="info-cols">
+          <div class="data-el">
+            <div class="count">
+              33
+            </div>
+            <div class="text">
+              Readed books
+            </div>
+          </div>
+
+          <div class="delimeter"></div>
+
+          <div class="data-el">
+            <div class="count">
+              145
+            </div>
+            <div class="text">
+              Viewed books
+            </div>
+          </div>
+
+          <div class="delimeter"></div>
+
+          <div class="data-el">
+            <div class="count">
+              657
+            </div>
+            <div class="text">
+              Bookmarks
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-cont">
+      <div class="wrapper">
+        <h3>Your activity</h3>
+
+        <canvas #myCanvas>
+          {{ chart }}
+        </canvas>
+      </div>
+    </div>
+    
+    <h1>Books in reading process:</h1>
+    <app-account-books-list></app-account-books-list>
+  </div>
+
+  <div class="info-col">
+    <div class="info-block">
+      <div class="wrapper">
+        <div class="avatar">
+          <img src="../../../../assets/images/faces/face-07.png">
+        </div>
+  
+        <div class="name info">
+          Rebecka Trump
+        </div>
+  
+        <div class="phone info">
+          +1 (345)-45-67-586
+        </div>
+  
+        <div class="city info">
+          USA, Washington, Portland, OR 97215
+        </div>
+  
+        <div class="birthday info">
+          21.08.1993
+        </div>
+  
+        <button mat-flat-button
+                color="primary"
+                class="edit">
+          Edit
+        </button>
+      </div>
+    </div>
+
+    <button class="info-link"
+            mat-button
+            [routerLink]="['/books']">
+      Recomended books
+      <mat-icon svgIcon="book"></mat-icon>
+    </button>
+
+    <button class="info-link"
+         mat-button
+         [routerLink]="['/auth']">
+      Log Out
+      <mat-icon svgIcon="out"></mat-icon>
+    </button>
+  </div>
+</div>

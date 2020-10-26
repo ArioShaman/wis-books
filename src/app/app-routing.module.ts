@@ -25,18 +25,41 @@ const routes: Routes = [
     loadChildren: () => import('./genres/genres.module').then((m) => m.GenresModule)
   },
   {
+    path: 'genres/details/:id',
+    loadChildren: () => import('./genre/genre.module').then((m) => m.GenreModule)
+  },
+  {
     path: 'authors',
     loadChildren: () => import('./authors/authors.module').then((m) => m.AuthorsModule)
   },
   {
+    path: 'authors/details/:id',
+    loadChildren: () => import('./author/author.module').then((m) => m.AuthorModule)
+  },
+  {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule)
+  },
+  {
+    path: 'account',
+    loadChildren: () => import('./account/account.module').then((m) => m.AccountModule)
+  },
+  {
+    path: 'account/form',
+    loadChildren: () => import('./account-info-form/account-info-form.module').then((m) => m.AccountInfoFormModule)
+  },
+  {
+    path: 'shoping-cart',
+    loadChildren: () => import('./shoping-cart/shoping-cart.module').then((m) => m.ShopingCartModule)
   }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes, {
+      enableTracing: false,
+      scrollPositionRestoration: 'top',
+    })
   ],
   exports: [
     RouterModule

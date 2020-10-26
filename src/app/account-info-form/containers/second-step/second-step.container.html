@@ -1,0 +1,59 @@
+<div class="wrapper"
+     [formGroup]="formGroup">
+  <h1>{{ steps[1].label }}</h1>
+
+  <div formArrayName="questions" 
+        *ngFor="let item of questionsArray.controls; let i = index;">
+    <div class="action-line" 
+          [formGroupName]="i">
+      <div class="title-line">
+        <div class="title">
+          Question {{ i + 1}}
+        </div>
+        <button type="button"
+                mat-flat-button
+                color="primary"
+                (click)="deleteQuestion(i)"
+                *ngIf="i > 0">
+          Remove question
+        </button>
+      </div> 
+
+      <mat-form-field>
+        <mat-label>Question</mat-label>
+        <input matInput
+               placeholder="Enter a Question"
+               formControlName="question"
+               required
+               autocomplete="off"
+               [errorStateMatcher]="secondMatcher">
+        <mat-error *ngIf="item.invalid && steps[1].submitted"
+                    class="error">
+          Oops, Question is required!
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Answer</mat-label>
+        <input matInput
+                placeholder="Enter a answer"
+                formControlName="answer"
+                required
+                autocomplete="off"
+                [errorStateMatcher]="secondMatcher">
+        <mat-error *ngIf="item.invalid && steps[1].submitted"
+                    class="error">
+          Oops, Answer is required!
+        </mat-error>
+      </mat-form-field>  
+    </div>
+  </div>
+
+  <button type="button"
+          mat-flat-button
+          color="primary"
+          class="add-button"
+          (click)="addQuestion()">
+    Add question
+  </button>
+</div>

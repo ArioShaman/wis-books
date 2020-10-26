@@ -4,11 +4,12 @@ import {
   FormBuilder,
   Validators
 } from '@angular/forms';
+import { Router } from '@angular/router';
 
-import { Subject, Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { ISignInForm } from '../../models/sign-in-form.interface';
 import {
   BookErrorStateMatcher
@@ -31,7 +32,8 @@ export class SignInContainer implements OnInit, OnDestroy {
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly auth: AuthService
+    private readonly auth: AuthService,
+    private readonly router: Router
   ) { }
 
   public ngOnInit(): void {
@@ -52,9 +54,14 @@ export class SignInContainer implements OnInit, OnDestroy {
     this.submited = true;
 
     if (this.signInForm.valid) {
-      this.auth.signIn(cf)
+      this.auth.fakeSignIn(cf)
         .pipe(takeUntil(this._destroy$))
-        .subscribe();
+        .subscribe(
+          (res) => {
+            if (res) {
+              this.router.navigate(['/books']);
+            }
+          });
     }
   }
 

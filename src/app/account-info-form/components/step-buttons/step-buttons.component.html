@@ -1,0 +1,24 @@
+<div class="line line-buttons">
+  <div class="buttons">
+    <button type="button"
+            mat-flat-button
+            class="grey"
+            (click)="prevStep()"
+            *ngIf="activeStep.id !== 1">
+      Prev
+    </button>
+    <button type="button"
+            mat-flat-button
+            color="primary"
+            (click)="nextStep()"
+            *ngIf="activeStep.id !== 3">
+      Next
+    </button>
+    <button type="submit"
+            mat-flat-button
+            color="primary"
+            *ngIf="activeStep.id === steps.length">
+      Submit
+    </button>
+  </div>
+</div>

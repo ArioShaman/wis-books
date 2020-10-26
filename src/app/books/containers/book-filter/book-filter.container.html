@@ -10,27 +10,24 @@
              formControlName="searchText">
     </mat-form-field>
   
-    <mat-form-field class="select"
-                    *ngIf="(authors$ | async) as resultAuthors">
+    <mat-form-field class="select">
       <mat-label>Choose an Author</mat-label>
   
       <mat-select formControlName="authorIds"
                   multiple>
         <mat-option [value]="author.id"
-                    *ngFor="let author of resultAuthors">
+                    *ngFor="let author of authors$ | async">
           {{ author.firstName }} {{ author.lastName }}
         </mat-option>
       </mat-select>
       
     </mat-form-field>
   
-    <mat-form-field class="select"
-                    *ngIf="(genres$ | async) as resultGenres">
-      
+    <mat-form-field class="select">
       <mat-label>Choose a genre</mat-label>
       <mat-select formControlName="genreNames"
                   multiple>
-        <mat-option *ngFor="let genre of resultGenres"
+        <mat-option *ngFor="let genre of genres$ | async"
                     [value]="genre.name">
           {{ genre.name }}
         </mat-option>

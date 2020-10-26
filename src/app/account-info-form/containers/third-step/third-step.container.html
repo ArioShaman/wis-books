@@ -1,0 +1,64 @@
+<div class="wrapper" 
+      [formGroup]="formGroup">
+  <h1>{{ steps[2].label }}</h1>
+  
+  <div class="card-wrapper">
+    <div class="cards">
+      <div class="card">
+        <div class="logo logo-l">
+          <img [src]="brandLogoSrc">
+        </div>
+        <div class="logo logo-r">
+          <img [src]="bankLogoSrc">
+        </div>
+        <div class="wrapper">
+          <div class="inputs">
+            <div class="input-line">
+              <input type="text" 
+                     placeholder="1234 1234 1234 1234"
+                     formControlName="numberCard"
+                     [mask]="'0000 0000 0000 0000'"
+                     [ngClass]="formGroup.get('numberCard').invalid && steps[2].submitted ? 'errored':''">
+            </div>
+
+            <div class="input-line">
+              <div class="md-2">
+                <input type="text"
+                       class="uppercase"
+                       placeholder="IVAN IVANOV"
+                       formControlName="cardOwner"
+                       [ngClass]="formGroup.get('cardOwner').invalid && steps[2].submitted ? 'errored':''">
+              </div>
+
+              <div class="md-1">
+                <input type="text" 
+                       placeholder="MM/YY"
+                       formControlName="expiredDate"
+                       [mask]="'00/00'"
+                       [ngClass]="formGroup.get('expiredDate').invalid && steps[2].submitted ? 'errored':''">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="magnit">
+          <div class="wrapper">
+            <div class="inputs">
+              <div class="input-line">
+                <div class="sm-1">
+                  <input type="text" 
+                          placeholder="CVV"
+                          formControlName="cvv"
+                          [mask]="'000'"
+                          [ngClass]="formGroup.get('cvv').invalid && steps[2].submitted ? 'errored':''">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

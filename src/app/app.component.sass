@@ -33,6 +33,11 @@ a
 mat-sidenav
   width: 400px
 
+mat-sidenav-content
+  @include mobile
+    overflow-x: hidden
+
+
 mat-list-item
   cursor: pointer
   user-select: none
@@ -40,8 +45,12 @@ mat-list-item
 
 mat-icon
   cursor: pointer
-  background: #ececec
+  // background: #ececec
   position: fixed
   z-index: 3000
   top: 20px
   left: 20px
+
+  @include mobile
+    top: 15px
+    left: 15px  

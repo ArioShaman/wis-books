@@ -1,0 +1,144 @@
+@import "./../../../../mixins.sass"
+@import "./../../../../variables.sass"
+
+.uppercase
+  text-transform: uppercase
+
+.card-wrapper
+  width: 100%
+  height: 300px
+  display: flex
+  align-items: center
+  justify-content: center
+
+  .wrapper
+    width: 320px
+    height: auto 
+    margin: 0px auto
+    position: relative
+
+    @include mobile
+      width: 270px
+
+    .inputs
+      height: 100px
+      width: 100%
+      margin-top: 110px
+
+      @include mobile
+        margin-top: 55px
+
+      .input-line
+        // background: #ececec
+        height: 40px
+        width: 100%
+        display: flex
+        justify-content: space-between
+
+        .md-2
+          width: 60%
+
+        .md-1
+          width: 25%
+
+        &:nth-child(2)
+          margin-top: 15px
+
+        input
+          width: 100%
+          height: 40px
+          border-width: 0px
+          border-radius: 5px
+          background: rgba(0, 0, 0, 0.24)
+          font-size: 16px
+          padding-top: 4px
+          color: white
+          box-sizing: border-box
+          padding-left: 8px
+          outline: none
+
+          &.errored
+            border: 2px solid #ff3936
+
+          &::placeholder
+            color: rgba(255, 255, 255, 0.48)
+
+  .sm-1
+    width: 15%
+
+    @include mobile
+      width: 50px
+
+  .cards
+    width: 470px
+    height: 260px
+    position: relative
+
+    @include mobile
+      width: 100%
+
+    .card
+      position: absolute
+      width: 370px
+      height: 230px
+      border-radius: 20px
+      background: linear-gradient(167.6deg, #B8C7FF -9.78%, #474CE4 107.04%)
+
+      @include mobile
+        width: 100%
+        height: 160px
+        border-radius: 10px
+
+      &:nth-child(1)
+        z-index: 300
+
+      &:nth-child(2)
+        right: 0px
+        bottom: 0px
+        z-index: 100
+
+        @include mobile
+          left: 0px
+
+        .input-line
+          justify-content: flex-end !important
+
+  .magnit
+    height: 45px
+    width: 100%
+    background: rgba(0, 0, 0, 0.48)
+    position: absolute
+    top: 40px
+
+
+  .text
+    font-weight: 500
+    font-size: 14px
+    color: white
+    margin-top: 30px
+
+  .logo
+    position: absolute
+    top: 15px
+    height: 50px
+    width: 70px
+
+    @include mobile
+      width: 50px
+      height: 30px
+
+    &.logo-l
+      left: 30px
+
+      @include mobile
+        left: 15px
+
+    &.logo-r
+      right: 30px
+
+      @include mobile
+        right: 15px
+
+    img
+      width: 100%
+      height: auto

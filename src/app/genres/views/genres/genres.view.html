@@ -1,1 +1,16 @@
-<p>genres works!</p>
+<app-navbar></app-navbar>
+
+<div class="grid">
+  <div class="line"
+        *ngIf="!isHidden" 
+        routerLinkActive="active">
+    <h1>Genres</h1>
+    <button class="create"
+            *showAdmin
+            mat-raised-button
+            (click)="openCreate()">
+      Create Genre
+    </button>
+  </div>
+  <router-outlet></router-outlet>
+</div>

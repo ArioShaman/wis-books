@@ -1,7 +1,7 @@
 <form class="body"
      [formGroup]="bookForm"
      (ngSubmit)="onSubmit(bookForm.value)">
-  <div class="header">
+  <div class="header-line">
     <div class="img" 
          [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}">
       <div class="error"
@@ -173,7 +173,7 @@
     <button type="submit" mat-flat-button
             color="primary"
             [disabled]="!edited && bookForm.valid">
-      Edit
+      Save
     </button>    
   </div>
 </form>

@@ -1,9 +1,13 @@
-<div class="grid">
+<app-navbar></app-navbar>
+
+<div class="grid-short">
   <div class="line">
     <h1>Books</h1>
+
     <button class="create"
-            mat-raised-button
-            (click)="openCreateModal()">
+      mat-raised-button
+      (click)="openCreateModal()"
+      *showAdmin>
       Create book
     </button>
   </div>

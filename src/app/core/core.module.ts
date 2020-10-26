@@ -14,8 +14,13 @@ import { MatListModule } from '@angular/material/list';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 
+import { NgxRansackService } from 'ngx-ransack';
+
 import { AppRoutingModule } from '../app-routing.module';
 
+import { AuthService } from './services/auth.service';
+import { HelperService } from './services/helper.service';
+import { RansackService } from './services/ransack.service';
 import { AuthorsService } from './services/authors.service';
 import { GenresService } from './services/genres.service';
 import { AppValidator } from './validators/app.validator';
@@ -32,7 +37,7 @@ const appearenceFactory = () => new MatAppearenceService();
 
 @NgModule({
   declarations: [
-    DialogComponent
+    DialogComponent,
   ],
   imports: [
     CommonModule,
@@ -60,8 +65,12 @@ const appearenceFactory = () => new MatAppearenceService();
     MatRippleModule
   ],
   providers: [
+    NgxRansackService,
     AuthorsService,
+    AuthService,
     GenresService,
+    HelperService,
+    RansackService,
     AppValidator,
     MatAppearenceService,
     {

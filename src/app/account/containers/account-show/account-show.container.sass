@@ -1,0 +1,331 @@
+@import "./../../../../mixins.sass"
+@import "./../../../../variables.sass"
+
+h1
+  margin-block-end: 0em
+  margin-top: 40px
+
+  @include mobile
+    font-size: 22px
+
+
+.container
+  width: 1400px
+  top: 70px
+  position: relative
+  margin: 0px auto
+  margin-top: 10px
+  position: relative
+  display: flex
+  justify-content: space-between
+
+  @include desk
+    width: 960px
+
+  @include tablet
+    width: 580px
+    flex-direction: column-reverse
+
+  @include mobile
+    width: 275px
+    flex-direction: column-reverse
+
+  .content-block
+    width: 960px
+    position: relative
+
+    @include desk
+      width: 630px
+
+    @include tablet
+      width: 100%
+
+    @include mobile
+      width: 100%
+
+    .chart-cont
+      width: 100%
+      background: white
+      box-shadow: $shadow
+      margin-top: 20px
+      position: relative
+
+      @include mobile
+        display: none
+
+      .wrapper
+        width: 94%
+        margin: 0px auto
+        padding-top: 20px
+        padding-bottom: 20px
+
+        h3
+          margin-block-start: 0em
+
+        canvas
+          height: 350px
+          width: 100%
+
+          @include desk
+            height: 300px 
+
+    .info-cont
+      width: 100%
+      height: auto
+      margin-top: 25px
+      background: $blue
+      box-shadow: $shadow
+      color: white
+      position: relative
+
+      .wrapper
+        width: 92%
+        margin: 0px auto
+        position: relative
+        padding-top: 20px
+        padding-bottom: 20px
+        
+
+        .info-cols
+          position: relative
+          width: 700px
+          height: 200px
+          margin: 0px auto
+          display: flex
+          justify-content: space-between
+
+          @include desk
+            height: 160px
+            width: 550px
+
+          @include tablet
+            height: 140px
+            width: 500px
+
+          @include mobile
+            width: 100%
+            flex-direction: column
+            height: auto
+            align-items: center
+
+          .delimeter
+            height: 140px
+            margin-top: 30px
+            width: 3px
+            background: white
+
+            @include desk
+              height: 90px
+
+            @include tablet
+              height: 90px
+
+            @include mobile
+              width: 120px
+              height: 3px
+
+          .data-el
+            height: 200px
+            width: 200px
+            display: flex
+            justify-content: center
+            align-items: center
+            flex-direction: column
+            cursor: pointer
+            user-select: none
+
+            @include desk
+              height: 160px
+              width: 160px
+            
+            @include tablet
+              height: 140px
+              width: 140px
+
+            &:hover
+              .count
+                background: #111138
+                transform: scale(1.05, 1.05)
+
+            .count
+              height: 100px
+              width: 100px 
+              border-radius: 50%
+              font-size: 45px
+              display: flex
+              justify-content: center
+              align-items: center
+              transition: 0.4s
+              background: #4f4fc4
+
+              @include desk
+                font-size: 38px
+
+              @include tablet
+                font-size: 35px
+
+            .text
+              margin-top: 20px
+              font-size: 18px
+              font-weight: 400
+
+              @include desk
+                font-size: 16px
+              
+              @include tablet
+                font-size: 14px
+
+        .email-title
+          font-size: 20px
+          font-weight: 500
+
+        p
+          font-size: 14px
+          font-weight: 300
+
+        .buttons
+          width: 300px
+          display: flex
+          justify-content: space-between
+
+          @include mobile
+            flex-direction: column
+            height: 95px
+            width: 100%
+
+        button
+          border-radius: 25px
+          height: 40px
+          font-weight: 400
+
+          &.white
+            width: 200px
+            color: $blue
+          
+            @include mobile
+              width: 100%
+
+          &.dark
+            color: white
+            background: #111138
+            width: 80px
+
+            @include mobile
+              width: 100%
+
+  .info-col
+    width: 400px
+
+    @include desk
+      width: 280px
+
+    @include tablet
+      width: 100%
+
+    @include mobile
+      width: 100%
+
+    .info-block
+      background: white
+      width: 100%
+      height: auto
+      position: relative
+      box-shadow: $shadow
+      margin-top: 20px
+
+      .wrapper
+        width: 350px
+        height: auto
+        margin: 0px auto
+        padding-top: 25px
+        padding-bottom: 25px
+        position: relative
+        display: flex
+        align-items: center
+        flex-direction: column
+        
+        @include desk
+          width: 250px
+          padding-top: 15px
+          padding-bottom: 15px
+
+        @include tablet
+          width: 90%
+          padding-top: 18px
+          padding-bottom: 18px
+
+        @include mobile
+          width: 90%
+          padding-top: 15px
+          padding-bottom: 15px
+
+        .city
+          text-align: center
+
+        .avatar
+          height: 200px
+          width: 200px
+          background: #e85348
+          border-radius: 50%
+          margin: 0px auto
+          position: relative
+
+          @include desk
+            height: 150px
+            width: 150px
+          
+          img
+            height: 100%
+            width: 100%
+
+        .edit
+          width: 100%
+          // margin: 0px auto
+          margin-top: 15px
+          height: 50px
+          border-radius: 0px
+
+          @include desk
+            height: 40px
+
+          @include tablet
+            height: 40px
+
+          @include mobile
+            height: 40px
+
+        .info
+          padding-top: 10px
+          border-radius: 0px
+
+        .name
+          font-size: 30px
+          font-weight: 800
+          text-align: center
+          margin-top: 10px
+
+  .info-link
+    cursor: pointer
+    height: 70px
+    width: 100%
+    background: white
+    box-shadow: $shadow
+    margin-top: 20px
+    outline: none
+    font-size: 16px
+    font-weight: 400
+    border-radius: 0px
+
+    @include desk
+      height: 50px
+
+    @include tablet
+      height: 60px
+
+    @include mobile
+      height: 60px
+
+    mat-icon
+      width: 24px
+      height: 24px
+      margin-left: 10px

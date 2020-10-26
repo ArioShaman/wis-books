@@ -16,12 +16,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { NgxImageCompressService } from 'ngx-image-compress';
 
+import { UIModule } from '../ui/ui.module';
+
 import { BooksRoutingModule } from './books-routing.module';
 import { BooksService } from './services/books.service';
 import { ParamsService } from './services/params.service';
 import { BooksView } from './views/books/books.view';
 import { BooksListContainer } from './containers/books-list/books-list.container';
-import { BookComponent } from './components/book/book.component';
 import { FilterByAuthorPipe } from './pipes/filter-by-author.pipe';
 import { FilterByGenrePipe } from './pipes/filter-by-genre.pipe';
 import { BookCreateContainer } from './containers/book-create/book-create.container';
@@ -32,12 +33,11 @@ import { BookFilterContainer } from './containers/book-filter/book-filter.contai
   declarations: [
     BooksView,
     BooksListContainer,
-    BookComponent,
     FilterByAuthorPipe,
     FilterByGenrePipe,
     BookCreateContainer,
     SearchTextPipe,
-    BookFilterContainer
+    BookFilterContainer,
   ],
   providers: [
     BooksService,
@@ -66,6 +66,7 @@ import { BookFilterContainer } from './containers/book-filter/book-filter.contai
 
     ImageCropperModule,
 
+    UIModule,
     BooksRoutingModule
   ]
 })
